@@ -1,0 +1,47 @@
+----------------------------------------------------------
+---------------- Projeto Final de POO --------------------
+----------------------------------------------------------
+Classes:
+
+Y- Gest Supermercado
+Y- Supermercado
+Y- Produto:
+	identificador: String
+	nome: String
+	preço unitario: float
+	stock: int
+		Y- ProdutoAlimentar:
+			nCaloriasPor100g: int
+			percentagemGordura: int 
+		Y- ProdutoLimpeza:
+			grauToxicidade: int //0 a 10
+		Y- ProdutoMobiliario:
+			peso: int
+			dimensao: String //altura x largura x profundidade
+			//mobiliário com peso superior a 15 kg têm um custo de transporte de 10 Euros.
+Y- Cliente:
+	nome: String
+	morada: String
+	email: String
+	telefone: int
+	nascimento: Data
+	frequente: boolean //Para os clientes frequentes o transporte ao domicílio é gratuito em
+						compras acima de 40 Euros. Abaixo deste valor o transporte tem um custo de 15
+						Euros. Para os restantes clientes o custo é fixo tendo o valor de 20 Euros.
+Promocao:
+		PromocaoTresQuatro: //comprar 9 unidades de produtos terá de pagar apenas 7
+		PromocaoPagueMenos: //uma unidade é paga a 100%, decrescendo o custo em 5%
+							por cada unidade adicional, até se atingir um desconto máximo de 50% do valor
+							total da compra.
+
+
+
+----------------------------------------------------------
+------------------------ Métodos -------------------------
+----------------------------------------------------------
+
+1- Login com email
+
+2- Realizar compra
+
+3- Consultar as compras realizadas

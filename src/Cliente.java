@@ -5,7 +5,7 @@ public class Cliente {
     private int telefone;
     private Data nascimento;
     private boolean frequente;
-
+    //
     public Cliente() {}
 
     public Cliente(String nome, String morada, String email, int telefone, Data nascimento, boolean frequente) {

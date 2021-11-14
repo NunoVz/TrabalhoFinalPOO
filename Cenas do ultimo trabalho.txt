@@ -5,7 +5,7 @@ Tudo com 'Y- ' antes esta feito
 
 
 
-Classes:
+Classes
 
 Y- Gest Supermercado
 Y- Supermercado

@@ -1,5 +1,6 @@
 public class Promocao {
     private Produto produto;
+    //kilos
     private int quantidade;
 
     public Promocao(Produto produto, int quantidade) {

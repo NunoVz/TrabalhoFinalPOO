@@ -56,6 +56,13 @@ public class Produto {
         this.stock = stock;
     }
 
+    public String getType(){
+        return "PD";
+    }
+    public String guardarData(){
+        return getType()+" "+identificador
+                +" "+nome+" "+precoUnitario+" "+stock+" "+custoTransporte;
+    }
     @Override
     public String toString() {
         return nome;

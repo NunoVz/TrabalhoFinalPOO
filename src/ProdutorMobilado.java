@@ -8,4 +8,9 @@ public class ProdutorMobilado extends Produto {
         super(identificador, nome, precoUnitario, stock, custoTransporte);
         this.peso=peso;
     }
+
+    public String getType(){
+        return "PDMOB";
+    }
+
 }

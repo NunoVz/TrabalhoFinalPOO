@@ -11,7 +11,7 @@ public class GestSupermercado {
         lerDados();
         System.out.println("Software up to date");
 
-        Supermercado sup=null;
+/*        Supermercado sup=null;
         while(sup==null){
             sup= escolherSupermercado();}
 
@@ -19,7 +19,8 @@ public class GestSupermercado {
         while(cliente==null) {
             cliente=LoginRegister(sup);}
 
-        escolherProdutos(sup, cliente);
+        escolherProdutos(sup, cliente);*/
+        guardarDados();
     }
 
     private static void lerDados(){
@@ -84,6 +85,33 @@ public class GestSupermercado {
         }
     }
 
+    private static void guardarDados(){
+        File f= new File("Data\\Datasupermercados.txt");
+        try{
+            FileWriter fw=new FileWriter(f);
+            BufferedWriter bw= new BufferedWriter(fw);
+            for (Supermercado b:supermercados){
+                bw.write("*NOME*\n");
+                bw.write(b.getNome()+"\n\n");
+                bw.write("*PRODUTOS*\n");
+                for (Produto c:b.getProdutos()){
+                    bw.write(c.guardarData()+"\n");
+                }
+                bw.write("\n*CLIENTES*\n");
+
+                for (Cliente c:b.getClientes()){
+                    bw.write(c.guardarData()+"\n");
+                }
+
+                bw.write("*PUSH*\n\n\n");
+
+            }
+            bw.close();
+        }catch (IOException ex){
+            System.out.println("Erro a ler o ficheiro");
+        }
+
+    }
 
     private static Supermercado escolherSupermercado() {
         Scanner sc = new Scanner(System.in);
@@ -165,7 +193,7 @@ public class GestSupermercado {
         if (sc.hasNextInt()) {
             //If option is 0 then it's the Exit
             while (option != sup.getProdutos().size()+2) {
-                System.out.println("Carrinho de compras: "+carrinhodecompras+"\r");
+                System.out.println("Carrinho de compras: "+carrinhodecompras);
                 option = Integer.parseInt(sc.nextLine());
                 if (option > sup.getProdutos().size()+3) {
                     System.out.println("Please only input a valid number");

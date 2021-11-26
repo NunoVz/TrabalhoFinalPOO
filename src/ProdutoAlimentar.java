@@ -8,4 +8,7 @@ public class ProdutoAlimentar extends Produto {
         this.nCalorias100g=nCalorias100g;
         this.percentagemGordura=percentagemGordura;
     }
+    public String getType(){
+        return "PDALI";
+    }
 }

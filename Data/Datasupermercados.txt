@@ -7,8 +7,8 @@ PD Teste3 Alho 4.22 102 2312
 PD Teste5 Cebola 4.22 102 2312
 
 *CLIENTES*
-Antonio Tabulado antones@com 91522113 13 11 2010 true
-Maria Lisboa marionata@com 91234122 12 12 2001 false
+Antonio Tabulado antones@com 91522113 13/11/2010 true
+Maria Lisboa marionata@com 91234122 12/12/2001 false
 *PUSH*
 
 
@@ -21,7 +21,8 @@ PD Teste3 Milho 6.22 32 213
 PD Teste5 Azeite 5.322 41 6423
 
 *CLIENTES*
-juao Rua antones@com 91522113 13 11 2010 true
-Limpao SemAbrigo marionata@com 91234122 12 12 2001 false
-
+juao Rua antones@com 91522113 13/11/2010 true
+Limpao SemAbrigo marionata@com 91234122 12/12/2001 false
 *PUSH*
+
+

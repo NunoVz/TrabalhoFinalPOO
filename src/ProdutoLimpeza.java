@@ -7,4 +7,8 @@ public class ProdutoLimpeza extends Produto {
         super(identificador, nome, precoUnitario, stock, custoTransporte);
         this.grauToxicidade=grauToxicidade;
     }
+
+    public String getType(){
+        return "PDLIMP";
+    }
 }

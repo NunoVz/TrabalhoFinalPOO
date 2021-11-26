@@ -62,4 +62,8 @@ public class Cliente {
     public void setFrequente(boolean frequente) {
         this.frequente = frequente;
     }
+
+    public String guardarData(){
+        return nome+" "+morada+" "+email+" "+telefone+" "+nascimento+" "+isFrequente();
+    }
 }

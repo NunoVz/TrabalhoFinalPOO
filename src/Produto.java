@@ -5,7 +5,6 @@ public class Produto {
     protected int stock;
     protected int custoTransporte;
 
-    public Produto() {}
 //
     public Produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
         this.identificador = identificador;
@@ -14,6 +13,8 @@ public class Produto {
         this.stock = stock;
         this.custoTransporte = custoTransporte;
     }
+
+
 
     public int getCustoTransporte() {
         return custoTransporte;

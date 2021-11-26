@@ -1,20 +1,72 @@
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
 
 
 public class GestSupermercado {
     private static ArrayList<Supermercado> supermercados = new ArrayList<>();
 
     public static void main(String[] args) {
-        supermercados.add(new Supermercado("SuperDaBaixa"));
-        supermercados.add(new Supermercado("SuperDaBaguete"));
-        supermercados.add(new Supermercado("SuperDoMoelas"));
+        lerdados();
         Supermercado Sup= EscolherSupermercado();
         Cliente cliente=null;
         while(cliente==null) {
             cliente=LoginRegister(Sup);
         }
     }
+
+    private static void lerdados(){
+        try {
+            File myObj = new File("Data\\Datasupermercados.txt");
+            Scanner myReader = new Scanner(myObj);
+            int mododeescrita=-1;
+            String nome="";
+            ArrayList<Cliente> clientes = new ArrayList<>();
+            ArrayList<Produto> produtos = new ArrayList<>();
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                if(data.charAt(0)=='!'){
+                    mododeescrita=0;
+                    data=data.replaceFirst("! ","");
+                }
+                else if(data.charAt(0)=='-') {
+                    mododeescrita = 1;
+                    data=data.replaceFirst("- ","");
+                }
+                else if(data.charAt(0)=='>'){
+                    mododeescrita=2;
+                    data=data.replaceFirst("> ","");
+                }
+                else if(data.charAt(0)=='/')
+                    mododeescrita=3;
+
+                switch (mododeescrita){
+                    case 0->nome=data;
+                    case 1->{
+                        String[] array=data.split(" ");
+                        produtos.add(new Produto(array[0],array[1],Float.parseFloat(array[2]),Integer.parseInt(array[3]),Integer.parseInt(array[4])));
+                    }
+                    case 2->{
+                        String[] array=data.split(" ");
+                        clientes.add(new Cliente(array[0],array[1],array[2],Integer.parseInt(array[3]),new Data(Integer.parseInt(array[4]),Integer.parseInt(array[5]),Integer.parseInt(array[6])),Boolean.parseBoolean(array[7])));
+                    }
+                    case 3->{
+                        supermercados.add(new Supermercado(nome,clientes,produtos));
+                        clientes = new ArrayList<>();
+                        produtos = new ArrayList<>();
+                    }
+                }
+
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+
     private static Supermercado EscolherSupermercado() {
         Scanner sc = new Scanner(System.in);
         int option = -1;
@@ -79,4 +131,5 @@ public class GestSupermercado {
                     return null;}
                 }
     } else System.out.println("Please type a valid option");return null;}
+
 }

@@ -3,12 +3,16 @@ import java.util.Scanner;
 
 public class Supermercado {
     private String nome;
-    private ArrayList<Cliente> clientes = new ArrayList<>();
-    private ArrayList<Produto> produtos = new ArrayList<>();
+    private ArrayList<Cliente> clientes;
+    private ArrayList<Produto> produtos;
 
-    public Supermercado(String nome){
+
+    public Supermercado(String nome, ArrayList<Cliente> clientes, ArrayList<Produto> produtos) {
         this.nome=nome;
+        this.clientes=clientes;
+        this.produtos=produtos;
     }
+
     public void add_produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte){
         produtos.add(new Produto(identificador,nome,precoUnitario,stock,custoTransporte));
     }

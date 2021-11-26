@@ -1,4 +1,3 @@
-import java.awt.print.Printable;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -10,21 +9,21 @@ public class GestSupermercado {
 
     public static void main(String[] args) {
         System.out.println("Software Boot");
-        lerdados();
+        lerDados();
         System.out.println("Software up to date");
 
         Supermercado sup=null;
         while(sup==null){
-            sup= EscolherSupermercado();}
+            sup= escolherSupermercado();}
 
         Cliente cliente=null;
         while(cliente==null) {
             cliente=LoginRegister(sup);}
 
-        EscolherProdutos(sup, cliente);
+        escolherProdutos(sup, cliente);
     }
 
-    private static void lerdados(){
+    private static void lerDados(){
         try {
             File myObj = new File("Data\\Datasupermercados.txt");
             Scanner myReader = new Scanner(myObj);
@@ -80,7 +79,7 @@ public class GestSupermercado {
     }
 
 
-    private static Supermercado EscolherSupermercado() {
+    private static Supermercado escolherSupermercado() {
         Scanner sc = new Scanner(System.in);
         int option;
 
@@ -95,7 +94,7 @@ public class GestSupermercado {
                 option = Integer.parseInt(sc.nextLine());
                 if (option > supermercados.size()) {
                     System.out.println("Please only input a valid number");
-                    EscolherSupermercado();
+                    escolherSupermercado();
                 }
                 return supermercados.get(option);
 
@@ -141,7 +140,7 @@ public class GestSupermercado {
                 }
     } else System.out.println("Please type a valid option");return null;}
 
-    private static void EscolherProdutos(Supermercado sup,Cliente cliente) {
+    private static void escolherProdutos(Supermercado sup, Cliente cliente) {
         Scanner sc = new Scanner(System.in);
         ArrayList<Produto> carrinhodecompras = new ArrayList<>();
         int option = -1;
@@ -160,11 +159,11 @@ public class GestSupermercado {
         if (sc.hasNextInt()) {
             //If option is 0 then it's the Exit
             while (option != sup.getProdutos().size()+2) {
-                System.out.println("Carrinho de compras: "+carrinhodecompras);
+                System.out.println("Carrinho de compras: "+carrinhodecompras+"\r");
                 option = Integer.parseInt(sc.nextLine());
                 if (option > sup.getProdutos().size()+3) {
                     System.out.println("Please only input a valid number");
-                    EscolherProdutos(sup,cliente);
+                    escolherProdutos(sup,cliente);
                 }
                 else if(sup.getProdutos().size()+3==option){
                     System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");

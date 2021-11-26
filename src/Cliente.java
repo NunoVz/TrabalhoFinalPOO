@@ -6,8 +6,6 @@ public class Cliente {
     private Data nascimento;
     private boolean frequente;
     //
-    public Cliente() {}
-
     public Cliente(String nome, String morada, String email, int telefone, Data nascimento, boolean frequente) {
         this.nome = nome;
         this.morada = morada;

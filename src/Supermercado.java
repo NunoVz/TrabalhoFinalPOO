@@ -50,6 +50,10 @@ public class Supermercado {
         return null;
     }
 
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+
     public String getNome() {
         return nome;
     }

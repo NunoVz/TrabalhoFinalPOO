@@ -1,20 +1,27 @@
 *NOME*
 Supermercado do mowlas
+
 *PRODUTOS*
-Teste1 nome 1.22 10 23
-Teste3 nome 4.22 102 2312
-Teste5 nome 4.22 102 2312
+PD Teste1 Arroz 1.22 10 23
+PD Teste3 Alho 4.22 102 2312
+PD Teste5 Cebola 4.22 102 2312
+
 *CLIENTES*
 Antonio Tabulado antones@com 91522113 13 11 2010 true
 Maria Lisboa marionata@com 91234122 12 12 2001 false
 *PUSH*
+
+
 *NOME*
 Supermercado do Crlh@
+
 *PRODUTOS*
-Teste231 Cona 1.22 10 23
-Teste3 Puta 6.22 32 213
-Teste5 Sheesh 5.322 41 6423
+PD Teste231 Batata 1.22 10 23
+PD Teste3 Milho 6.22 32 213
+PD Teste5 Azeite 5.322 41 6423
+
 *CLIENTES*
 juao Rua antones@com 91522113 13 11 2010 true
 Limpao SemAbrigo marionata@com 91234122 12 12 2001 false
+
 *PUSH*

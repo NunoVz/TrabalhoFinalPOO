@@ -3,7 +3,8 @@ public class ProdutoLimpeza extends Produto {
     private int grauToxicidade;
 
     //Tive que fazer isto para o codigo correr not sure se ta bem
-    public ProdutoLimpeza(String identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
+    public ProdutoLimpeza(String identificador, String nome, float precoUnitario, int stock, int custoTransporte,int grauToxicidade) {
         super(identificador, nome, precoUnitario, stock, custoTransporte);
+        this.grauToxicidade=grauToxicidade;
     }
 }

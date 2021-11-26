@@ -1,7 +1,6 @@
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.File;
 
 
 public class GestSupermercado {
@@ -24,57 +23,64 @@ public class GestSupermercado {
     }
 
     private static void lerDados(){
-        try {
-            File myObj = new File("Data\\Datasupermercados.txt");
-            Scanner myReader = new Scanner(myObj);
-            int mododeescrita=-1;
-            String nome="";
-            ArrayList<Cliente> clientes = new ArrayList<>();
-            ArrayList<Produto> produtos = new ArrayList<>();
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                if (data.length()!=0) {
+        File f= new File("Data\\Datasupermercados.txt");
+        if(f.exists() && f.isFile()){
+            try{
+                FileReader fr = new FileReader(f);
+                BufferedReader br= new BufferedReader(fr);
 
-                    if (data.contains("*NOME*"))
-                        mododeescrita = 0;
+                String data;
+                int mododeescrita=-1;
+                String nome="";
+                ArrayList<Cliente> clientes = new ArrayList<>();
+                ArrayList<Produto> produtos = new ArrayList<>();
+                while ((data= br.readLine())!= null) {
+                    if (data.length()!=0) {
 
-                    else if (data.contains("*PRODUTOS*"))
-                        mododeescrita = 1;
+                        if (data.contains("*NOME*"))
+                            mododeescrita = 0;
 
-                    else if (data.contains("*CLIENTES*"))
-                        mododeescrita = 2;
+                        else if (data.contains("*PRODUTOS*"))
+                            mododeescrita = 1;
 
-                    else if (data.contains("*PUSH*")) {
-                        supermercados.add(new Supermercado(nome, clientes, produtos));
-                        clientes = new ArrayList<>();
-                        produtos = new ArrayList<>();
-                    } else {
-                        switch (mododeescrita) {
-                            case 0 -> nome = data;
-                            case 1 -> {
-                                String[] array = data.split(" ");
-                                if (array[0].equals("PD"))
-                                    produtos.add(new Produto(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5])));
-                                if (array[0].equals("PDALI"))
-                                    produtos.add(new ProdutoAlimentar(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), Integer.parseInt(array[7])));
-                                if (array[0].equals("PDLIMP"))
-                                    produtos.add(new ProdutoLimpeza(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
-                                if (array[0].equals("PDMOB"))
-                                    produtos.add(new ProdutorMobilado(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
-                            }
-                            case 2 -> {
-                                String[] array = data.split(" ");
-                                clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]), new Data(Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])), Boolean.parseBoolean(array[7])));
+                        else if (data.contains("*CLIENTES*"))
+                            mododeescrita = 2;
+
+                        else if (data.contains("*PUSH*")) {
+                            supermercados.add(new Supermercado(nome, clientes, produtos));
+                            clientes = new ArrayList<>();
+                            produtos = new ArrayList<>();
+                        } else {
+                            switch (mododeescrita) {
+                                case 0 -> nome = data;
+                                case 1 -> {
+                                    String[] array = data.split(" ");
+                                    if (array[0].equals("PD"))
+                                        produtos.add(new Produto(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5])));
+                                    if (array[0].equals("PDALI"))
+                                        produtos.add(new ProdutoAlimentar(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), Integer.parseInt(array[7])));
+                                    if (array[0].equals("PDLIMP"))
+                                        produtos.add(new ProdutoLimpeza(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
+                                    if (array[0].equals("PDMOB"))
+                                        produtos.add(new ProdutorMobilado(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
+                                }
+                                case 2 -> {
+                                    String[] array = data.split(" ");
+                                    clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]), new Data(Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])), Boolean.parseBoolean(array[7])));
+                                }
                             }
                         }
                     }
-                }
 
+                }
+                br.close();
+            } catch (FileNotFoundException ex){
+                System.out.println("Erro a abrir o ficheiro de texto");
+            } catch(IOException ex) {
+                System.out.println("Erro a ler ficheiro de texto");
             }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+        } else {
+            System.out.println("Ficheiro não existe");
         }
     }
 

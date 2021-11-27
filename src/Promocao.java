@@ -4,4 +4,8 @@ public class Promocao {
     public Promocao(Produto produto) {
         this.produto = produto;
     }
+
+    public Produto getProduto() {
+        return produto;
+    }
 }

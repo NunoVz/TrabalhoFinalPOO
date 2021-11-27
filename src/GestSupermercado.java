@@ -41,18 +41,19 @@ public class GestSupermercado {
                 String data;
                 int mododeescrita=-1;
                 String nome="";
+                PromocaoPagueMenos prod1=null;
+                PromocaoTresQuatro prod2=null;
                 ArrayList<Produto> produtos = new ArrayList<>();
                 while ((data= br.readLine())!= null) {
                     if (data.length()!=0) {
-
                         if (data.contains("*NOME*"))
                             mododeescrita = 0;
-
                         else if (data.contains("*PRODUTOS*"))
                             mododeescrita = 1;
-
+                        else if (data.contains("*PROMOCAO*"))
+                            mododeescrita = 2;
                         else if (data.contains("*PUSH*")) {
-                            supermercados.add(new Supermercado(nome, produtos));
+                            supermercados.add(new Supermercado(nome, produtos,prod1,prod2));
                             produtos = new ArrayList<>();
                         } else {
                             switch (mododeescrita) {
@@ -67,6 +68,30 @@ public class GestSupermercado {
                                         produtos.add(new ProdutoLimpeza(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
                                     if (array[0].equals("PDMOB"))
                                         produtos.add(new ProdutorMobilado(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
+                                }
+                                case 2->{
+                                    String[] array = data.split(" ");
+                                    if(array[0].equals("PM")){
+                                        String Produto=array[1];
+                                        for(Produto b:produtos){
+                                            if (b.getNome().equals(Produto)){
+                                                prod1=new PromocaoPagueMenos(b);
+                                                break;
+                                            }
+
+                                        }
+                                    }
+                                    else if(array[0].equals("TQ")){
+                                        String Produto=array[1];
+                                        for(Produto b:produtos){
+                                            if (b.getNome().equals(Produto)){
+                                                prod2= new PromocaoTresQuatro(b);
+                                                break;
+                                            }
+
+                                        }
+                                    }
+
                                 }
                             }
                         }
@@ -248,6 +273,11 @@ public class GestSupermercado {
         //Prints the various options
         System.out.println("---------------------------");
         System.out.println("|       **Produtos**      |");
+        if(sup.getTQ()!=null)
+            System.out.println("Promoção Leve 3 pague 4 no produto: "+sup.getTQ().getProduto().getNome());
+        if(sup.getPM()!=null)
+            System.out.println("Promoção Pague Menos no produto: "+sup.getPM().getProduto().getNome());
+
         for (int i = 0; i < sup.getProdutos().size(); i++) {
             System.out.println(i+"- "+sup.getProdutos().get(i).getNome());}
         System.out.println((sup.getProdutos().size())+"- Retirar o ultimo elemento adcionado");
@@ -268,7 +298,7 @@ public class GestSupermercado {
                 }
                 else if(sup.getProdutos().size()+1==option){
                     System.out.println("Prosseguindo para o pagamento");
-                    System.out.println("Valor a pagar pelos produtos: "+venda.getPreco_Prod());
+                    System.out.println("Valor a pagar pelos produtos: "+venda.getPreco_Prod(sup));
                     System.out.println("Valor a pagar pelo Transporte: "+venda.getPreco_transporte(cliente));
                     System.out.println("Total: "+venda.getTotal());
                     cliente.add_venda(venda);

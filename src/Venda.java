@@ -17,7 +17,33 @@ public class Venda implements Serializable {
     public void removerProduto(){
         CarrinhoDeCompras.remove(CarrinhoDeCompras.size()-1);
     }
-    public float getPreco_Prod() {
+    public float getPreco_Prod(Supermercado sup) {
+        if(CarrinhoDeCompras.contains(sup.getPM())) {
+            int quantidade = 0;
+            float MaxDesc;
+            for (Produto b : CarrinhoDeCompras) {
+                if (b == sup.getPM().getProduto())
+                    quantidade+=1;
+            }
+            MaxDesc=quantidade;
+            preco_prod-=quantidade*sup.getPM().getProduto().precoUnitario;
+            if(quantidade>10)
+                MaxDesc=10;
+            MaxDesc=(100-(5*MaxDesc)/100);
+            preco_prod+=quantidade*(sup.getPM().getProduto().precoUnitario*MaxDesc);
+        }
+
+        if(getCarrinhoDeCompras().contains(sup.getTQ())){
+            int quantidade = 0;
+            for (Produto b : CarrinhoDeCompras) {
+                if (b == sup.getTQ().getProduto())
+                    quantidade+=1;
+            }
+            while(quantidade>3){
+                preco_prod-=sup.getTQ().getProduto().precoUnitario;
+                quantidade-=4;
+            }
+        }
         return preco_prod;
     }
     public float getPreco_transporte(Cliente c){

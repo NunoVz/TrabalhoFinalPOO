@@ -5,6 +5,9 @@ Supermercado do Norte
 PD Teste1 Arroz 1.22 8 23
 PD Teste3 Alho 4.22 86 2312
 PD Teste5 Cebola 4.22 84 2312
+*PROMOCAO*
+PM Arroz
+TQ Cebola
 *PUSH*
 
 
@@ -15,4 +18,6 @@ Supermercado do Sul
 PD Teste231 Batata 1.22 10 23
 PD Teste3 Milho 6.22 32 213
 PD Teste5 Azeite 5.322 41 6423
+*PROMOCAO*
+PM Milho
 *PUSH*

@@ -81,6 +81,7 @@ public class Cliente implements Serializable {
         return historicoVendas;
     }
 
+
     @Override
     public String toString() {
         return "Cliente{" +

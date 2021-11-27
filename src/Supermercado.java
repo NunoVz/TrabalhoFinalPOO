@@ -4,15 +4,20 @@ import java.util.ArrayList;
 public class Supermercado implements Serializable {
     private String nome;
     private ArrayList<Produto> produtos;
+    private PromocaoPagueMenos PM;
+    private PromocaoTresQuatro TQ;
 
 
-    public Supermercado(String nome, ArrayList<Produto> produtos) {
+    public Supermercado(String nome, ArrayList<Produto> produtos,PromocaoPagueMenos PM,PromocaoTresQuatro TQ) {
         this.nome=nome;
         this.produtos=produtos;
+        this.PM=PM;
+        this.TQ=TQ;
     }
 
     public void add_produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte){
         produtos.add(new Produto(identificador,nome,precoUnitario,stock,custoTransporte));
+
     }
 
 
@@ -22,6 +27,14 @@ public class Supermercado implements Serializable {
 
     public String getNome() {
         return nome;
+    }
+
+    public PromocaoPagueMenos getPM() {
+        return PM;
+    }
+
+    public PromocaoTresQuatro getTQ() {
+        return TQ;
     }
 
     @Override

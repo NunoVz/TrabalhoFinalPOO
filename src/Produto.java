@@ -58,11 +58,8 @@ public class Produto implements Serializable {
         this.stock = stock;
     }
 
-    public String getType(){
-        return "PD";
-    }
     public String guardarData(){
-        return getType()+" "+identificador
+        return identificador
                 +" "+nome+" "+precoUnitario+" "+stock+" "+custoTransporte;
     }
     @Override

@@ -8,7 +8,4 @@ public class ProdutoLimpeza extends Produto {
         this.grauToxicidade=grauToxicidade;
     }
 
-    public String getType(){
-        return "PDLIMP";
-    }
 }

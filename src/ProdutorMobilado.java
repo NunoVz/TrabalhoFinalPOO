@@ -13,8 +13,5 @@ public class ProdutorMobilado extends Produto {
         return peso;
     }
 
-    public String getType(){
-        return "PDMOB";
-    }
 
 }

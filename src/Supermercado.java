@@ -15,12 +15,6 @@ public class Supermercado implements Serializable {
         this.TQ=TQ;
     }
 
-    public void add_produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte){
-        produtos.add(new Produto(identificador,nome,precoUnitario,stock,custoTransporte));
-
-    }
-
-
     public ArrayList<Produto> getProdutos() {
         return produtos;
     }

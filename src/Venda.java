@@ -18,7 +18,8 @@ public class Venda implements Serializable {
         CarrinhoDeCompras.remove(CarrinhoDeCompras.size()-1);
     }
     public float getPreco_Prod(Supermercado sup) {
-        if(CarrinhoDeCompras.contains(sup.getPM())) {
+        if(CarrinhoDeCompras.contains(sup.getPM().getProduto())) {
+            System.out.println("Tem alho");
             int quantidade = 0;
             float MaxDesc;
             for (Produto b : CarrinhoDeCompras) {
@@ -29,11 +30,11 @@ public class Venda implements Serializable {
             preco_prod-=quantidade*sup.getPM().getProduto().precoUnitario;
             if(quantidade>10)
                 MaxDesc=10;
-            MaxDesc=(100-(5*MaxDesc)/100);
+            MaxDesc=(100-(5*MaxDesc))/100;
             preco_prod+=quantidade*(sup.getPM().getProduto().precoUnitario*MaxDesc);
         }
 
-        if(getCarrinhoDeCompras().contains(sup.getTQ())){
+        if(getCarrinhoDeCompras().contains(sup.getTQ().getProduto())){
             int quantidade = 0;
             for (Produto b : CarrinhoDeCompras) {
                 if (b == sup.getTQ().getProduto())
@@ -44,6 +45,7 @@ public class Venda implements Serializable {
                 quantidade-=4;
             }
         }
+        preco_prod = (float) (Math.round(preco_prod * 100.0) / 100.0);
         return preco_prod;
     }
     public float getPreco_transporte(Cliente c){
@@ -63,7 +65,10 @@ public class Venda implements Serializable {
         return preco_transporte;
     }
 
-
+    public void limparCarro(){
+        for(Produto b:CarrinhoDeCompras)
+            b.stock+=1;
+    }
     public float getTotal() {
         return (preco_prod + preco_transporte);
     }

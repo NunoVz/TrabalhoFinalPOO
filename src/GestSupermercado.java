@@ -55,6 +55,8 @@ public class GestSupermercado {
                         else if (data.contains("*PUSH*")) {
                             supermercados.add(new Supermercado(nome, produtos,prod1,prod2));
                             produtos = new ArrayList<>();
+                            prod1=null;
+                            prod2=null;
                         } else {
                             switch (mododeescrita) {
                                 case 0 -> nome = data;
@@ -295,6 +297,7 @@ public class GestSupermercado {
                 }
                 else if(sup.getProdutos().size()+2==option){
                     System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
+                    venda.limparCarro();
                 }
                 else if(sup.getProdutos().size()+1==option){
                     System.out.println("Prosseguindo para o pagamento");

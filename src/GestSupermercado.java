@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -11,7 +12,7 @@ public class GestSupermercado {
         lerDados();
         System.out.println("Software up to date");
 
-/*        Supermercado sup=null;
+        Supermercado sup=null;
         while(sup==null){
             sup= escolherSupermercado();}
 
@@ -19,8 +20,12 @@ public class GestSupermercado {
         while(cliente==null) {
             cliente=LoginRegister(sup);}
 
-        escolherProdutos(sup, cliente);*/
+        escolherProdutos(sup, cliente);
+
+        System.out.println("Software storing new data");
         guardarDados();
+        System.out.println("Successes\nProgram will be closing now!");
+
     }
 
     private static void lerDados(){

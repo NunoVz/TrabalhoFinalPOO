@@ -229,34 +229,36 @@ public class GestSupermercado {
         System.out.println("|       **Produtos**      |");
         for (int i = 0; i < sup.getProdutos().size(); i++) {
             System.out.println(i+"- "+sup.getProdutos().get(i).getNome());}
-        System.out.println((sup.getProdutos().size()+1)+"- Retirar o ultimo elemento adcionado");
-        System.out.println((sup.getProdutos().size()+2)+"- Pagar");
-        System.out.println((sup.getProdutos().size()+3)+"- Exit");
+        System.out.println((sup.getProdutos().size())+"- Retirar o ultimo elemento adcionado");
+        System.out.println((sup.getProdutos().size()+1)+"- Pagar");
+        System.out.println((sup.getProdutos().size()+2)+"- Exit");
         System.out.println("---------------------------");
 
-        //Checks for valid input
         if (sc.hasNextInt()) {
-            //If option is 0 then it's the Exit
             while (option != sup.getProdutos().size()+2) {
                 System.out.println("Carrinho de compras: "+venda.getCarrinhoDeCompras());
                 option = Integer.parseInt(sc.nextLine());
-                if (option > sup.getProdutos().size()+3) {
+                if (option > sup.getProdutos().size()+2) {
                     System.out.println("Please only input a valid number");
                     escolherProdutos(sup,cliente);
                 }
-                else if(sup.getProdutos().size()+3==option){
-                    System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
-                    System.exit(0);
-                }
                 else if(sup.getProdutos().size()+2==option){
+                    System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
+                }
+                else if(sup.getProdutos().size()+1==option){
                     System.out.println("Prosseguindo para o pagamento");
                     System.out.println("Valor a pagar pelos produtos: "+venda.getPreco_Prod());
                     System.out.println("Valor a pagar pelo Transporte: "+venda.getPreco_transporte(cliente));
                     System.out.println("Total: "+venda.getTotal());
                     cliente.add_venda(venda);
+                    option=sup.getProdutos().size()+2;
                 }
-                else if(sup.getProdutos().size()+1==option){
-                    System.out.println("Retirando o ultimo elemento");
+                else if(sup.getProdutos().size()==option){
+                    System.out.println("Retirando o Ultimo elemento adcionado");
+                    if(venda.getCarrinhoDeCompras().size()>0)
+                        venda.removerProduto();
+                    else
+                        System.out.println("O seu carrinho de compras esta vazio!!");
                 }
 
                 else if (sup.getProdutos().get(option).stock!=0){

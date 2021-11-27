@@ -2,9 +2,9 @@
 Supermercado do mowlas
 
 *PRODUTOS*
-PD Teste1 Arroz 1.22 10 23
-PD Teste3 Alho 4.22 102 2312
-PD Teste5 Cebola 4.22 102 2312
+PD Teste1 Arroz 1.22 8 23
+PD Teste3 Alho 4.22 88 2312
+PD Teste5 Cebola 4.22 84 2312
 
 *CLIENTES*
 Antonio Tabulado antones@com 91522113 13 11 2010 true

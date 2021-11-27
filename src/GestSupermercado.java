@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -24,7 +23,7 @@ public class GestSupermercado {
 
         System.out.println("Software storing new data");
         guardarDados();
-        System.out.println("Successes\nProgram will be closing now!");
+        System.out.println("Success\nProgram will be closing now!");
 
     }
 
@@ -181,7 +180,7 @@ public class GestSupermercado {
 
     private static void escolherProdutos(Supermercado sup, Cliente cliente) {
         Scanner sc = new Scanner(System.in);
-        ArrayList<Produto> carrinhodecompras = new ArrayList<>();
+        Venda venda=new Venda();
         int option = -1;
 
         //Prints the various options
@@ -198,7 +197,7 @@ public class GestSupermercado {
         if (sc.hasNextInt()) {
             //If option is 0 then it's the Exit
             while (option != sup.getProdutos().size()+2) {
-                System.out.println("Carrinho de compras: "+carrinhodecompras);
+                System.out.println("Carrinho de compras: "+venda.getCarrinhoDeCompras());
                 option = Integer.parseInt(sc.nextLine());
                 if (option > sup.getProdutos().size()+3) {
                     System.out.println("Please only input a valid number");
@@ -210,6 +209,13 @@ public class GestSupermercado {
                 }
                 else if(sup.getProdutos().size()+2==option){
                     System.out.println("Prosseguindo para o pagamento");
+                    System.out.println("Valor a pagar pelos produtos: "+venda.getPreco_Prod());
+                    System.out.println("Valor a pagar pelo Transporte: "+venda.getPreco_transporte(cliente));
+                    System.out.println("Total: "+venda.getTotal());
+                    cliente.add_venda(venda);
+                }
+                else if(sup.getProdutos().size()+1==option){
+                    System.out.println("Retirando o ultimo elemento");
                 }
 
                 else if (sup.getProdutos().get(option).stock!=0){
@@ -220,7 +226,7 @@ public class GestSupermercado {
                     int num = sc2.nextInt();
                     if (sup.getProdutos().get(option).stock>num) {
                         sup.getProdutos().get(option).stock=sup.getProdutos().get(option).stock-num;
-                        for (int i = 0; i < num; i++) {carrinhodecompras.add(sup.getProdutos().get(option));}
+                        for (int i = 0; i < num; i++) {venda.add_produto(sup.getProdutos().get(option));}
                     }
                     else
                         System.out.println("Não ha stock suficiente!");

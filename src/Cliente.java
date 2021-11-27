@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Cliente {
     private String nome;
     private String morada;
@@ -5,6 +7,8 @@ public class Cliente {
     private int telefone;
     private Data nascimento;
     private boolean frequente;
+    private ArrayList<Venda> historicoVendas=new ArrayList<>();
+
     //
     public Cliente(String nome, String morada, String email, int telefone, Data nascimento, boolean frequente) {
         this.nome = nome;
@@ -61,6 +65,10 @@ public class Cliente {
 
     public void setFrequente(boolean frequente) {
         this.frequente = frequente;
+    }
+
+    public void add_venda(Venda venda){
+        historicoVendas.add(venda);
     }
 
     public String guardarData(){

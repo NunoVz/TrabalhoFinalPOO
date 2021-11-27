@@ -57,7 +57,7 @@ public class Venda implements Serializable {
                 preco_transporte =0;
         }
         for(Produto b:CarrinhoDeCompras){
-            if (b.getType().equals("PDMOB")){
+            if (b.getClass()==ProdutorMobilado.class){
                 if(((ProdutorMobilado) b).getPeso()>15)
                     preco_transporte = preco_transporte +15;
             }

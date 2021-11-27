@@ -19,12 +19,11 @@ public class GestSupermercado {
 
         Cliente cliente=null;
         while(cliente==null) {
-            cliente=LoginRegister(clientes);}
+            cliente=MenuLoginRegister(clientes);}
 
         Supermercado sup=null;
         while(sup==null){
             sup= escolherSupermercado();}
-
 
         escolherProdutos(sup, cliente);
 
@@ -123,39 +122,76 @@ public class GestSupermercado {
         }
     }
 
-    private static void guardarDados(ArrayList<Cliente> clientes){
-        File f= new File("Data\\Datasupermercados.obj");
-        try{
-            FileOutputStream fos= new FileOutputStream(f);
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
+    private static Cliente MenuLoginRegister(ArrayList<Cliente> clientes) {
+        Scanner sc = new Scanner(System.in);
+        int option;
 
-            for (Supermercado b:supermercados)
-                oos.writeObject(b);
+        //Prints the various options
+        System.out.println("---------------------------");
+        System.out.println("|        **Menu**         |");
+        System.out.println("|1-Login                  |");
+        System.out.println("|2-Register               |");
+        System.out.println("---------------------------");
+        System.out.print("Introduza um numero:");
 
-            oos.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("Erro a criar ficheiro");
-        }catch (IOException ex){
-            System.out.println("Erro a escrever para o ficheiro2");
+        //Checks for valid input
+        if (sc.hasNextInt()) {
+            //Assigns the user input to the variable while (casting) the value to int
+            option = Integer.parseInt(sc.nextLine());
+            if (option > 2) {
+                System.out.println("Please only input a valid number");
+                MenuLoginRegister(clientes);
+            }
+            //Switch Case for the menu
+            switch (option) {
+                case 1 -> {
+                    Cliente x=login(clientes);
+                    if(x==null)
+                        System.out.println("Este email não esta na nossa base de dados");
+                    else {
+                        System.out.println("Login Bem-sucedido!\nBem vindo " + x.getNome()+"! ");
+                        return x;
+                    }
+                }
+                case 2 -> {register(clientes);
+                    System.out.println("Cliente registrado com sucesso!\nPedimos agora que efetue o login no respetivo supermercado!\n\n");
+                    return null;}
+            }
+        } else System.out.println("Please type a valid option");return null;}
+
+    public static void  register(ArrayList<Cliente> clientes){
+        Scanner sc= new Scanner(System.in);
+
+        System.out.print("Introduza o seu Nome:");
+        String nome=sc.nextLine();
+        System.out.print("Introduza a sua Morada:");
+        String morada=sc.nextLine();
+        System.out.print("Introduza o seu Email:");
+        String email=sc.nextLine();
+        Data nascimento=new Data(-1,-1,-1);
+        //Compor Data
+        /*while(Dtnascimento.isDateValid(Dtnascimento)){
+        }*/
+        System.out.print("Introduza o seu nº de telefone:");
+        while ((!sc.hasNextInt())) {sc.next();
+            System.out.print("Escreva o seu nº de telefone:");
         }
+        int telefone = sc.nextInt();
+        int freq=(int)(Math.random()*10)%2;
+        boolean frequente= freq == 1;
+        clientes.add(new Cliente(nome,morada,email,telefone,nascimento,frequente));
+    }
 
-        f= new File("Data\\Clientes.obj");
-        try{
-            FileOutputStream fos= new FileOutputStream(f);
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
+    public static Cliente login(ArrayList<Cliente> clientes){
+        Scanner sc= new Scanner(System.in);
 
-            for (Cliente b:clientes)
-                oos.writeObject(b);
-
-            oos.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("Erro a criar ficheiro");
-        }catch (IOException ex){
-            System.out.println("Erro a escrever para o ficheiro2");
+        System.out.print("Introduza o seu email:");
+        String email=sc.nextLine();
+        for (Cliente b : clientes) {
+            if(b.getEmail().equals(email))
+                return b;
         }
-
-
-
+        return null;
     }
 
     private static Supermercado escolherSupermercado() {
@@ -181,43 +217,6 @@ public class GestSupermercado {
         return null;
 
     }
-
-    private static Cliente LoginRegister(ArrayList<Cliente> clientes) {
-        Scanner sc = new Scanner(System.in);
-        int option;
-
-        //Prints the various options
-        System.out.println("---------------------------");
-        System.out.println("|        **Menu**         |");
-        System.out.println("|1-Login                  |");
-        System.out.println("|2-Register               |");
-        System.out.println("---------------------------");
-        System.out.print("Introduza um numero:");
-
-        //Checks for valid input
-        if (sc.hasNextInt()) {
-            //Assigns the user input to the variable while (casting) the value to int
-            option = Integer.parseInt(sc.nextLine());
-            if (option > 2) {
-                System.out.println("Please only input a valid number");
-                LoginRegister(clientes);
-            }
-            //Switch Case for the menu
-            switch (option) {
-                case 1 -> {
-                    Cliente x=login(clientes);
-                    if(x==null)
-                        System.out.println("Este email não esta na nossa base de dados");
-                    else {
-                        System.out.println("Login Bem-sucedido!\nBem vindo " + x.getNome()+"! ");
-                        return x;
-                    }
-                }
-                case 2 -> {register(clientes);
-                    System.out.println("Cliente registrado com sucesso!\nPedimos agora que efetue o login no respetivo supermercado!\n\n");
-                    return null;}
-                }
-    } else System.out.println("Please type a valid option");return null;}
 
     private static void escolherProdutos(Supermercado sup, Cliente cliente) {
         Scanner sc = new Scanner(System.in);
@@ -278,38 +277,42 @@ public class GestSupermercado {
         } else System.out.println("Please type a valid option");
     }
 
-    public static void  register(ArrayList<Cliente> clientes){
-        Scanner sc= new Scanner(System.in);
+    private static void guardarDados(ArrayList<Cliente> clientes){
+        File f= new File("Data\\Datasupermercados.obj");
+        try{
+            FileOutputStream fos= new FileOutputStream(f);
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
 
-        System.out.print("Introduza o seu Nome:");
-        String nome=sc.nextLine();
-        System.out.print("Introduza a sua Morada:");
-        String morada=sc.nextLine();
-        System.out.print("Introduza o seu Email:");
-        String email=sc.nextLine();
-        Data nascimento=new Data(-1,-1,-1);
-        //Compor Data
-        /*while(Dtnascimento.isDateValid(Dtnascimento)){
-        }*/
-        System.out.print("Introduza o seu nº de telefone:");
-        while ((!sc.hasNextInt())) {sc.next();
-            System.out.print("Escreva o seu nº de telefone:");
+            for (Supermercado b:supermercados)
+                oos.writeObject(b);
+
+            oos.close();
+        }catch (FileNotFoundException ex){
+            System.out.println("Erro a criar ficheiro");
+        }catch (IOException ex){
+            System.out.println("Erro a escrever para o ficheiro2");
         }
-        int telefone = sc.nextInt();
-        int freq=(int)(Math.random()*10)%2;
-        boolean frequente= freq == 1;
-        clientes.add(new Cliente(nome,morada,email,telefone,nascimento,frequente));
+
+        f= new File("Data\\Clientes.obj");
+        try{
+            FileOutputStream fos= new FileOutputStream(f);
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+
+            for (Cliente b:clientes)
+                oos.writeObject(b);
+
+            oos.close();
+        }catch (FileNotFoundException ex){
+            System.out.println("Erro a criar ficheiro");
+        }catch (IOException ex){
+            System.out.println("Erro a escrever para o ficheiro2");
+        }
+
+
+
     }
 
-    public static Cliente login(ArrayList<Cliente> clientes){
-        Scanner sc= new Scanner(System.in);
 
-        System.out.print("Introduza o seu email:");
-        String email=sc.nextLine();
-        for (Cliente b : clientes) {
-            if(b.getEmail().equals(email))
-                return b;
-        }
-        return null;
-    }
+
+
 }

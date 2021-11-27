@@ -8,13 +8,10 @@ public class GestSupermercado {
 
     public static void main(String[] args) {
         ArrayList<Cliente> clientes=new ArrayList<>();
-
         System.out.println("Software Boot");
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
         //lerDados(clientes);
         lerobjeto(clientes);
-
-
         System.out.println("Software up to date");
 
         Cliente cliente=null;
@@ -26,6 +23,8 @@ public class GestSupermercado {
             sup= escolherSupermercado();}
 
         escolherProdutos(sup, cliente);
+
+        MenuFinal(cliente);
 
         System.out.println("Software storing new data");
         guardarDados(clientes);
@@ -86,6 +85,28 @@ public class GestSupermercado {
         } else {
             System.out.println("Ficheiro não existe");
         }
+
+        f=new File("Data\\Clientes.txt");
+        if(f.exists() && f.isFile()){
+            try{
+                FileReader fr = new FileReader(f);
+                BufferedReader br= new BufferedReader(fr);
+                String data;
+                while ((data= br.readLine())!= null) {
+                    String[] array=data.split(" ");
+                    clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]), new Data(Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])), Boolean.parseBoolean(array[7]), new ArrayList<>()));
+                }
+                br.close();
+            } catch (FileNotFoundException ex){
+                System.out.println("Erro a abrir o ficheiro de texto");
+            } catch(IOException ex) {
+                System.out.println("Erro a ler ficheiro de texto");
+            }
+
+
+        } else {
+            System.out.println("Ficheiro não existe");
+        }
     }
 
     private static void lerobjeto(ArrayList<Cliente> clientes){
@@ -110,8 +131,10 @@ public class GestSupermercado {
             FileInputStream fis= new FileInputStream(f);
             ObjectInputStream ois= new ObjectInputStream(fis);
             Cliente b;
-            while((b= (Cliente) ois.readObject())!=null)
+
+            while((b= (Cliente) ois.readObject())!=null){
                 clientes.add(b);
+            }
             ois.close();
         }catch (FileNotFoundException ex){
             System.out.println("Erro a abrir o ficheiro");
@@ -179,7 +202,7 @@ public class GestSupermercado {
         int telefone = sc.nextInt();
         int freq=(int)(Math.random()*10)%2;
         boolean frequente= freq == 1;
-        clientes.add(new Cliente(nome,morada,email,telefone,nascimento,frequente));
+        clientes.add(new Cliente(nome,morada,email,telefone,nascimento,frequente,new ArrayList<>()));
     }
 
     public static Cliente login(ArrayList<Cliente> clientes){
@@ -199,7 +222,7 @@ public class GestSupermercado {
         int option;
 
         System.out.println("---------------------------");
-        System.out.println("|      Supermercados      |");
+        System.out.println("|    **Supermercados**    |");
         for (int i = 0; i < supermercados.size(); i++) {
             System.out.println(i+"-"+supermercados.get(i).getNome());}
         System.out.println("---------------------------");
@@ -273,6 +296,31 @@ public class GestSupermercado {
                     else
                         System.out.println("Não ha stock suficiente!");
                 }
+            }
+        } else System.out.println("Please type a valid option");
+    }
+
+    private static void MenuFinal(Cliente cliente) {
+        Scanner sc = new Scanner(System.in);
+        int option = -1;
+
+        //Prints the various options
+        System.out.println("---------------------------");
+        System.out.println("|         **Fim**         |");
+        System.out.println("1. Ver historico de compras");
+        System.out.println("2. Exit");
+
+        //Checks for valid input
+        if (sc.hasNextInt()) {
+            //If option is 0 then it's the Exit
+            while (option != 2) {
+                //Assigns the user input to the variable while (casting) the value to int
+                option = Integer.parseInt(sc.nextLine());
+                if (option > 2) {
+                    System.out.println("Please only input a valid number");
+                    MenuFinal(cliente);
+                }
+                System.out.println(cliente.getHistoricoVendas());
             }
         } else System.out.println("Please type a valid option");
     }

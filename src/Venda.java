@@ -45,7 +45,7 @@ public class Venda implements Serializable {
 
     @Override
     public String toString() {
-        return "Comprou: "+ CarrinhoDeCompras+"\nPreço prod = "+preco_prod
-                +"\nPreço do Transporte = "+preco_transporte+"\nTotal = "+getTotal()+"\n";
+        return "\nComprou: "+ CarrinhoDeCompras+"\nPreço prod = "+preco_prod
+                +"\nPreço do Transporte = "+preco_transporte+"\nTotal = "+getTotal()+"\n-------";
     }
 }

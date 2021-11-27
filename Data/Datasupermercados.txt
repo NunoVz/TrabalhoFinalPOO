@@ -1,5 +1,5 @@
 *NOME*
-Supermercado do mowlas
+Supermercado do Norte
 
 *PRODUTOS*
 PD Teste1 Arroz 1.22 8 23
@@ -9,7 +9,7 @@ PD Teste5 Cebola 4.22 84 2312
 
 
 *NOME*
-Supermercado do Crlh@
+Supermercado do Sul
 
 *PRODUTOS*
 PD Teste231 Batata 1.22 10 23

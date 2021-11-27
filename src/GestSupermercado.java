@@ -4,14 +4,13 @@ import java.util.Scanner;
 
 
 public class GestSupermercado {
-    private static ArrayList<Supermercado> supermercados = new ArrayList<>();
-
     public static void main(String[] args) {
+        ArrayList<Supermercado> supermercados = new ArrayList<>();
         ArrayList<Cliente> clientes=new ArrayList<>();
         System.out.println("Software Boot");
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
-        //lerDados(clientes);
-        lerobjeto(clientes);
+        lerDados(supermercados,clientes);
+        //lerobjeto(supermercados,clientes);
         System.out.println("Software up to date");
 
         Cliente cliente=null;
@@ -20,19 +19,19 @@ public class GestSupermercado {
 
         Supermercado sup=null;
         while(sup==null){
-            sup= escolherSupermercado();}
+            sup= escolherSupermercado(supermercados);}
 
         escolherProdutos(sup, cliente);
 
         MenuFinal(cliente);
 
         System.out.println("Software storing new data");
-        guardarDados(clientes);
+        guardarDados(supermercados,clientes);
         System.out.println("Success\nProgram will be closing now!");
 
     }
 
-    private static void lerDados(ArrayList<Cliente> clientes){
+    private static void lerDados(ArrayList<Supermercado> supermercados,ArrayList<Cliente> clientes){
         File f= new File("Data\\Datasupermercados.txt");
         if(f.exists() && f.isFile()){
             try{
@@ -109,7 +108,7 @@ public class GestSupermercado {
         }
     }
 
-    private static void lerobjeto(ArrayList<Cliente> clientes){
+    private static void lerobjeto(ArrayList<Supermercado> supermercados,ArrayList<Cliente> clientes){
         File f=new File("Data\\Datasupermercados.obj");
         try{
             FileInputStream fis= new FileInputStream(f);
@@ -217,7 +216,7 @@ public class GestSupermercado {
         return null;
     }
 
-    private static Supermercado escolherSupermercado() {
+    private static Supermercado escolherSupermercado(ArrayList<Supermercado> supermercados) {
         Scanner sc = new Scanner(System.in);
         int option;
 
@@ -232,7 +231,7 @@ public class GestSupermercado {
                 option = Integer.parseInt(sc.nextLine());
                 if (option > supermercados.size()) {
                     System.out.println("Please only input a valid number");
-                    escolherSupermercado();
+                    escolherSupermercado(supermercados);
                 }
                 return supermercados.get(option);
 
@@ -320,12 +319,13 @@ public class GestSupermercado {
                     System.out.println("Please only input a valid number");
                     MenuFinal(cliente);
                 }
-                System.out.println(cliente.getHistoricoVendas());
+                if(option==1)
+                    System.out.println(cliente.getHistoricoVendas());
             }
         } else System.out.println("Please type a valid option");
     }
 
-    private static void guardarDados(ArrayList<Cliente> clientes){
+    private static void guardarDados(ArrayList<Supermercado> supermercados,ArrayList<Cliente> clientes){
         File f= new File("Data\\Datasupermercados.obj");
         try{
             FileOutputStream fos= new FileOutputStream(f);

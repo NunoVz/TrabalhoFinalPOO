@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Venda implements Serializable {
     private ArrayList<Produto> CarrinhoDeCompras=new ArrayList<>();
@@ -14,7 +15,9 @@ public class Venda implements Serializable {
     public ArrayList<Produto> getCarrinhoDeCompras() {
         return CarrinhoDeCompras;
     }
-
+    public void removerProduto(){
+        CarrinhoDeCompras.remove(CarrinhoDeCompras.size()-1);
+    }
     public float getPreco_Prod() {
         return preco_prod;
     }
@@ -38,5 +41,11 @@ public class Venda implements Serializable {
 
     public float getTotal() {
         return (preco_prod + preco_transporte);
+    }
+
+    @Override
+    public String toString() {
+        return "Comprou: "+ CarrinhoDeCompras+"\nPreço prod = "+preco_prod
+                +"\nPreço do Transporte = "+preco_transporte+"\nTotal = "+getTotal()+"\n";
     }
 }

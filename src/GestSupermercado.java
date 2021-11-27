@@ -7,27 +7,34 @@ public class GestSupermercado {
     private static ArrayList<Supermercado> supermercados = new ArrayList<>();
 
     public static void main(String[] args) {
+        ArrayList<Cliente> clientes=new ArrayList<>();
+
         System.out.println("Software Boot");
-        lerDados();
+        //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
+        //lerDados(clientes);
+        lerobjeto(clientes);
+
+
         System.out.println("Software up to date");
+
+        Cliente cliente=null;
+        while(cliente==null) {
+            cliente=LoginRegister(clientes);}
 
         Supermercado sup=null;
         while(sup==null){
             sup= escolherSupermercado();}
 
-        Cliente cliente=null;
-        while(cliente==null) {
-            cliente=LoginRegister(sup);}
 
         escolherProdutos(sup, cliente);
 
         System.out.println("Software storing new data");
-        guardarDados();
+        guardarDados(clientes);
         System.out.println("Success\nProgram will be closing now!");
 
     }
 
-    private static void lerDados(){
+    private static void lerDados(ArrayList<Cliente> clientes){
         File f= new File("Data\\Datasupermercados.txt");
         if(f.exists() && f.isFile()){
             try{
@@ -37,7 +44,6 @@ public class GestSupermercado {
                 String data;
                 int mododeescrita=-1;
                 String nome="";
-                ArrayList<Cliente> clientes = new ArrayList<>();
                 ArrayList<Produto> produtos = new ArrayList<>();
                 while ((data= br.readLine())!= null) {
                     if (data.length()!=0) {
@@ -48,12 +54,8 @@ public class GestSupermercado {
                         else if (data.contains("*PRODUTOS*"))
                             mododeescrita = 1;
 
-                        else if (data.contains("*CLIENTES*"))
-                            mododeescrita = 2;
-
                         else if (data.contains("*PUSH*")) {
-                            supermercados.add(new Supermercado(nome, clientes, produtos));
-                            clientes = new ArrayList<>();
+                            supermercados.add(new Supermercado(nome, produtos));
                             produtos = new ArrayList<>();
                         } else {
                             switch (mododeescrita) {
@@ -69,10 +71,6 @@ public class GestSupermercado {
                                     if (array[0].equals("PDMOB"))
                                         produtos.add(new ProdutorMobilado(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
                                 }
-                                case 2 -> {
-                                    String[] array = data.split(" ");
-                                    clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]), new Data(Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])), Boolean.parseBoolean(array[7])));
-                                }
                             }
                         }
                     }
@@ -84,36 +82,79 @@ public class GestSupermercado {
             } catch(IOException ex) {
                 System.out.println("Erro a ler ficheiro de texto");
             }
+
+
         } else {
             System.out.println("Ficheiro não existe");
         }
     }
 
-    private static void guardarDados(){
-        File f= new File("Data\\Datasupermercados.txt");
+    private static void lerobjeto(ArrayList<Cliente> clientes){
+        File f=new File("Data\\Datasupermercados.obj");
         try{
-            FileWriter fw=new FileWriter(f);
-            BufferedWriter bw= new BufferedWriter(fw);
-            for (Supermercado b:supermercados){
-                bw.write("*NOME*\n");
-                bw.write(b.getNome()+"\n\n");
-                bw.write("*PRODUTOS*\n");
-                for (Produto c:b.getProdutos()){
-                    bw.write(c.guardarData()+"\n");
-                }
-                bw.write("\n*CLIENTES*\n");
-
-                for (Cliente c:b.getClientes()){
-                    bw.write(c.guardarData()+"\n");
-                }
-
-                bw.write("*PUSH*\n\n\n");
-
-            }
-            bw.close();
+            FileInputStream fis= new FileInputStream(f);
+            ObjectInputStream ois= new ObjectInputStream(fis);
+            Supermercado b;
+            while((b= (Supermercado) ois.readObject())!=null)
+                supermercados.add(b);
+            ois.close();
+        }catch (FileNotFoundException ex){
+            System.out.println("Erro a abrir o ficheiro");
         }catch (IOException ex){
             System.out.println("Erro a ler o ficheiro");
+        }catch (ClassNotFoundException ex){
+            System.out.println("Erro a converter o objeto");
         }
+
+        f=new File("Data\\Clientes.obj");
+        try{
+            FileInputStream fis= new FileInputStream(f);
+            ObjectInputStream ois= new ObjectInputStream(fis);
+            Cliente b;
+            while((b= (Cliente) ois.readObject())!=null)
+                clientes.add(b);
+            ois.close();
+        }catch (FileNotFoundException ex){
+            System.out.println("Erro a abrir o ficheiro");
+        }catch (IOException ex){
+            System.out.println("Erro a ler o ficheiro");
+        }catch (ClassNotFoundException ex){
+            System.out.println("Erro a converter o objeto");
+        }
+    }
+
+    private static void guardarDados(ArrayList<Cliente> clientes){
+        File f= new File("Data\\Datasupermercados.obj");
+        try{
+            FileOutputStream fos= new FileOutputStream(f);
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+
+            for (Supermercado b:supermercados)
+                oos.writeObject(b);
+
+            oos.close();
+        }catch (FileNotFoundException ex){
+            System.out.println("Erro a criar ficheiro");
+        }catch (IOException ex){
+            System.out.println("Erro a escrever para o ficheiro2");
+        }
+
+        f= new File("Data\\Clientes.obj");
+        try{
+            FileOutputStream fos= new FileOutputStream(f);
+            ObjectOutputStream oos= new ObjectOutputStream(fos);
+
+            for (Cliente b:clientes)
+                oos.writeObject(b);
+
+            oos.close();
+        }catch (FileNotFoundException ex){
+            System.out.println("Erro a criar ficheiro");
+        }catch (IOException ex){
+            System.out.println("Erro a escrever para o ficheiro2");
+        }
+
+
 
     }
 
@@ -141,7 +182,7 @@ public class GestSupermercado {
 
     }
 
-    private static Cliente LoginRegister(Supermercado sup) {
+    private static Cliente LoginRegister(ArrayList<Cliente> clientes) {
         Scanner sc = new Scanner(System.in);
         int option;
 
@@ -159,20 +200,20 @@ public class GestSupermercado {
             option = Integer.parseInt(sc.nextLine());
             if (option > 2) {
                 System.out.println("Please only input a valid number");
-                LoginRegister(sup);
+                LoginRegister(clientes);
             }
             //Switch Case for the menu
             switch (option) {
                 case 1 -> {
-                    Cliente x=sup.login();
+                    Cliente x=login(clientes);
                     if(x==null)
                         System.out.println("Este email não esta na nossa base de dados");
                     else {
-                        System.out.println("Login Bem-sucedido!\nBem vindo " + x.getNome()+"! \nEsta a efetuar compras no "+sup.getNome());
+                        System.out.println("Login Bem-sucedido!\nBem vindo " + x.getNome()+"! ");
                         return x;
                     }
                 }
-                case 2 -> {sup.register();
+                case 2 -> {register(clientes);
                     System.out.println("Cliente registrado com sucesso!\nPedimos agora que efetue o login no respetivo supermercado!\n\n");
                     return null;}
                 }
@@ -233,5 +274,40 @@ public class GestSupermercado {
                 }
             }
         } else System.out.println("Please type a valid option");
+    }
+
+    public static void  register(ArrayList<Cliente> clientes){
+        Scanner sc= new Scanner(System.in);
+
+        System.out.print("Introduza o seu Nome:");
+        String nome=sc.nextLine();
+        System.out.print("Introduza a sua Morada:");
+        String morada=sc.nextLine();
+        System.out.print("Introduza o seu Email:");
+        String email=sc.nextLine();
+        Data nascimento=new Data(-1,-1,-1);
+        //Compor Data
+        /*while(Dtnascimento.isDateValid(Dtnascimento)){
+        }*/
+        System.out.print("Introduza o seu nº de telefone:");
+        while ((!sc.hasNextInt())) {sc.next();
+            System.out.print("Escreva o seu nº de telefone:");
+        }
+        int telefone = sc.nextInt();
+        int freq=(int)(Math.random()*10)%2;
+        boolean frequente= freq == 1;
+        clientes.add(new Cliente(nome,morada,email,telefone,nascimento,frequente));
+    }
+
+    public static Cliente login(ArrayList<Cliente> clientes){
+        Scanner sc= new Scanner(System.in);
+
+        System.out.print("Introduza o seu email:");
+        String email=sc.nextLine();
+        for (Cliente b : clientes) {
+            if(b.getEmail().equals(email))
+                return b;
+        }
+        return null;
     }
 }

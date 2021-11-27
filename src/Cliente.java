@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Cliente {
+public class Cliente implements Serializable {
     private String nome;
     private String morada;
     private String email;
@@ -73,5 +74,12 @@ public class Cliente {
 
     public String guardarData(){
         return nome+" "+morada+" "+email+" "+telefone+" "+nascimento+" "+isFrequente();
+    }
+
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                '}';
     }
 }

@@ -1,4 +1,6 @@
-public class Produto {
+import java.io.Serializable;
+
+public class Produto implements Serializable {
     protected String identificador;
     protected String nome;
     protected float precoUnitario;

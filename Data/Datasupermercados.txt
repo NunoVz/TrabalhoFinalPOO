@@ -3,12 +3,8 @@ Supermercado do mowlas
 
 *PRODUTOS*
 PD Teste1 Arroz 1.22 8 23
-PD Teste3 Alho 4.22 88 2312
+PD Teste3 Alho 4.22 86 2312
 PD Teste5 Cebola 4.22 84 2312
-
-*CLIENTES*
-Antonio Tabulado antones@com 91522113 13 11 2010 true
-Maria Lisboa marionata@com 91234122 12 12 2001 false
 *PUSH*
 
 
@@ -19,10 +15,4 @@ Supermercado do Crlh@
 PD Teste231 Batata 1.22 10 23
 PD Teste3 Milho 6.22 32 213
 PD Teste5 Azeite 5.322 41 6423
-
-*CLIENTES*
-juao Rua antones@com 91522113 13 11 2010 true
-Limpao SemAbrigo marionata@com 91234122 12 12 2001 false
 *PUSH*
-
-

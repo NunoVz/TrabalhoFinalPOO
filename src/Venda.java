@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Venda {
+public class Venda implements Serializable {
     private ArrayList<Produto> CarrinhoDeCompras=new ArrayList<>();
     float preco_prod;
     float preco_transporte;

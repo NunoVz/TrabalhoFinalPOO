@@ -26,8 +26,10 @@ public class Venda {
                 preco_transporte =0;
         }
         for(Produto b:CarrinhoDeCompras){
-            if (b.getType().equals("PDMOB"))
-                preco_transporte = preco_transporte +15;
+            if (b.getType().equals("PDMOB")){
+                if(((ProdutorMobilado) b).getPeso()>15)
+                    preco_transporte = preco_transporte +15;
+            }
         }
         return preco_transporte;
     }

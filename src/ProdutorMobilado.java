@@ -9,6 +9,10 @@ public class ProdutorMobilado extends Produto {
         this.peso=peso;
     }
 
+    public int getPeso() {
+        return peso;
+    }
+
     public String getType(){
         return "PDMOB";
     }

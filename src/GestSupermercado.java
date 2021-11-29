@@ -7,7 +7,7 @@ public class GestSupermercado {
     private static ArrayList<Supermercado> supermercados = new ArrayList<>();
 
     public static void main(String[] args) {
-        ArrayList<Cliente> clientes=new ArrayList<>();
+        ArrayList<Cliente> clientes = new ArrayList<>();
 
         System.out.println("Software Boot");
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
@@ -17,13 +17,15 @@ public class GestSupermercado {
 
         System.out.println("Software up to date");
 
-        Cliente cliente=null;
-        while(cliente==null) {
-            cliente=LoginRegister(clientes);}
+        Cliente cliente = null;
+        while (cliente == null) {
+            cliente = LoginRegister(clientes);
+        }
 
-        Supermercado sup=null;
-        while(sup==null){
-            sup= escolherSupermercado();}
+        Supermercado sup = null;
+        while (sup == null) {
+            sup = escolherSupermercado();
+        }
 
 
         escolherProdutos(sup, cliente);
@@ -34,19 +36,19 @@ public class GestSupermercado {
 
     }
 
-    private static void lerDados(ArrayList<Cliente> clientes){
-        File f= new File("Data\\Datasupermercados.txt");
-        if(f.exists() && f.isFile()){
-            try{
+    private static void lerDados(ArrayList<Cliente> clientes) {
+        File f = new File("Data\\Datasupermercados.txt");
+        if (f.exists() && f.isFile()) {
+            try {
                 FileReader fr = new FileReader(f);
-                BufferedReader br= new BufferedReader(fr);
+                BufferedReader br = new BufferedReader(fr);
 
                 String data;
-                int mododeescrita=-1;
-                String nome="";
+                int mododeescrita = -1;
+                String nome = "";
                 ArrayList<Produto> produtos = new ArrayList<>();
-                while ((data= br.readLine())!= null) {
-                    if (data.length()!=0) {
+                while ((data = br.readLine()) != null) {
+                    if (data.length() != 0) {
 
                         if (data.contains("*NOME*"))
                             mododeescrita = 0;
@@ -77,9 +79,9 @@ public class GestSupermercado {
 
                 }
                 br.close();
-            } catch (FileNotFoundException ex){
+            } catch (FileNotFoundException ex) {
                 System.out.println("Erro a abrir o ficheiro de texto");
-            } catch(IOException ex) {
+            } catch (IOException ex) {
                 System.out.println("Erro a ler ficheiro de texto");
             }
 
@@ -89,71 +91,70 @@ public class GestSupermercado {
         }
     }
 
-    private static void lerobjeto(ArrayList<Cliente> clientes){
-        File f=new File("Data\\Datasupermercados.obj");
-        try{
-            FileInputStream fis= new FileInputStream(f);
-            ObjectInputStream ois= new ObjectInputStream(fis);
+    private static void lerobjeto(ArrayList<Cliente> clientes) {
+        File f = new File("Data\\Datasupermercados.obj");
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(fis);
             Supermercado b;
-            while((b= (Supermercado) ois.readObject())!=null)
+            while ((b = (Supermercado) ois.readObject()) != null)
                 supermercados.add(b);
             ois.close();
-        }catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("Erro a abrir o ficheiro");
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("Erro a ler o ficheiro");
-        }catch (ClassNotFoundException ex){
+        } catch (ClassNotFoundException ex) {
             System.out.println("Erro a converter o objeto");
         }
 
-        f=new File("Data\\Clientes.obj");
-        try{
-            FileInputStream fis= new FileInputStream(f);
-            ObjectInputStream ois= new ObjectInputStream(fis);
+        f = new File("Data\\Clientes.obj");
+        try {
+            FileInputStream fis = new FileInputStream(f);
+            ObjectInputStream ois = new ObjectInputStream(fis);
             Cliente b;
-            while((b= (Cliente) ois.readObject())!=null)
+            while ((b = (Cliente) ois.readObject()) != null)
                 clientes.add(b);
             ois.close();
-        }catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("Erro a abrir o ficheiro");
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("Erro a ler o ficheiro");
-        }catch (ClassNotFoundException ex){
+        } catch (ClassNotFoundException ex) {
             System.out.println("Erro a converter o objeto");
         }
     }
 
-    private static void guardarDados(ArrayList<Cliente> clientes){
-        File f= new File("Data\\Datasupermercados.obj");
-        try{
-            FileOutputStream fos= new FileOutputStream(f);
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
+    private static void guardarDados(ArrayList<Cliente> clientes) {
+        File f = new File("Data\\Datasupermercados.obj");
+        try {
+            FileOutputStream fos = new FileOutputStream(f);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            for (Supermercado b:supermercados)
+            for (Supermercado b : supermercados)
                 oos.writeObject(b);
 
             oos.close();
-        }catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("Erro a criar ficheiro");
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("Erro a escrever para o ficheiro2");
         }
 
-        f= new File("Data\\Clientes.obj");
-        try{
-            FileOutputStream fos= new FileOutputStream(f);
-            ObjectOutputStream oos= new ObjectOutputStream(fos);
+        f = new File("Data\\Clientes.obj");
+        try {
+            FileOutputStream fos = new FileOutputStream(f);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            for (Cliente b:clientes)
+            for (Cliente b : clientes)
                 oos.writeObject(b);
 
             oos.close();
-        }catch (FileNotFoundException ex){
+        } catch (FileNotFoundException ex) {
             System.out.println("Erro a criar ficheiro");
-        }catch (IOException ex){
+        } catch (IOException ex) {
             System.out.println("Erro a escrever para o ficheiro2");
         }
-
 
 
     }
@@ -165,17 +166,18 @@ public class GestSupermercado {
         System.out.println("---------------------------");
         System.out.println("|      Supermercados      |");
         for (int i = 0; i < supermercados.size(); i++) {
-            System.out.println(i+"-"+supermercados.get(i).getNome());}
+            System.out.println(i + "-" + supermercados.get(i).getNome());
+        }
         System.out.println("---------------------------");
         System.out.print("Introduza um numero:");
 
         if (sc.hasNextInt()) {
-                option = Integer.parseInt(sc.nextLine());
-                if (option > supermercados.size()) {
-                    System.out.println("Please only input a valid number");
-                    escolherSupermercado();
-                }
-                return supermercados.get(option);
+            option = Integer.parseInt(sc.nextLine());
+            if (option > supermercados.size()) {
+                System.out.println("Please only input a valid number");
+                escolherSupermercado();
+            }
+            return supermercados.get(option);
 
         } else System.out.println("Please type a valid option");
         return null;
@@ -205,107 +207,112 @@ public class GestSupermercado {
             //Switch Case for the menu
             switch (option) {
                 case 1 -> {
-                    Cliente x=login(clientes);
-                    if(x==null)
+                    Cliente x = login(clientes);
+                    if (x == null)
                         System.out.println("Este email não esta na nossa base de dados");
                     else {
-                        System.out.println("Login Bem-sucedido!\nBem vindo " + x.getNome()+"! ");
+                        System.out.println("Login Bem-sucedido!\nBem vindo " + x.getNome() + "! ");
                         return x;
                     }
                 }
-                case 2 -> {register(clientes);
+                case 2 -> {
+                    register(clientes);
                     System.out.println("Cliente registrado com sucesso!\nPedimos agora que efetue o login no respetivo supermercado!\n\n");
-                    return null;}
+                    return null;
                 }
-    } else System.out.println("Please type a valid option");return null;}
+            }
+        } else System.out.println("Please type a valid option");
+        return null;
+    }
 
     private static void escolherProdutos(Supermercado sup, Cliente cliente) {
         Scanner sc = new Scanner(System.in);
-        Venda venda=new Venda();
+        Venda venda = new Venda();
         int option = -1;
 
         //Prints the various options
         System.out.println("---------------------------");
         System.out.println("|       **Produtos**      |");
         for (int i = 0; i < sup.getProdutos().size(); i++) {
-            System.out.println(i+"- "+sup.getProdutos().get(i).getNome());}
-        System.out.println((sup.getProdutos().size()+1)+"- Retirar o ultimo elemento adcionado");
-        System.out.println((sup.getProdutos().size()+2)+"- Pagar");
-        System.out.println((sup.getProdutos().size()+3)+"- Exit");
+            System.out.println(i + "- " + sup.getProdutos().get(i).getNome());
+        }
+        System.out.println((sup.getProdutos().size() + 1) + "- Retirar o ultimo elemento adicionado");
+        System.out.println((sup.getProdutos().size() + 2) + "- Pagar");
+        System.out.println((sup.getProdutos().size() + 3) + "- Exit");
         System.out.println("---------------------------");
 
         //Checks for valid input
         if (sc.hasNextInt()) {
             //If option is 0 then it's the Exit
-            while (option != sup.getProdutos().size()+2) {
-                System.out.println("Carrinho de compras: "+venda.getCarrinhoDeCompras());
+            while (option != sup.getProdutos().size() + 2) {
+                System.out.println("Carrinho de compras: " + venda.getCarrinhoDeCompras());
                 option = Integer.parseInt(sc.nextLine());
-                if (option > sup.getProdutos().size()+3) {
+                if (option > sup.getProdutos().size() + 3) {
                     System.out.println("Please only input a valid number");
-                    escolherProdutos(sup,cliente);
-                }
-                else if(sup.getProdutos().size()+3==option){
+                    escolherProdutos(sup, cliente);
+                } else if (sup.getProdutos().size() + 3 == option) {
                     System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
                     System.exit(0);
-                }
-                else if(sup.getProdutos().size()+2==option){
+                } else if (sup.getProdutos().size() + 2 == option) {
                     System.out.println("Prosseguindo para o pagamento");
-                    System.out.println("Valor a pagar pelos produtos: "+venda.getPreco_Prod());
-                    System.out.println("Valor a pagar pelo Transporte: "+venda.getPreco_transporte(cliente));
-                    System.out.println("Total: "+venda.getTotal());
+                    System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod());
+                    System.out.println("Valor a pagar pelo Transporte: " + venda.getPreco_transporte(cliente));
+                    System.out.println("Total: " + venda.getTotal());
                     cliente.add_venda(venda);
-                }
-                else if(sup.getProdutos().size()+1==option){
+                } else if (sup.getProdutos().size() + 1 == option) {
                     System.out.println("Retirando o ultimo elemento");
-                }
-
-                else if (sup.getProdutos().get(option).stock!=0){
-                    System.out.print("Escolha a quantidade de "+sup.getProdutos().get(option).getNome()+" que deseja adcionar:");
+                } else if (sup.getProdutos().get(option).stock != 0) {
+                    System.out.print("Escolha a quantidade de " + sup.getProdutos().get(option).getNome() + " que deseja adicionar:");
                     Scanner sc2 = new Scanner(System.in);
 
-                    while ((!sc2.hasNextInt())) {sc2.next();System.out.print("Escreva um numero!!");}
+//                    while ((!sc2.hasNextInt())) {
+//                        sc2.next();
+//                        System.out.print("Escreva um numero!!");
+//                    }
                     int num = sc2.nextInt();
-                    if (sup.getProdutos().get(option).stock>num) {
-                        sup.getProdutos().get(option).stock=sup.getProdutos().get(option).stock-num;
-                        for (int i = 0; i < num; i++) {venda.add_produto(sup.getProdutos().get(option));}
-                    }
-                    else
+                    if (sup.getProdutos().get(option).stock > num) {
+                        sup.getProdutos().get(option).stock -= num;
+                        for (int i = 0; i < num; i++) {
+                            venda.add_produto(sup.getProdutos().get(option));
+                        }
+                    } else
                         System.out.println("Não ha stock suficiente!");
                 }
             }
         } else System.out.println("Please type a valid option");
     }
 
-    public static void  register(ArrayList<Cliente> clientes){
-        Scanner sc= new Scanner(System.in);
+    public static void register(ArrayList<Cliente> clientes) {
+        Scanner sc = new Scanner(System.in);
 
         System.out.print("Introduza o seu Nome:");
-        String nome=sc.nextLine();
+        String nome = sc.nextLine();
         System.out.print("Introduza a sua Morada:");
-        String morada=sc.nextLine();
+        String morada = sc.nextLine();
         System.out.print("Introduza o seu Email:");
-        String email=sc.nextLine();
-        Data nascimento=new Data(-1,-1,-1);
+        String email = sc.nextLine();
+        Data nascimento = new Data(-1, -1, -1);
         //Compor Data
         /*while(Dtnascimento.isDateValid(Dtnascimento)){
         }*/
         System.out.print("Introduza o seu nº de telefone:");
-        while ((!sc.hasNextInt())) {sc.next();
+        while ((!sc.hasNextInt())) {
+            sc.next();
             System.out.print("Escreva o seu nº de telefone:");
         }
         int telefone = sc.nextInt();
-        int freq=(int)(Math.random()*10)%2;
-        boolean frequente= freq == 1;
-        clientes.add(new Cliente(nome,morada,email,telefone,nascimento,frequente));
+        int freq = (int) (Math.random() * 10) % 2;
+        boolean frequente = freq == 1;
+        clientes.add(new Cliente(nome, morada, email, telefone, nascimento, frequente));
     }
 
-    public static Cliente login(ArrayList<Cliente> clientes){
-        Scanner sc= new Scanner(System.in);
+    public static Cliente login(ArrayList<Cliente> clientes) {
+        Scanner sc = new Scanner(System.in);
 
         System.out.print("Introduza o seu email:");
-        String email=sc.nextLine();
+        String email = sc.nextLine();
         for (Cliente b : clientes) {
-            if(b.getEmail().equals(email))
+            if (b.getEmail().equals(email))
                 return b;
         }
         return null;

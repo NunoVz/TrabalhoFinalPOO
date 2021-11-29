@@ -1,13 +1,15 @@
 import java.io.Serializable;
+
 public class Data implements Serializable {
     private int dia, mes, ano;
     //wee
+
     /**
      * Contructor of Date.
      *
-     * @param dia   the day
+     * @param dia the day
      * @param mes the month
-     * @param ano  the year
+     * @param ano the year
      */
     public Data(int dia, int mes, int ano) {
         this.dia = dia;
@@ -66,7 +68,7 @@ public class Data implements Serializable {
             if (d1.getMes() > d2.getMes())
                 val = true;
             else if (d1.getMes() == d2.getMes()) {
-                if(d1.getDia() >= d2.getDia())
+                if (d1.getDia() >= d2.getDia())
                     val = true;
             }
         }

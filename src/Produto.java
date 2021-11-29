@@ -7,7 +7,7 @@ public class Produto implements Serializable {
     protected int stock;
     protected int custoTransporte;
 
-//
+    //
     public Produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
         this.identificador = identificador;
         this.nome = nome;
@@ -15,7 +15,6 @@ public class Produto implements Serializable {
         this.stock = stock;
         this.custoTransporte = custoTransporte;
     }
-
 
 
     public int getCustoTransporte() {
@@ -58,13 +57,15 @@ public class Produto implements Serializable {
         this.stock = stock;
     }
 
-    public String getType(){
+    public String getType() {
         return "PD";
     }
-    public String guardarData(){
-        return getType()+" "+identificador
-                +" "+nome+" "+precoUnitario+" "+stock+" "+custoTransporte;
+
+    public String guardarData() {
+        return getType() + " " + identificador
+                + " " + nome + " " + precoUnitario + " " + stock + " " + custoTransporte;
     }
+
     @Override
     public String toString() {
         return nome;

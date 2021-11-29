@@ -8,7 +8,7 @@ public class Cliente implements Serializable {
     private int telefone;
     private Data nascimento;
     private boolean frequente;
-    private ArrayList<Venda> historicoVendas=new ArrayList<>();
+    private ArrayList<Venda> historicoVendas = new ArrayList<>();
 
     //
     public Cliente(String nome, String morada, String email, int telefone, Data nascimento, boolean frequente) {
@@ -68,12 +68,12 @@ public class Cliente implements Serializable {
         this.frequente = frequente;
     }
 
-    public void add_venda(Venda venda){
+    public void add_venda(Venda venda) {
         historicoVendas.add(venda);
     }
 
-    public String guardarData(){
-        return nome+" "+morada+" "+email+" "+telefone+" "+nascimento+" "+isFrequente();
+    public String guardarData() {
+        return nome + " " + morada + " " + email + " " + telefone + " " + nascimento + " " + isFrequente();
     }
 
     @Override

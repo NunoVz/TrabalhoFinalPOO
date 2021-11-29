@@ -7,12 +7,12 @@ public class Supermercado implements Serializable {
 
 
     public Supermercado(String nome, ArrayList<Produto> produtos) {
-        this.nome=nome;
-        this.produtos=produtos;
+        this.nome = nome;
+        this.produtos = produtos;
     }
 
-    public void add_produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte){
-        produtos.add(new Produto(identificador,nome,precoUnitario,stock,custoTransporte));
+    public void add_produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
+        produtos.add(new Produto(identificador, nome, precoUnitario, stock, custoTransporte));
     }
 
 

@@ -252,7 +252,6 @@ public class GestSupermercado {
                     escolherProdutos(sup, cliente);
                 } else if (sup.getProdutos().size() + 3 == option) {
                     System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
-                    System.exit(0);
                 } else if (sup.getProdutos().size() + 2 == option) {
                     System.out.println("Prosseguindo para o pagamento");
                     System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod());
@@ -264,11 +263,10 @@ public class GestSupermercado {
                 } else if (sup.getProdutos().get(option).stock != 0) {
                     System.out.print("Escolha a quantidade de " + sup.getProdutos().get(option).getNome() + " que deseja adicionar:");
                     Scanner sc2 = new Scanner(System.in);
-
-//                    while ((!sc2.hasNextInt())) {
-//                        sc2.next();
-//                        System.out.print("Escreva um numero!!");
-//                    }
+                    while ((!sc2.hasNextInt())) {
+                        sc2.next();
+                        System.out.print("Escreva um numero!!");
+                    }
                     int num = sc2.nextInt();
                     if (sup.getProdutos().get(option).stock > num) {
                         sup.getProdutos().get(option).stock -= num;

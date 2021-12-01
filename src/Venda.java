@@ -27,7 +27,7 @@ public class Venda implements Serializable {
     public float getPreco_transporte(Cliente c) {
         preco_transporte = 20;
         if (c.isFrequente()) {
-            if (preco_transporte < 40)
+            if (preco_prod < 40)
                 preco_transporte = 15;
             else
                 preco_transporte = 0;

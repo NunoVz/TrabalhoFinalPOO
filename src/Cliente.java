@@ -8,17 +8,16 @@ public class Cliente implements Serializable {
     private int telefone;
     private Data nascimento;
     private boolean frequente;
-    private ArrayList<Venda> historicoVendas;
+    private ArrayList<Venda> historicoVendas = new ArrayList<>();
 
     //
-    public Cliente(String nome, String morada, String email, int telefone, Data nascimento, boolean frequente,ArrayList<Venda> historicoVendas) {
+    public Cliente(String nome, String morada, String email, int telefone, Data nascimento, boolean frequente) {
         this.nome = nome;
         this.morada = morada;
         this.email = email;
         this.telefone = telefone;
         this.nascimento = nascimento;
         this.frequente = frequente;
-        this.historicoVendas=historicoVendas;
     }
 
     public String getNome() {
@@ -69,18 +68,13 @@ public class Cliente implements Serializable {
         this.frequente = frequente;
     }
 
-    public void add_venda(Venda venda){
+    public void add_venda(Venda venda) {
         historicoVendas.add(venda);
     }
 
-    public String guardarData(){
-        return nome+" "+morada+" "+email+" "+telefone+" "+nascimento+" "+isFrequente();
+    public String guardarData() {
+        return nome + " " + morada + " " + email + " " + telefone + " " + nascimento + " " + isFrequente();
     }
-
-    public ArrayList<Venda> getHistoricoVendas() {
-        return historicoVendas;
-    }
-
 
     @Override
     public String toString() {

@@ -44,10 +44,6 @@ public class GestSupermercado {
         System.out.println("Success\nProgram will be closing now!");
     }
 
-
-
-
-
     private static Supermercado escolherSupermercado() {
         Scanner sc = new Scanner(System.in);
         int option;

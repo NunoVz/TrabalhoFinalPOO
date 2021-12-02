@@ -51,6 +51,8 @@ public class Ficheiro {
                 int modoEscrita = -1;
                 String nome = "";
                 ArrayList<Produto> produtos = new ArrayList<>();
+                ArrayList<Promocao> promocoes = new ArrayList<>();
+
                 while ((linha = br.readLine()) != null) {
                     if (linha.length() != 0) {
 
@@ -60,9 +62,13 @@ public class Ficheiro {
                         else if (linha.contains("*PRODUTOS*"))
                             modoEscrita = 1;
 
+                        else if (linha.contains("*PROMOCAO*"))
+                            modoEscrita = 2;
+
                         else if (linha.contains("*PUSH*")) {
-                            GestSupermercado.supermercados.add(new Supermercado(nome, produtos));
+                            GestSupermercado.supermercados.add(new Supermercado(nome, produtos, promocoes));
                             produtos = new ArrayList<>();
+                            promocoes = new ArrayList<>();
                         } else {
                             switch (modoEscrita) {
                                 case 0 -> nome = linha;
@@ -77,10 +83,30 @@ public class Ficheiro {
                                     if (array[0].equals("PDMOB"))
                                         produtos.add(new ProdutorMobilado(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
                                 }
+                                case 2 -> {
+                                    String[] array = linha.split(" ");
+                                    if (array[0].equals("PM")) {
+                                        String Produto = array[1];
+                                        for (Produto b : produtos) {
+                                            if (b.getNome().equals(Produto)) {
+                                                promocoes.add(new PromocaoPagueMenos(b));
+                                                break;
+                                            }
+                                        }
+
+                                    } else if (array[0].equals("TQ")) {
+                                        String Produto = array[1];
+                                        for (Produto b : produtos) {
+                                            if (b.getNome().equals(Produto)) {
+                                                promocoes.add(new PromocaoTresQuatro(b));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
-
                 }
                 br.close();
             } catch (FileNotFoundException ex) {
@@ -94,6 +120,7 @@ public class Ficheiro {
             System.out.println("Ficheiro não existe");
         }
     }
+
 
     public void lerObjeto(ArrayList<Cliente> clientes) {
         File dataSupermercadosObj = new File("Data\\Datasupermercados.obj");

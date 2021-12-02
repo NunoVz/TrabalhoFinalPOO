@@ -1,20 +1,30 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+// TODO: 02/12/2021 - Hugo, 14:51
+//  dar print da lista de produtos quando se seleciona um nao volta a listar os produtos
+//  fazer um metodo para guardar os dados em txt tb
+//  fazer metodos para ler e gravar em ficheiros txt de produtos e promos
+//  quando se da register, guardar nos ficheiros a info
 
 
 public class GestSupermercado {
-    private static ArrayList<Supermercado> supermercados = new ArrayList<>();
+    public static ArrayList<Supermercado> supermercados;
+    public static ArrayList<Cliente> clientes;
 
     public static void main(String[] args) {
-        ArrayList<Cliente> clientes;
+        supermercados = new ArrayList<>();
+        clientes = new ArrayList<>();
+
+        //Ficheiros
+        Ficheiro clientesTexto = new Ficheiro("Clientes.txt");
 
         System.out.println("Software Boot");
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
-        clientes = lerClientes();
-        lerDados(clientes);
+        clientes = clientesTexto.lerClientes();
+        //System.out.println(clientes);
+        clientesTexto.lerDados();
         //lerobjeto(clientes);
-
 
         System.out.println("Software up to date");
 
@@ -22,167 +32,21 @@ public class GestSupermercado {
         while (cliente == null) {
             cliente = LoginRegister(clientes);
         }
-
         Supermercado sup = null;
         while (sup == null) {
             sup = escolherSupermercado();
         }
 
-
         escolherProdutos(sup, cliente);
 
         System.out.println("Software storing new data");
-        guardarDados(clientes);
+        Ficheiro.guardarDadosObj(clientes);
         System.out.println("Success\nProgram will be closing now!");
-
     }
 
-    public static ArrayList<Cliente> lerClientes() {
-        ArrayList<Cliente> clientes = new ArrayList<>();
-        File f = new File("Data\\Clientes.txt");
-        try {
-            FileReader fileReader = new FileReader(f);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                if (line.length() != 0) {
-                    String[] array = line.split("\\|");
-                    clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]) , getDateFromString(array[4]), Boolean.parseBoolean(array[5])));
-                }
-            }
-            bufferedReader.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("O ficheiro nao existe.");
-        } catch (IOException e) {
-            System.out.println("Erro.");
-        }
-        return clientes;
-    }
-
-    private static void lerDados(ArrayList<Cliente> clientes) {
-        File f = new File("Data\\Datasupermercados.txt");
-        if (f.exists() && f.isFile()) {
-            try {
-                FileReader fr = new FileReader(f);
-                BufferedReader br = new BufferedReader(fr);
-
-                String data;
-                int mododeescrita = -1;
-                String nome = "";
-                ArrayList<Produto> produtos = new ArrayList<>();
-                while ((data = br.readLine()) != null) {
-                    if (data.length() != 0) {
-
-                        if (data.contains("*NOME*"))
-                            mododeescrita = 0;
-
-                        else if (data.contains("*PRODUTOS*"))
-                            mododeescrita = 1;
-
-                        else if (data.contains("*PUSH*")) {
-                            supermercados.add(new Supermercado(nome, produtos));
-                            produtos = new ArrayList<>();
-                        } else {
-                            switch (mododeescrita) {
-                                case 0 -> nome = data;
-                                case 1 -> {
-                                    String[] array = data.split(" ");
-                                    if (array[0].equals("PD"))
-                                        produtos.add(new Produto(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5])));
-                                    if (array[0].equals("PDALI"))
-                                        produtos.add(new ProdutoAlimentar(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), Integer.parseInt(array[7])));
-                                    if (array[0].equals("PDLIMP"))
-                                        produtos.add(new ProdutoLimpeza(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
-                                    if (array[0].equals("PDMOB"))
-                                        produtos.add(new ProdutorMobilado(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
-                                }
-                            }
-                        }
-                    }
-
-                }
-                br.close();
-            } catch (FileNotFoundException ex) {
-                System.out.println("Erro a abrir o ficheiro de texto");
-            } catch (IOException ex) {
-                System.out.println("Erro a ler ficheiro de texto");
-            }
 
 
-        } else {
-            System.out.println("Ficheiro não existe");
-        }
-    }
 
-    private static void lerobjeto(ArrayList<Cliente> clientes) {
-        File f = new File("Data\\Datasupermercados.obj");
-        try {
-            FileInputStream fis = new FileInputStream(f);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Supermercado b;
-            while ((b = (Supermercado) ois.readObject()) != null)
-                supermercados.add(b);
-            ois.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Erro a abrir o ficheiro");
-        } catch (IOException ex) {
-            System.out.println("Erro a ler o ficheiro");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Erro a converter o objeto");
-        }
-
-        f = new File("Data\\Clientes.obj");
-        try {
-            FileInputStream fis = new FileInputStream(f);
-            ObjectInputStream ois = new ObjectInputStream(fis);
-            Cliente b;
-            while ((b = (Cliente) ois.readObject()) != null)
-                clientes.add(b);
-            ois.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Erro a abrir o ficheiro");
-        } catch (IOException ex) {
-            System.out.println("Erro a ler o ficheiro");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Erro a converter o objeto");
-        }
-    }
-
-    private static void guardarDados(ArrayList<Cliente> clientes) {
-        File f = new File("Data\\Datasupermercados.obj");
-        try {
-            FileOutputStream fos = new FileOutputStream(f);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            for (Supermercado b : supermercados)
-                oos.writeObject(b);
-
-            oos.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Erro a criar ficheiro");
-        } catch (IOException ex) {
-            System.out.println("Erro a escrever para o ficheiro2");
-        }
-
-        f = new File("Data\\Clientes.obj");
-        try {
-            FileOutputStream fos = new FileOutputStream(f);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            for (Cliente b : clientes)
-                oos.writeObject(b);
-
-            oos.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Erro a criar ficheiro");
-        } catch (IOException ex) {
-            System.out.println("Erro a escrever para o ficheiro2");
-        }
-
-
-    }
 
     private static Supermercado escolherSupermercado() {
         Scanner sc = new Scanner(System.in);
@@ -261,29 +125,29 @@ public class GestSupermercado {
         for (int i = 0; i < sup.getProdutos().size(); i++) {
             System.out.println(i + "- " + sup.getProdutos().get(i).getNome());
         }
-        System.out.println((sup.getProdutos().size() + 1) + "- Retirar o ultimo elemento adicionado");
-        System.out.println((sup.getProdutos().size() + 2) + "- Pagar");
-        System.out.println((sup.getProdutos().size() + 3) + "- Exit");
+        System.out.println((sup.getProdutos().size()) + "- Retirar o ultimo elemento adicionado");
+        System.out.println((sup.getProdutos().size() + 1) + "- Pagar");
+        System.out.println((sup.getProdutos().size() + 2) + "- Exit");
         System.out.println("---------------------------");
 
         //Checks for valid input
         if (sc.hasNextInt()) {
             //If option is 0 then it's the Exit
-            while (option != sup.getProdutos().size() + 2) {
+            while (option != sup.getProdutos().size() + 1) {
                 System.out.println("Carrinho de compras: " + venda.getCarrinhoDeCompras());
                 option = Integer.parseInt(sc.nextLine());
-                if (option > sup.getProdutos().size() + 3) {
+                if (option > sup.getProdutos().size() + 2) {
                     System.out.println("Please only input a valid number");
                     escolherProdutos(sup, cliente);
-                } else if (sup.getProdutos().size() + 3 == option) {
-                    System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
                 } else if (sup.getProdutos().size() + 2 == option) {
+                    System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
+                } else if (sup.getProdutos().size() + 1 == option) {
                     System.out.println("Prosseguindo para o pagamento");
                     System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod());
                     System.out.println("Valor a pagar pelo Transporte: " + venda.getPreco_transporte(cliente));
                     System.out.println("Total: " + venda.getTotal());
                     cliente.add_venda(venda);
-                } else if (sup.getProdutos().size() + 1 == option) {
+                } else if (sup.getProdutos().size() == option) {
                     System.out.println("Retirando o ultimo elemento");
                 } else if (sup.getProdutos().get(option).stock != 0) {
                     System.out.print("Escolha a quantidade de " + sup.getProdutos().get(option).getNome() + " que deseja adicionar:");
@@ -314,10 +178,14 @@ public class GestSupermercado {
         String morada = sc.nextLine();
         System.out.print("Introduza o seu Email:");
         String email = sc.nextLine();
-        Data nascimento = new Data(-1, -1, -1);
-        //Compor Data
-        /*while(Dtnascimento.isDateValid(Dtnascimento)){
-        }*/
+        System.out.println("Introduza a data de nascimento:");
+        String nascimento = sc.nextLine();
+        Data dtNascimento;
+        while (!(dtNascimento = Ficheiro.getDateFromString(nascimento)).isDateValid()) {
+            System.out.println("Data de nascimento inválida.");
+            System.out.println("Introduza a data de nascimento:");
+            nascimento = sc.nextLine();
+        }
         System.out.print("Introduza o seu nº de telefone:");
         while ((!sc.hasNextInt())) {
             sc.next();
@@ -326,7 +194,7 @@ public class GestSupermercado {
         int telefone = sc.nextInt();
         int freq = (int) (Math.random() * 10) % 2;
         boolean frequente = freq == 1;
-        clientes.add(new Cliente(nome, morada, email, telefone, nascimento, frequente));
+        clientes.add(new Cliente(nome, morada, email, telefone, dtNascimento, frequente));
     }
 
     private static Cliente login(ArrayList<Cliente> clientes) {
@@ -341,15 +209,5 @@ public class GestSupermercado {
         return null;
     }
 
-    private static Data getDateFromString(String date) {
-        //splits it by '/'
-        String[] d = date.split("/");
 
-        //Assigns day month and year the correct values
-        int day = Integer.parseInt(d[0]);
-        int month = Integer.parseInt(d[1]);
-        int year = Integer.parseInt(d[2]);
-        //A new date object is created
-        return new Data(day, month, year);
-    }
 }

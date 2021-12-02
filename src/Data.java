@@ -30,25 +30,24 @@ public class Data implements Serializable {
 
     /**
      * Date validator.
-     * Checks for invalid day, month and year inputs
+     * Checks for invalid day, month and year
      *
-     * @param d the date
      * @return the boolean
      */
-    public boolean isDateValid(Data d) {
+    public boolean isDateValid() {
         //Checks for negative numbers
-        if (d.getDia() <= 0 || d.getMes() <= 0 || d.getAno() <= 0)
+        if (dia <= 0 || mes <= 0 || ano <= 0)
             return false;
             //Checks for "overflow" in the days and months
-        else if (d.getDia() > 31 || d.getMes() > 12)
+        else if (dia > 31 || mes > 12)
             return false;
             //Checks for leap years (%4==0 && %100!=0) and makes feb only have 29 days
-        else if ((d.getAno() % 4 == 0 && d.getAno() % 100 != 0) && d.getMes() == 2 && d.getDia() > 29)
+        else if ((ano % 4 == 0 && ano % 100 != 0) && mes == 2 && dia > 29)
             return false;
             //Checks for months that have 31 days
-        else if (d.getMes() <= 7 && d.getMes() % 2 == 0 && d.getDia() > 30)
+        else if (mes <= 7 && mes % 2 == 0 && dia > 30)
             return false;
-        else return d.getMes() <= 7 || d.getMes() % 2 != 1 || d.getDia() < 31;
+        else return mes <= 7 || mes % 2 != 1 || dia < 31;
     }
 
     /**

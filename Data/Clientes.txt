@@ -1,4 +1,4 @@
-Lionel Rua antones@com 91522113 13 11 2010 true
-Limpao SemAbrigo marionata@com 91234122 12 12 2001 false
-juao Rua w 91522113 13 11 2010 true
-Limpao SemAbrigo p 91234122 12 12 2001 false
+Lionel|Rua|antones@com|91522113|13/11/2010|true
+Limpao|SemAbrigo|marionata@com|91234122|12/12/2001|false
+juao|Rua|w|91522113|13/11/2010|true
+Limpao|SemAbrigo|p|91234122|12/12/2001|false

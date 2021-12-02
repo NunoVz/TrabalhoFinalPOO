@@ -1,6 +1,5 @@
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Venda implements Serializable {
     private ArrayList<Produto> CarrinhoDeCompras = new ArrayList<>();

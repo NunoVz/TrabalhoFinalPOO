@@ -7,12 +7,13 @@ public class GestSupermercado {
     private static ArrayList<Supermercado> supermercados = new ArrayList<>();
 
     public static void main(String[] args) {
-        ArrayList<Cliente> clientes = new ArrayList<>();
+        ArrayList<Cliente> clientes;
 
         System.out.println("Software Boot");
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
-        //lerDados(clientes);
-        lerobjeto(clientes);
+        clientes = lerClientes();
+        lerDados(clientes);
+        //lerobjeto(clientes);
 
 
         System.out.println("Software up to date");
@@ -34,6 +35,30 @@ public class GestSupermercado {
         guardarDados(clientes);
         System.out.println("Success\nProgram will be closing now!");
 
+    }
+
+    public static ArrayList<Cliente> lerClientes() {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        File f = new File("Data\\Clientes.txt");
+        try {
+            FileReader fileReader = new FileReader(f);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.length() != 0) {
+                    String[] array = line.split("\\|");
+                    clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]) , getDateFromString(array[4]), Boolean.parseBoolean(array[5])));
+                }
+            }
+            bufferedReader.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("O ficheiro nao existe.");
+        } catch (IOException e) {
+            System.out.println("Erro.");
+        }
+        return clientes;
     }
 
     private static void lerDados(ArrayList<Cliente> clientes) {
@@ -280,7 +305,7 @@ public class GestSupermercado {
         } else System.out.println("Please type a valid option");
     }
 
-    public static void register(ArrayList<Cliente> clientes) {
+    private static void register(ArrayList<Cliente> clientes) {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Introduza o seu Nome:");
@@ -304,7 +329,7 @@ public class GestSupermercado {
         clientes.add(new Cliente(nome, morada, email, telefone, nascimento, frequente));
     }
 
-    public static Cliente login(ArrayList<Cliente> clientes) {
+    private static Cliente login(ArrayList<Cliente> clientes) {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Introduza o seu email:");
@@ -314,5 +339,17 @@ public class GestSupermercado {
                 return b;
         }
         return null;
+    }
+
+    private static Data getDateFromString(String date) {
+        //splits it by '/'
+        String[] d = date.split("/");
+
+        //Assigns day month and year the correct values
+        int day = Integer.parseInt(d[0]);
+        int month = Integer.parseInt(d[1]);
+        int year = Integer.parseInt(d[2]);
+        //A new date object is created
+        return new Data(day, month, year);
     }
 }

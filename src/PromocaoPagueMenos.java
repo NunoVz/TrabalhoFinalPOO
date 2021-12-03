@@ -1,6 +1,6 @@
 public class PromocaoPagueMenos extends Promocao {
-    public PromocaoPagueMenos(Produto produto) {
-        super(produto);
+    public PromocaoPagueMenos(Produto produto,String tipo) {
+        super(produto,tipo);
     }
 
 }

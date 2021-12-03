@@ -67,6 +67,7 @@ public class Ficheiro {
 
                         else if (linha.contains("*PUSH*")) {
                             GestSupermercado.supermercados.add(new Supermercado(nome, produtos, promocoes));
+
                             produtos = new ArrayList<>();
                             promocoes = new ArrayList<>();
                         } else {
@@ -89,8 +90,7 @@ public class Ficheiro {
                                         String Produto = array[1];
                                         for (Produto b : produtos) {
                                             if (b.getNome().equals(Produto)) {
-                                                promocoes.add(new PromocaoPagueMenos(b));
-                                                break;
+                                                promocoes.add(new PromocaoPagueMenos(b,array[0]));
                                             }
                                         }
 
@@ -98,8 +98,7 @@ public class Ficheiro {
                                         String Produto = array[1];
                                         for (Produto b : produtos) {
                                             if (b.getNome().equals(Produto)) {
-                                                promocoes.add(new PromocaoTresQuatro(b));
-                                                break;
+                                                promocoes.add(new PromocaoTresQuatro(b,array[0]));
                                             }
                                         }
                                     }
@@ -169,7 +168,7 @@ public class Ficheiro {
         } catch (FileNotFoundException ex) {
             System.out.println("Erro a criar ficheiro");
         } catch (IOException ex) {
-            System.out.println("Erro a escrever para o ficheiro2");
+            System.out.println("Erro a escrever para o ficheiro");
         }
 
         f = new File("Data\\Clientes.obj");

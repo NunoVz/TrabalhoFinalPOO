@@ -1,11 +1,22 @@
-public class Promocao {
-    private Produto produto;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-    public Promocao(Produto produto) {
+public class Promocao implements Serializable {
+    private Produto produto;
+    private String tipo;
+
+    public Promocao(Produto produto,String tipo) {
         this.produto = produto;
+        this.tipo=tipo;
+    }
+
+    public String getTipo() {
+        return tipo;
     }
 
     public Produto getProduto() {
         return produto;
     }
+
+
 }

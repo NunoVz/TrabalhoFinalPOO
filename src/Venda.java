@@ -19,7 +19,40 @@ public class Venda implements Serializable {
         CarrinhoDeCompras.remove(CarrinhoDeCompras.size() - 1);
     }
 
-    public float getPreco_Prod() {
+    public float getPreco_Prod(Supermercado sup) {
+        ArrayList<Promocao> PM= sup.getprom(sup.getPromocoes(),"PM");
+        ArrayList<Promocao> TQ=sup.getprom(sup.getPromocoes(),"TQ");
+
+        for(Promocao b: PM) {
+            if (CarrinhoDeCompras.contains(b.getProduto())) {
+                int quantidade = 0;
+                float MaxDesc;
+                for (Produto x : CarrinhoDeCompras) {
+                    if (x == b.getProduto())
+                        quantidade += 1;
+                }
+                MaxDesc = quantidade;
+                preco_prod -= quantidade * b.getProduto().precoUnitario;
+                if (quantidade > 10)
+                    MaxDesc = 10;
+                MaxDesc = (100 - (5 * MaxDesc) / 100);
+                preco_prod += quantidade * (b.getProduto().precoUnitario * MaxDesc);
+            }
+        }
+        for(Promocao b:TQ) {
+
+            if (getCarrinhoDeCompras().contains(b.getProduto())) {
+                int quantidade = 0;
+                for (Produto x : CarrinhoDeCompras) {
+                    if (x == b.getProduto())
+                        quantidade += 1;
+                }
+                while (quantidade > 3) {
+                    preco_prod -= b.getProduto().precoUnitario;
+                    quantidade -= 4;
+                }
+            }
+        }
         return preco_prod;
     }
 

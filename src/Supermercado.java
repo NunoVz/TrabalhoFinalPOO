@@ -40,6 +40,19 @@ public class Supermercado implements Serializable {
     public void add_produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
         produtos.add(new Produto(identificador, nome, precoUnitario, stock, custoTransporte));
     }
+    public ArrayList<Promocao> getprom(ArrayList<Promocao> promos,String tipo){
+        ArrayList<Promocao> promoTipo=new ArrayList<>();
+        for(Promocao b:promos){
+            if (b.getTipo().equals(tipo)){
+                promoTipo.add(b);
+            }
+        }
+        if((promoTipo.size())!=0){
+            return promoTipo;
+
+        }
+        return null;
+    }
 
     @Override
     public String toString() {

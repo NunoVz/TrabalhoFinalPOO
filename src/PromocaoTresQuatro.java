@@ -1,7 +1,7 @@
 public class PromocaoTresQuatro extends Promocao {
     //
-    public PromocaoTresQuatro(Produto produto) {
-        super(produto);
+    public PromocaoTresQuatro(Produto produto,String tipo) {
+        super(produto,tipo);
     }
 
 }

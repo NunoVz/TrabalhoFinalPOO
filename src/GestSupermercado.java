@@ -1,11 +1,8 @@
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 // TODO: 02/12/2021 - Hugo, 14:51
 //  dar print da lista de produtos quando se seleciona um nao volta a listar os produtos
-//  fazer um metodo para guardar os dados em txt tb
-//  fazer metodos para ler e gravar em ficheiros txt de produtos e promos
-//  quando se da register, guardar nos ficheiros a info
 
 
 public class GestSupermercado {
@@ -23,8 +20,9 @@ public class GestSupermercado {
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
         clientes = clientesTexto.lerClientes();
         //System.out.println(clientes);
-        clientesTexto.lerDados();
-        //lerobjeto(clientes);
+        //clientesTexto.lerDados();
+        clientesTexto.lerObjeto(clientes);
+
 
         System.out.println("Software up to date");
 
@@ -126,10 +124,23 @@ public class GestSupermercado {
         System.out.println((sup.getProdutos().size() + 2) + "- Exit");
         System.out.println("---------------------------");
 
+        if(sup.getprom(sup.getPromocoes(),"TQ")!=null) {
+            System.out.println("Produtos com a promoção leve 4 pague 3:");
+            for (Promocao b : sup.getprom(sup.getPromocoes(), "TQ"))
+                System.out.println(b.getProduto().getNome());
+        }
+        if(sup.getprom(sup.getPromocoes(),"PM")!=null) {
+            System.out.println("Produtos com a promoção pague menos:");
+            for (Promocao b : sup.getprom(sup.getPromocoes(), "PM"))
+                System.out.println(b.getProduto().getNome());
+        }
+
+
+
         //Checks for valid input
         if (sc.hasNextInt()) {
             //If option is 0 then it's the Exit
-            while (option != sup.getProdutos().size() + 1) {
+            while (option != sup.getProdutos().size() + 2) {
                 System.out.println("Carrinho de compras: " + venda.getCarrinhoDeCompras());
                 option = Integer.parseInt(sc.nextLine());
                 if (option > sup.getProdutos().size() + 2) {
@@ -139,7 +150,7 @@ public class GestSupermercado {
                     System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
                 } else if (sup.getProdutos().size() + 1 == option) {
                     System.out.println("Prosseguindo para o pagamento");
-                    System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod());
+                    System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod(sup));
                     System.out.println("Valor a pagar pelo Transporte: " + venda.getPreco_transporte(cliente));
                     System.out.println("Total: " + venda.getTotal());
                     cliente.add_venda(venda);
@@ -204,6 +215,7 @@ public class GestSupermercado {
         }
         return null;
     }
+
 
 
 }

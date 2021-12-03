@@ -127,8 +127,18 @@ public class GestSupermercado implements Serializable {
         System.out.println("3- Retirar o ultimo elemento adicionado");
         System.out.println("4- Pagar");
         System.out.println("5- Exit");
-        if(venda.getCarrinhoDeCompras().size()!=0)
-            System.out.println("Carrinho de compras: " + venda.getCarrinhoDeCompras());
+        if(venda.getCarrinhoDeCompras().size()!=0){
+            System.out.print("Carrinho de compras=[");
+            int i=0;
+            for(Produto b:venda.getCarrinhoDeCompras()){
+                i+=1;
+                System.out.print(b.nome+" * "+b.quantidade_carrinho);
+                if(i!=venda.getCarrinhoDeCompras().size())
+                    System.out.print(", ");
+                else
+                    System.out.print("]\n");
+            }
+        }
         System.out.println("---------------------------");
         System.out.print("Introduza um numero:");
 

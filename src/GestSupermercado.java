@@ -3,7 +3,9 @@ import java.util.Scanner;
 
 // TODO: 02/12/2021 - Hugo, 14:51
 //  dar print da lista de produtos quando se seleciona um nao volta a listar os produtos
-
+// Ta top
+//xe
+//não xe
 
 public class GestSupermercado {
     public static ArrayList<Supermercado> supermercados;

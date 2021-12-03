@@ -76,20 +76,20 @@ public class Ficheiro {
                                 case 1 -> {
                                     String[] array = linha.split(" ");
                                     if (array[0].equals("PD"))
-                                        produtos.add(new Produto(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5])));
+                                        produtos.add(new Produto(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5])));
                                     if (array[0].equals("PDALI"))
-                                        produtos.add(new ProdutoAlimentar(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), Integer.parseInt(array[7])));
+                                        produtos.add(new ProdutoAlimentar(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), Integer.parseInt(array[7])));
                                     if (array[0].equals("PDLIMP"))
-                                        produtos.add(new ProdutoLimpeza(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
+                                        produtos.add(new ProdutoLimpeza(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
                                     if (array[0].equals("PDMOB"))
-                                        produtos.add(new ProdutorMobilado(array[1], array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
+                                        produtos.add(new ProdutorMobilado(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
                                 }
                                 case 2 -> {
                                     String[] array = linha.split(" ");
                                     if (array[0].equals("PM")) {
-                                        String Produto = array[1];
+                                        String produto = array[1];
                                         for (Produto b : produtos) {
-                                            if (b.getNome().equals(Produto)) {
+                                            if (b.getNome().equals(produto)) {
                                                 promocoes.add(new PromocaoPagueMenos(b,array[0]));
                                             }
                                         }

@@ -7,7 +7,7 @@ public class ProdutorMobilado extends Produto implements Serializable {
     private String dimensao;
 
     //Tive que fazer isto para o codigo correr not sure se ta bem
-    public ProdutorMobilado(String identificador, String nome, float precoUnitario, int stock, int custoTransporte, int peso) {
+    public ProdutorMobilado(int identificador, String nome, float precoUnitario, int stock, int custoTransporte, int peso) {
         super(identificador, nome, precoUnitario, stock, custoTransporte);
         this.peso = peso;
     }

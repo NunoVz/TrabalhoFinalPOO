@@ -37,7 +37,7 @@ public class Supermercado implements Serializable {
         return nome;
     }
 
-    public void add_produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
+    public void add_produto(int identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
         produtos.add(new Produto(identificador, nome, precoUnitario, stock, custoTransporte));
     }
     public ArrayList<Promocao> getprom(ArrayList<Promocao> promos,String tipo){

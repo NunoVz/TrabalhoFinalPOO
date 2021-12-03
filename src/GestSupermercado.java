@@ -27,9 +27,8 @@ public class GestSupermercado implements Serializable {
 
         dataSupermercadosTexto.lerDados();
 
-        Ficheiro.guardarDadosObj(clientes);
 
-        clientesTexto.lerObjeto(clientes);
+        //clientesTexto.lerObjeto(clientes);
 
 
         System.out.println("Software up to date");
@@ -119,27 +118,21 @@ public class GestSupermercado implements Serializable {
 
     }
 
-    private static void menuProdutos(Supermercado sup) {
+    private static void menuProdutos(Venda venda) {
         System.out.println("---------------------------");
         System.out.println("|       **Produtos**      |");
-        for (int i = 0; i < sup.getProdutos().size(); i++) {
-            System.out.println(i + "- " + sup.getProdutos().get(i).getNome());
-        }
-        System.out.println((sup.getProdutos().size()) + "- Retirar o ultimo elemento adicionado");
-        System.out.println((sup.getProdutos().size() + 1) + "- Pagar");
-        System.out.println((sup.getProdutos().size() + 2) + "- Exit");
+        System.out.println("0- Listar os produtos");
+        System.out.println("1- Listar as promoções");
+        System.out.println("2- Adicionar um produto");
+        System.out.println("3- Retirar o ultimo elemento adicionado");
+        System.out.println("4- Pagar");
+        System.out.println("5- Exit");
+        if(venda.getCarrinhoDeCompras().size()!=0)
+            System.out.println("Carrinho de compras: " + venda.getCarrinhoDeCompras());
         System.out.println("---------------------------");
+        System.out.print("Introduza um numero:");
 
-        if(sup.getprom(sup.getPromocoes(),"TQ")!=null) {
-            System.out.println("Produtos com a promoção leve 4 pague 3:");
-            for (Promocao b : sup.getprom(sup.getPromocoes(), "TQ"))
-                System.out.println(b.getProduto().getNome());
-        }
-        if(sup.getprom(sup.getPromocoes(),"PM")!=null) {
-            System.out.println("Produtos com a promoção pague menos:");
-            for (Promocao b : sup.getprom(sup.getPromocoes(), "PM"))
-                System.out.println(b.getProduto().getNome());
-        }
+
     }
 
     private static void escolherProdutos(Supermercado sup, Cliente cliente) {
@@ -147,43 +140,77 @@ public class GestSupermercado implements Serializable {
         Venda venda = new Venda();
         int option = -1;
 
-        menuProdutos(sup);
+        menuProdutos(venda);
 
         //Checks for valid input
         if (sc.hasNextInt()) {
-            while (option != sup.getProdutos().size() + 2) {
-                System.out.println("Carrinho de compras: " + venda.getCarrinhoDeCompras());
+            while (option != 5) {
                 option = Integer.parseInt(sc.nextLine());
-                if (option > sup.getProdutos().size() + 2 || option < 0) {
+                if (option > 5|| option < 0) {
                     System.out.println("Please only input a valid number");
                     escolherProdutos(sup, cliente);
-                } else if (sup.getProdutos().size() + 2 == option) {
-                    System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
-                } else if (sup.getProdutos().size() + 1 == option) {
-                    System.out.println("Prosseguindo para o pagamento");
-                    System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod(sup));
-                    System.out.println("Valor a pagar pelo Transporte: " + venda.getPreco_transporte(cliente));
-                    System.out.println("Total: " + venda.getTotal());
-                    cliente.add_venda(venda);
-                } else if (sup.getProdutos().size() == option) {
-                    System.out.println("Retirando o ultimo elemento");
-                    menuProdutos(sup);
-                } else if (sup.getProdutos().get(option).stock != 0) {
-                    System.out.print("Escolha a quantidade de " + sup.getProdutos().get(option).getNome() + " que deseja adicionar:");
-                    Scanner sc2 = new Scanner(System.in);
-                    while ((!sc2.hasNextInt())) {
-                        sc2.next();
-                        System.out.print("Escreva um numero!!");
-                    }
-                    int num = sc2.nextInt();
-                    if (sup.getProdutos().get(option).stock > num) {
-                        sup.getProdutos().get(option).stock -= num;
-                        for (int i = 0; i < num; i++) {
-                            venda.add_produto(sup.getProdutos().get(option));
+                }else {
+                    switch (option){
+                        case 5->System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
+                        case 4->{
+                            System.out.println("Prosseguindo para o pagamento");
+                            System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod(sup));
+                            System.out.println("Valor a pagar pelo Transporte: " + venda.getPreco_transporte(cliente));
+                            System.out.println("Total: " + venda.getTotal());
+                            cliente.add_venda(venda);
                         }
-                    } else
-                        System.out.println("Não ha stock suficiente!");
-                    menuProdutos(sup);
+                        case 3->{
+                            System.out.println("Retirando o ultimo elemento");
+                            //Not working
+                            menuProdutos(venda);
+                        }
+                        case 2->{
+                            Produto p=null;
+                            while(p==null){
+                                System.out.print("Indique o ID do produto que deseja adcionar: ");
+                                int ID = sc.nextInt();
+                                for (Produto b:sup.getProdutos()){
+                                    if (b.getIdentificador()==ID){
+                                        p=b;
+                                    }
+                                }
+
+                            }
+                            if(p!=null) {
+                                int quantidade=0;
+                                while(quantidade<=0){
+                                    System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adcionar:");
+                                    quantidade = sc.nextInt();
+                                    if(p.getStock()>=quantidade)
+                                        venda.add_produto(p, quantidade);
+                                    else
+                                        System.out.println("Não existe stock suficiente!");
+                                }
+                            }
+                            else{
+                                System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
+                            }
+
+                        }
+                        case 1->{
+                            if(sup.getprom(sup.getPromocoes(),"TQ")!=null) {
+                                System.out.println("Produtos com a promoção leve 4 pague 3:");
+                                for (Promocao b : sup.getprom(sup.getPromocoes(), "TQ"))
+                                    System.out.println(b.getProduto().getNome());
+                            }
+                            if(sup.getprom(sup.getPromocoes(),"PM")!=null) {
+                                System.out.println("Produtos com a promoção pague menos:");
+                                for (Promocao b : sup.getprom(sup.getPromocoes(), "PM"))
+                                    System.out.println(b.getProduto().getNome());
+                            }
+                            menuProdutos(venda);
+                        }
+                        case 0->{
+                            for(Produto b:sup.getProdutos())
+                                System.out.println(b.getIdentificador()+"-"+b.getNome());
+                            menuProdutos(venda);
+                        }
+                    }
                 }
             }
         } else System.out.println("Please type a valid option");

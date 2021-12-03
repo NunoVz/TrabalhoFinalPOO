@@ -1,14 +1,15 @@
 import java.io.Serializable;
 
 public class Produto implements Serializable {
-    protected String identificador;
+    protected int identificador;
     protected String nome;
     protected float precoUnitario;
     protected int stock;
     protected int custoTransporte;
+    protected int quantidade_carrinho;
 
     //
-    public Produto(String identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
+    public Produto(int identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
         this.identificador = identificador;
         this.nome = nome;
         this.precoUnitario = precoUnitario;
@@ -25,11 +26,11 @@ public class Produto implements Serializable {
         this.custoTransporte = custoTransporte;
     }
 
-    public String getIdentificador() {
+    public int getIdentificador() {
         return identificador;
     }
 
-    public void setIdentificador(String identificador) {
+    public void setIdentificador(int identificador) {
         this.identificador = identificador;
     }
 
@@ -59,6 +60,14 @@ public class Produto implements Serializable {
 
     public String getType() {
         return "PD";
+    }
+
+    public int getQuantidade_carrinho() {
+        return quantidade_carrinho;
+    }
+
+    public void setQuantidade_carrinho(int quantidade_carrinho) {
+        this.quantidade_carrinho = quantidade_carrinho;
     }
 
     public String guardarData() {

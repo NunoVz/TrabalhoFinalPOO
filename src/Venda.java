@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Venda implements Serializable {
     private ArrayList<Produto> CarrinhoDeCompras = new ArrayList<>();
@@ -22,7 +23,6 @@ public class Venda implements Serializable {
     public float getPreco_Prod(Supermercado sup) {
         ArrayList<Promocao> PM= sup.getprom(sup.getPromocoes(),"PM");
         ArrayList<Promocao> TQ=sup.getprom(sup.getPromocoes(),"TQ");
-
         for(Promocao b: PM) {
             if (CarrinhoDeCompras.contains(b.getProduto())) {
                 int quantidade = 0;
@@ -35,8 +35,8 @@ public class Venda implements Serializable {
                 preco_prod -= quantidade * b.getProduto().precoUnitario;
                 if (quantidade > 10)
                     MaxDesc = 10;
-                MaxDesc = (100 - (5 * MaxDesc) / 100);
-                preco_prod += quantidade * (b.getProduto().precoUnitario * MaxDesc);
+                MaxDesc = (100 - (5 * MaxDesc)) / 100;
+                preco_prod += (quantidade * b.getProduto().precoUnitario) * MaxDesc;
             }
         }
         for(Promocao b:TQ) {
@@ -53,6 +53,7 @@ public class Venda implements Serializable {
                 }
             }
         }
+        preco_prod=(float)(Math.round(preco_prod * 100.0) / 100.0);
         return preco_prod;
     }
 

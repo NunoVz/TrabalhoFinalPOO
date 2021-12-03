@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,7 +9,7 @@ import java.util.Scanner;
 //  meter identificadores, tp um id = 1002, Arroz, e dar o id em vez de um numero do print
 
 
-public class GestSupermercado {
+public class GestSupermercado implements Serializable {
     public static ArrayList<Supermercado> supermercados;
     public static ArrayList<Cliente> clientes;
 
@@ -18,12 +19,18 @@ public class GestSupermercado {
 
         //Ficheiros
         Ficheiro clientesTexto = new Ficheiro("Clientes.txt");
+        Ficheiro dataSupermercadosTexto = new Ficheiro("Datasupermercados.txt");
 
         System.out.println("Software Boot");
+
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
+
         clientes = clientesTexto.lerClientes();
-        //System.out.println(clientes);
-        //clientesTexto.lerDados();
+
+        dataSupermercadosTexto.lerDados();
+
+        Ficheiro.guardarDadosObj(clientes);
+
         clientesTexto.lerObjeto(clientes);
 
 

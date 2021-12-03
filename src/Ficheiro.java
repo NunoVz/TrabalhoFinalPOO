@@ -122,47 +122,50 @@ public class Ficheiro {
 
 
     public void lerObjeto(ArrayList<Cliente> clientes) {
-        File dataSupermercadosObj = new File("Data\\Datasupermercados.obj");
+        File dataSupermercadosObj = new File("Data\\Datasupermercados.ser");
         try {
             FileInputStream fis = new FileInputStream(dataSupermercadosObj);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            Supermercado b;
-            while ((b = (Supermercado) ois.readObject()) != null)
-                GestSupermercado.supermercados.add(b);
+            GestSupermercado.supermercados = (ArrayList<Supermercado>) ois.readObject();
+//            Supermercado b = null;
+//            while ((b = (Supermercado) ois.readObject()) != null)
+//                GestSupermercado.supermercados.add(b);
             ois.close();
         } catch (FileNotFoundException e) {
             System.out.println("Erro a abrir o ficheiro");
         } catch (IOException e) {
-            System.out.println("Erro a ler o ficheiro");
+            System.out.println("Erro a ler o objeto Supermercados");
         } catch (ClassNotFoundException e) {
             System.out.println("Erro a converter o objeto");
         }
 
-        File clientesObj = new File("Data\\Clientes.obj");
+        File clientesObj = new File("Data\\Clientes.ser");
         try {
             FileInputStream fis = new FileInputStream(clientesObj);
             ObjectInputStream ois = new ObjectInputStream(fis);
-            Cliente cliente;
-            while ((cliente = (Cliente) ois.readObject()) != null)
-                clientes.add(cliente);
+
+            clientes = (ArrayList<Cliente>) ois.readObject();
+//            Cliente cliente;
+//            while ((cliente = (Cliente) ois.readObject()) != null)
+//                clientes.add(cliente);
             ois.close();
         } catch (FileNotFoundException e) {
             System.out.println("Erro a abrir o ficheiro");
         } catch (IOException e) {
-            System.out.println("Erro a ler o ficheiro");
+            System.out.println("Erro a ler o ficheiro objeto clientes ");
         } catch (ClassNotFoundException e) {
             System.out.println("Erro a converter o objeto");
         }
     }
 
     public static void guardarDadosObj(ArrayList<Cliente> clientes) {
-        File f = new File("Data\\Datasupermercados.obj");
+        File f = new File("Data\\Datasupermercados.ser");
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            for (Supermercado b : GestSupermercado.supermercados)
-                oos.writeObject(b);
+            oos.writeObject(GestSupermercado.supermercados);
+//            for (Supermercado b : GestSupermercado.supermercados)
+//                oos.writeObject(b);
 
             oos.close();
         } catch (FileNotFoundException ex) {
@@ -171,13 +174,14 @@ public class Ficheiro {
             System.out.println("Erro a escrever para o ficheiro");
         }
 
-        f = new File("Data\\Clientes.obj");
+        f = new File("Data\\Clientes.ser");
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
 
-            for (Cliente b : clientes)
-                oos.writeObject(b);
+            oos.writeObject(clientes);
+//            for (Cliente b : clientes)
+//                oos.writeObject(b);
 
             oos.close();
         } catch (FileNotFoundException e) {

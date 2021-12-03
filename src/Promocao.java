@@ -1,13 +1,12 @@
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Promocao implements Serializable {
     private Produto produto;
     private String tipo;
 
-    public Promocao(Produto produto,String tipo) {
+    public Promocao(Produto produto, String tipo) {
         this.produto = produto;
-        this.tipo=tipo;
+        this.tipo = tipo;
     }
 
     public String getTipo() {

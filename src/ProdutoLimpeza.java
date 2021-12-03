@@ -1,4 +1,6 @@
-public class ProdutoLimpeza extends Produto {
+import java.io.Serializable;
+
+public class ProdutoLimpeza extends Produto implements Serializable {
     //Grau de Toxicidade varia de 0 a 10//
     private int grauToxicidade;
 

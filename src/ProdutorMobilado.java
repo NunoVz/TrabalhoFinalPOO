@@ -1,4 +1,6 @@
-public class ProdutorMobilado extends Produto {
+import java.io.Serializable;
+
+public class ProdutorMobilado extends Produto implements Serializable {
     private int peso;
     //dimensao composta por altura/largura/profundidad
 

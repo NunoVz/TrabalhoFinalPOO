@@ -184,21 +184,19 @@ public class GestSupermercado implements Serializable {
                                         p=b;
                                     }
                                 }
+                                if(p==null)
+                                    System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
+
 
                             }
-                            if(p!=null) {
-                                int quantidade=0;
-                                while(quantidade<=0){
-                                    System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar:");
-                                    quantidade = sc.nextInt();
-                                    if(p.getStock()>=quantidade)
-                                        venda.add_produto(p, quantidade);
-                                    else
-                                        System.out.println("Não existe stock suficiente!");
-                                }
-                            }
-                            else{
-                                System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
+                            int quantidade=0;
+                            while(quantidade<=0){
+                                System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar:");
+                                quantidade = sc.nextInt();
+                                if(p.getStock()>=quantidade)
+                                    venda.add_produto(p, quantidade);
+                                else
+                                    System.out.println("Não existe stock suficiente!");
                             }
                             menuProdutos(venda);
                         }

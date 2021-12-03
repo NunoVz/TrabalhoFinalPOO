@@ -7,7 +7,7 @@ import java.util.Scanner;
 //  mudar a estrutura toda foda-se
 //  tp, criar um lista stock no supermercado e no carrinho de compras em vez de [Arroz Arroz] -> Arroz 2x
 //  meter identificadores, tp um id = 1002, Arroz, e dar o id em vez de um numero do print
-
+//
 
 public class GestSupermercado implements Serializable {
     public static ArrayList<Supermercado> supermercados;

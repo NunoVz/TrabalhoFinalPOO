@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 // TODO: 02/12/2021 - Hugo, 14:51
 //  dar print da lista de produtos quando se seleciona um nao volta a listar os produtos
+//  mudar a estrutura toda foda-se
+//  tp, criar um lista stock no supermercado e no carrinho de compras em vez de [Arroz Arroz] -> Arroz 2x
+//  meter identificadores, tp um id = 1002, Arroz, e dar o id em vez de um numero do print
 
 
 public class GestSupermercado {

@@ -186,8 +186,6 @@ public class GestSupermercado implements Serializable {
                                 }
                                 if(p==null)
                                     System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
-
-
                             }
                             int quantidade=0;
                             while(quantidade<=0){

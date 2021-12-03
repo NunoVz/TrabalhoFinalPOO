@@ -145,10 +145,10 @@ public class GestSupermercado implements Serializable {
         //Checks for valid input
         if (sc.hasNextInt()) {
             while (option != 5) {
-                option = Integer.parseInt(sc.nextLine());
+                option = sc.nextInt();
                 if (option > 5|| option < 0) {
                     System.out.println("Please only input a valid number");
-                    escolherProdutos(sup, cliente);
+                    menuProdutos(venda);
                 }else {
                     switch (option){
                         case 5->System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
@@ -167,7 +167,7 @@ public class GestSupermercado implements Serializable {
                         case 2->{
                             Produto p=null;
                             while(p==null){
-                                System.out.print("Indique o ID do produto que deseja adcionar: ");
+                                System.out.print("Indique o ID do produto que deseja adicionar: ");
                                 int ID = sc.nextInt();
                                 for (Produto b:sup.getProdutos()){
                                     if (b.getIdentificador()==ID){
@@ -179,7 +179,7 @@ public class GestSupermercado implements Serializable {
                             if(p!=null) {
                                 int quantidade=0;
                                 while(quantidade<=0){
-                                    System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adcionar:");
+                                    System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar:");
                                     quantidade = sc.nextInt();
                                     if(p.getStock()>=quantidade)
                                         venda.add_produto(p, quantidade);
@@ -190,7 +190,7 @@ public class GestSupermercado implements Serializable {
                             else{
                                 System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
                             }
-
+                            menuProdutos(venda);
                         }
                         case 1->{
                             if(sup.getprom(sup.getPromocoes(),"TQ")!=null) {

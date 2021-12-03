@@ -3,11 +3,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // TODO: 02/12/2021 - Hugo, 14:51
-//  dar print da lista de produtos quando se seleciona um nao volta a listar os produtos
 //  mudar a estrutura toda foda-se
 //  tp, criar um lista stock no supermercado e no carrinho de compras em vez de [Arroz Arroz] -> Arroz 2x
 //  meter identificadores, tp um id = 1002, Arroz, e dar o id em vez de um numero do print
-//
 
 public class GestSupermercado implements Serializable {
     public static ArrayList<Supermercado> supermercados;
@@ -36,45 +34,23 @@ public class GestSupermercado implements Serializable {
 
         System.out.println("Software up to date");
 
-        Cliente cliente = null;
+        Cliente cliente = clientes.get(0);
+        Supermercado sup = supermercados.get(0);
+
+        /*Cliente cliente = null;
         while (cliente == null) {
             cliente = LoginRegister(clientes);
         }
         Supermercado sup = null;
         while (sup == null) {
             sup = escolherSupermercado();
-        }
+        }*/
 
         escolherProdutos(sup, cliente);
 
         System.out.println("Software storing new data");
         Ficheiro.guardarDadosObj(clientes);
         System.out.println("Success\nProgram will be closing now!");
-    }
-
-    private static Supermercado escolherSupermercado() {
-        Scanner sc = new Scanner(System.in);
-        int option;
-
-        System.out.println("---------------------------");
-        System.out.println("|      Supermercados      |");
-        for (int i = 0; i < supermercados.size(); i++) {
-            System.out.println(i + "-" + supermercados.get(i).getNome());
-        }
-        System.out.println("---------------------------");
-        System.out.print("Introduza um numero:");
-
-        if (sc.hasNextInt()) {
-            option = Integer.parseInt(sc.nextLine());
-            if (option > supermercados.size()) {
-                System.out.println("Please only input a valid number");
-                escolherSupermercado();
-            }
-            return supermercados.get(option);
-
-        } else System.out.println("Please type a valid option");
-        return null;
-
     }
 
     private static Cliente LoginRegister(ArrayList<Cliente> clientes) {
@@ -118,12 +94,32 @@ public class GestSupermercado implements Serializable {
         return null;
     }
 
-    private static void escolherProdutos(Supermercado sup, Cliente cliente) {
+    private static Supermercado escolherSupermercado() {
         Scanner sc = new Scanner(System.in);
-        Venda venda = new Venda();
-        int option = -1;
+        int option;
 
-        //Prints the various options
+        System.out.println("---------------------------");
+        System.out.println("|      Supermercados      |");
+        for (int i = 0; i < supermercados.size(); i++) {
+            System.out.println(i + "-" + supermercados.get(i).getNome());
+        }
+        System.out.println("---------------------------");
+        System.out.print("Introduza um numero:");
+
+        if (sc.hasNextInt()) {
+            option = Integer.parseInt(sc.nextLine());
+            if (option > supermercados.size()) {
+                System.out.println("Please only input a valid number");
+                escolherSupermercado();
+            }
+            return supermercados.get(option);
+
+        } else System.out.println("Please type a valid option");
+        return null;
+
+    }
+
+    private static void menuProdutos(Supermercado sup) {
         System.out.println("---------------------------");
         System.out.println("|       **Produtos**      |");
         for (int i = 0; i < sup.getProdutos().size(); i++) {
@@ -144,16 +140,21 @@ public class GestSupermercado implements Serializable {
             for (Promocao b : sup.getprom(sup.getPromocoes(), "PM"))
                 System.out.println(b.getProduto().getNome());
         }
+    }
 
+    private static void escolherProdutos(Supermercado sup, Cliente cliente) {
+        Scanner sc = new Scanner(System.in);
+        Venda venda = new Venda();
+        int option = -1;
 
+        menuProdutos(sup);
 
         //Checks for valid input
         if (sc.hasNextInt()) {
-            //If option is 0 then it's the Exit
             while (option != sup.getProdutos().size() + 2) {
                 System.out.println("Carrinho de compras: " + venda.getCarrinhoDeCompras());
                 option = Integer.parseInt(sc.nextLine());
-                if (option > sup.getProdutos().size() + 2) {
+                if (option > sup.getProdutos().size() + 2 || option < 0) {
                     System.out.println("Please only input a valid number");
                     escolherProdutos(sup, cliente);
                 } else if (sup.getProdutos().size() + 2 == option) {
@@ -166,6 +167,7 @@ public class GestSupermercado implements Serializable {
                     cliente.add_venda(venda);
                 } else if (sup.getProdutos().size() == option) {
                     System.out.println("Retirando o ultimo elemento");
+                    menuProdutos(sup);
                 } else if (sup.getProdutos().get(option).stock != 0) {
                     System.out.print("Escolha a quantidade de " + sup.getProdutos().get(option).getNome() + " que deseja adicionar:");
                     Scanner sc2 = new Scanner(System.in);
@@ -181,6 +183,7 @@ public class GestSupermercado implements Serializable {
                         }
                     } else
                         System.out.println("Não ha stock suficiente!");
+                    menuProdutos(sup);
                 }
             }
         } else System.out.println("Please type a valid option");

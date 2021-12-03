@@ -120,7 +120,6 @@ public class Ficheiro {
         }
     }
 
-
     public void lerObjeto(ArrayList<Cliente> clientes) {
         File dataSupermercadosObj = new File("Data\\Datasupermercados.ser");
         try {

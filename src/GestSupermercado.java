@@ -7,8 +7,8 @@ public class GestSupermercado implements Serializable {
     public static ArrayList<Cliente> clientes;
 
     public static void main(String[] args) {
-        supermercados = null;
-        clientes = null;
+        supermercados = new ArrayList<>();
+        clientes = new ArrayList<>();
 
         //Ficheiros
         Ficheiro clientesTexto = new Ficheiro("Clientes.txt");

@@ -10,7 +10,10 @@ public class Cliente implements Serializable {
     private boolean frequente;
     private ArrayList<Venda> historicoVendas = new ArrayList<>();
 
-    //
+    public Cliente() {
+
+    }
+
     public Cliente(String nome, String morada, String email, int telefone, Data nascimento, boolean frequente) {
         this.nome = nome;
         this.morada = morada;
@@ -18,6 +21,14 @@ public class Cliente implements Serializable {
         this.telefone = telefone;
         this.nascimento = nascimento;
         this.frequente = frequente;
+    }
+
+    public ArrayList<Venda> getHistoricoVendas() {
+        return historicoVendas;
+    }
+
+    public void setHistoricoVendas(ArrayList<Venda> historicoVendas) {
+        this.historicoVendas = historicoVendas;
     }
 
     public String getNome() {

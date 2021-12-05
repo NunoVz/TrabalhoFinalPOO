@@ -8,7 +8,10 @@ public class Produto implements Serializable {
     protected int custoTransporte;
     protected int quantidade_carrinho;
 
-    //
+    public Produto() {
+
+    }
+
     public Produto(int identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
         this.identificador = identificador;
         this.nome = nome;

@@ -6,6 +6,9 @@ public class Supermercado implements Serializable {
     private ArrayList<Produto> produtos;
     private ArrayList<Promocao> promocoes;
 
+    public Supermercado() {
+
+    }
 
     public Supermercado(String nome, ArrayList<Produto> produtos, ArrayList<Promocao> promocoes) {
         this.nome = nome;

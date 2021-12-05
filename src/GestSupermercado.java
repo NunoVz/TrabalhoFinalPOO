@@ -2,18 +2,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// TODO: 02/12/2021 - Hugo, 14:51
-//  mudar a estrutura toda foda-se
-//  tp, criar um lista stock no supermercado e no carrinho de compras em vez de [Arroz Arroz] -> Arroz 2x
-//  meter identificadores, tp um id = 1002, Arroz, e dar o id em vez de um numero do print
-
 public class GestSupermercado implements Serializable {
     public static ArrayList<Supermercado> supermercados;
     public static ArrayList<Cliente> clientes;
 
     public static void main(String[] args) {
-        supermercados = new ArrayList<>();
-        clientes = new ArrayList<>();
+        supermercados = null;
+        clientes = null;
 
         //Ficheiros
         Ficheiro clientesTexto = new Ficheiro("Clientes.txt");
@@ -27,9 +22,9 @@ public class GestSupermercado implements Serializable {
 
         dataSupermercadosTexto.lerDados();
 
-
-        //clientesTexto.lerObjeto(clientes);
-
+        //Ler objetos
+        //clientes = clientesTexto.lerObjetoCliente();
+        //supermercados = dataSupermercadosTexto.lerObjetoSupermercado();
 
         System.out.println("Software up to date");
 
@@ -48,7 +43,7 @@ public class GestSupermercado implements Serializable {
         escolherProdutos(sup, cliente);
 
         System.out.println("Software storing new data");
-        Ficheiro.guardarDadosObj(clientes);
+        Ficheiro.guardarDadosObj(clientes, supermercados);
         System.out.println("Success\nProgram will be closing now!");
     }
 

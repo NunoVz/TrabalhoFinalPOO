@@ -46,30 +46,33 @@ public class Venda implements Serializable {
         return (preco_prod + preco_transporte);
     }
 
-    public void add_produto(Produto p, int quantidade) {
+    public boolean add_produto(Produto p, int quantidade) {
+        boolean added = false;
         int index = carrinhoDeCompras.indexOf(p);
         if (index != -1) {
-            for (Produto b : carrinhoDeCompras)
-                if (b == p)
-                    b.setQuantidade_carrinho(carrinhoDeCompras.get(index).getQuantidade_carrinho() + quantidade);
+            p.setQuantidade_carrinho(p.getQuantidade_carrinho() + quantidade);
+            p.setStock(p.getStock() - quantidade);
         } else {
             p.setQuantidade_carrinho(quantidade);
+            p.setStock(p.getStock() - quantidade);
             carrinhoDeCompras.add(p);
         }
 
         preco_prod += (p.precoUnitario) * quantidade;
+        return added;
     }
 
     public boolean removerProduto(Produto p) {
-        boolean test = false;
+        boolean removed = false;
         int stock = p.getStock();
-        int index;
-        if ((index = getProdutoIndex(p)) == -1)
-            return false;
-        stock += carrinhoDeCompras.get(index).getQuantidade_carrinho();
-        p.setStock(stock);
-        carrinhoDeCompras.remove(p);
-        return true;
+        int index = carrinhoDeCompras.indexOf(p);
+        if (index != -1) {
+            stock += carrinhoDeCompras.get(index).getQuantidade_carrinho();
+            p.setStock(stock);
+            carrinhoDeCompras.remove(p);
+            removed = true;
+        }
+        return removed;
     }
 
     public float getPreco_Prod(Supermercado sup) {

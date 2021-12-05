@@ -158,7 +158,9 @@ public class GestSupermercado implements Serializable {
 
                 } else {
                     switch (option) {
+                        // 5-Sair
                         case 5 -> System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
+                        // 4-Pagar
                         case 4 -> {
                             System.out.println("Prosseguindo para o pagamento");
                             System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod(sup));
@@ -168,6 +170,7 @@ public class GestSupermercado implements Serializable {
                             venda = new Venda();
                             menuProdutos(venda);
                         }
+                        //3- Remover elemento do carrinho
                         case 3 -> {
                             Produto produto = null;
                             while (produto == null) {
@@ -184,10 +187,11 @@ public class GestSupermercado implements Serializable {
                             }
                             if (venda.removerProduto(produto)) {
                                 System.out.println(produto.getNome() + " removido com sucesso!");
-                            }
+                            } else System.out.println("Erro ao remover produto");
 
                             menuProdutos(venda);
                         }
+                        // 2-Adicionar produto
                         case 2 -> {
                             Produto p = null;
                             while (p == null) {
@@ -213,6 +217,7 @@ public class GestSupermercado implements Serializable {
                             }
                             menuProdutos(venda);
                         }
+                        //Listar promocoes
                         case 1 -> {
                             if (sup.getprom(sup.getPromocoes(), "TQ") != null) {
                                 System.out.println("Produtos com a promoção leve 4 pague 3:");
@@ -226,9 +231,10 @@ public class GestSupermercado implements Serializable {
                             }
                             menuProdutos(venda);
                         }
+                        //Listar produtos
                         case 0 -> {
                             for (Produto b : sup.getProdutos())
-                                System.out.println(b.getIdentificador() + "-" + b.getNome());
+                                System.out.println(b.getIdentificador() + "-" + b.getNome() + " Stock: " + b.getStock());
                             menuProdutos(venda);
                         }
                     }

@@ -119,16 +119,16 @@ public class GestSupermercado implements Serializable {
         System.out.println("0- Listar os produtos");
         System.out.println("1- Listar as promoções");
         System.out.println("2- Adicionar um produto");
-        System.out.println("3- Retirar o ultimo elemento adicionado");
+        System.out.println("3- Remover elemento do carrinho");
         System.out.println("4- Pagar");
         System.out.println("5- Exit");
-        if(venda.getCarrinhoDeCompras().size()!=0){
+        if (venda.getCarrinhoDeCompras().size() != 0) {
             System.out.print("Carrinho de compras=[");
-            int i=0;
-            for(Produto b:venda.getCarrinhoDeCompras()){
-                i+=1;
-                System.out.print(b.nome+" * "+b.quantidade_carrinho);
-                if(i!=venda.getCarrinhoDeCompras().size())
+            int i = 0;
+            for (Produto b : venda.getCarrinhoDeCompras()) {
+                i += 1;
+                System.out.print(b.nome + " * " + b.quantidade_carrinho);
+                if (i != venda.getCarrinhoDeCompras().size())
                     System.out.print(", ");
                 else
                     System.out.print("]\n");
@@ -151,64 +151,84 @@ public class GestSupermercado implements Serializable {
         if (sc.hasNextInt()) {
             while (option != 5) {
                 option = sc.nextInt();
-                if (option > 5|| option < 0) {
+
+                if (option > 5 || option < 0) {
                     System.out.println("Please only input a valid number");
                     menuProdutos(venda);
-                }else {
-                    switch (option){
-                        case 5->System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
-                        case 4->{
+
+                } else {
+                    switch (option) {
+                        case 5 -> System.out.println("Obrigado pela sua visita! :)\nVolte sempre!");
+                        case 4 -> {
                             System.out.println("Prosseguindo para o pagamento");
                             System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod(sup));
                             System.out.println("Valor a pagar pelo Transporte: " + venda.getPreco_transporte(cliente));
                             System.out.println("Total: " + venda.getTotal());
                             cliente.add_venda(venda);
-                        }
-                        case 3->{
-                            System.out.println("Retirando o ultimo elemento");
-                            //Not working
+                            venda = new Venda();
                             menuProdutos(venda);
                         }
-                        case 2->{
-                            Produto p=null;
-                            while(p==null){
-                                System.out.print("Indique o ID do produto que deseja adicionar: ");
+                        case 3 -> {
+                            Produto produto = null;
+                            while (produto == null) {
+                                System.out.print("Indique o ID do produto que deseja eliminar: ");
                                 int ID = sc.nextInt();
-                                for (Produto b:sup.getProdutos()){
-                                    if (b.getIdentificador()==ID){
-                                        p=b;
+                                for (Produto p : sup.getProdutos()) {
+                                    if (p.getIdentificador() == ID) {
+                                        produto = p;
                                     }
                                 }
-                                if(p==null)
+                                if (produto == null) {
+                                    System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
+                                }
+                            }
+                            if (venda.removerProduto(produto)) {
+                                System.out.println(produto.getNome() + " removido com sucesso!");
+                            }
+
+                            menuProdutos(venda);
+                        }
+                        case 2 -> {
+                            Produto p = null;
+                            while (p == null) {
+                                System.out.print("Indique o ID do produto que deseja adicionar: ");
+                                int ID = sc.nextInt();
+                                for (Produto b : sup.getProdutos()) {
+                                    if (b.getIdentificador() == ID) {
+                                        p = b;
+                                    }
+                                }
+                                if (p == null)
                                     System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
                             }
-                            int quantidade=0;
-                            while(quantidade<=0){
+
+                            int quantidade = 0;
+                            while (quantidade <= 0) {
                                 System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar:");
                                 quantidade = sc.nextInt();
-                                if(p.getStock()>=quantidade)
+                                if (p.getStock() >= quantidade)
                                     venda.add_produto(p, quantidade);
                                 else
                                     System.out.println("Não existe stock suficiente!");
                             }
                             menuProdutos(venda);
                         }
-                        case 1->{
-                            if(sup.getprom(sup.getPromocoes(),"TQ")!=null) {
+                        case 1 -> {
+                            if (sup.getprom(sup.getPromocoes(), "TQ") != null) {
                                 System.out.println("Produtos com a promoção leve 4 pague 3:");
                                 for (Promocao b : sup.getprom(sup.getPromocoes(), "TQ"))
                                     System.out.println(b.getProduto().getNome());
                             }
-                            if(sup.getprom(sup.getPromocoes(),"PM")!=null) {
+                            if (sup.getprom(sup.getPromocoes(), "PM") != null) {
                                 System.out.println("Produtos com a promoção pague menos:");
                                 for (Promocao b : sup.getprom(sup.getPromocoes(), "PM"))
                                     System.out.println(b.getProduto().getNome());
                             }
                             menuProdutos(venda);
                         }
-                        case 0->{
-                            for(Produto b:sup.getProdutos())
-                                System.out.println(b.getIdentificador()+"-"+b.getNome());
+                        case 0 -> {
+                            for (Produto b : sup.getProdutos())
+                                System.out.println(b.getIdentificador() + "-" + b.getNome());
                             menuProdutos(venda);
                         }
                     }
@@ -256,7 +276,6 @@ public class GestSupermercado implements Serializable {
         }
         return null;
     }
-
 
 
 }

@@ -2,7 +2,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Venda implements Serializable {
-    private ArrayList<Produto> CarrinhoDeCompras = new ArrayList<>();
+    private ArrayList<Produto> carrinhoDeCompras = new ArrayList<>();
     float preco_prod;
     float preco_transporte;
 
@@ -10,11 +10,11 @@ public class Venda implements Serializable {
     }
 
     public ArrayList<Produto> getCarrinhoDeCompras() {
-        return CarrinhoDeCompras;
+        return carrinhoDeCompras;
     }
 
     public void setCarrinhoDeCompras(ArrayList<Produto> carrinhoDeCompras) {
-        CarrinhoDeCompras = carrinhoDeCompras;
+        this.carrinhoDeCompras = carrinhoDeCompras;
     }
 
     public float getPreco_prod() {
@@ -33,36 +33,53 @@ public class Venda implements Serializable {
         this.preco_transporte = preco_transporte;
     }
 
+    private int getProdutoIndex(Produto produto) {
+        int index = -1;
+        for (int i = 0; i < carrinhoDeCompras.size(); i++) {
+            if (produto.getIdentificador() == carrinhoDeCompras.get(i).getIdentificador())
+                index = i;
+        }
+        return index;
+    }
+
     public float getTotal() {
         return (preco_prod + preco_transporte);
     }
 
     public void add_produto(Produto p, int quantidade) {
-        int index = CarrinhoDeCompras.indexOf(p);
+        int index = carrinhoDeCompras.indexOf(p);
         if (index != -1) {
-            for (Produto b : CarrinhoDeCompras)
+            for (Produto b : carrinhoDeCompras)
                 if (b == p)
-                    b.setQuantidade_carrinho(CarrinhoDeCompras.get(index).getQuantidade_carrinho() + quantidade);
+                    b.setQuantidade_carrinho(carrinhoDeCompras.get(index).getQuantidade_carrinho() + quantidade);
         } else {
             p.setQuantidade_carrinho(quantidade);
-            CarrinhoDeCompras.add(p);
+            carrinhoDeCompras.add(p);
         }
 
         preco_prod += (p.precoUnitario) * quantidade;
     }
 
-    public void removerProduto() {
-        CarrinhoDeCompras.remove(CarrinhoDeCompras.size() - 1);
+    public boolean removerProduto(Produto p) {
+        boolean test = false;
+        int stock = p.getStock();
+        int index;
+        if ((index = getProdutoIndex(p)) == -1)
+            return false;
+        stock += carrinhoDeCompras.get(index).getQuantidade_carrinho();
+        p.setStock(stock);
+        carrinhoDeCompras.remove(p);
+        return true;
     }
 
     public float getPreco_Prod(Supermercado sup) {
         ArrayList<Promocao> PM = sup.getprom(sup.getPromocoes(), "PM");
         ArrayList<Promocao> TQ = sup.getprom(sup.getPromocoes(), "TQ");
         for (Promocao b : PM) {
-            if (CarrinhoDeCompras.contains(b.getProduto())) {
+            if (carrinhoDeCompras.contains(b.getProduto())) {
                 int quantidade = b.getProduto().getQuantidade_carrinho();
                 float MaxDesc;
-                for (Produto x : CarrinhoDeCompras) {
+                for (Produto x : carrinhoDeCompras) {
                     if (x == b.getProduto())
                         quantidade += 1;
                 }
@@ -96,7 +113,7 @@ public class Venda implements Serializable {
             else
                 preco_transporte = 0;
         }
-        for (Produto b : CarrinhoDeCompras) {
+        for (Produto b : carrinhoDeCompras) {
             if (b.getType().equals("PDMOB")) {
                 if (((ProdutorMobilado) b).getPeso() > 15)
                     preco_transporte = preco_transporte + 15;
@@ -107,7 +124,7 @@ public class Venda implements Serializable {
 
     @Override
     public String toString() {
-        return "Comprou: " + CarrinhoDeCompras + "\nPreço prod = " + preco_prod
+        return "Comprou: " + carrinhoDeCompras + "\nPreço prod = " + preco_prod
                 + "\nPreço do Transporte = " + preco_transporte + "\nTotal = " + getTotal() + "\n";
     }
 }

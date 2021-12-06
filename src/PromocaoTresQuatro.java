@@ -5,7 +5,7 @@ public class PromocaoTresQuatro extends Promocao implements Serializable {
 
     }
 
-    public PromocaoTresQuatro(Produto produto,String tipo) {
-        super(produto,tipo);
+    public PromocaoTresQuatro(Produto produto, String tipo, Data dataInicio, Data dataFim) {
+        super(produto, tipo, dataInicio, dataFim);
     }
 }

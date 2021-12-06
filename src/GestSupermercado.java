@@ -2,9 +2,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/*
+ TODO: 06/12/2021
+    tirar o calculo de atributos da classe, da classe venda (preco_prod)
+    cena de abertura de ficheiros obj apenas se existirem
+*/
+
 public class GestSupermercado implements Serializable {
     public static ArrayList<Supermercado> supermercados;
     public static ArrayList<Cliente> clientes;
+    public static Data hoje;
 
     public static void main(String[] args) {
         supermercados = new ArrayList<>();
@@ -22,12 +29,15 @@ public class GestSupermercado implements Serializable {
 
         dataSupermercadosTexto.lerDados();
 
-        //Ler objetos
-        //clientes = clientesTexto.lerObjetoCliente();
-        //supermercados = dataSupermercadosTexto.lerObjetoSupermercado();
+        /*
+        Ler objetos
+        clientes = clientesTexto.lerObjetoCliente();
+        supermercados = dataSupermercadosTexto.lerObjetoSupermercado();
+        */
 
         System.out.println("Software up to date");
 
+        hoje = getHoje();
         Cliente cliente = clientes.get(0);
         Supermercado sup = supermercados.get(0);
 
@@ -45,6 +55,17 @@ public class GestSupermercado implements Serializable {
         System.out.println("Software storing new data");
         Ficheiro.guardarDadosObj(clientes, supermercados);
         System.out.println("Success\nProgram will be closing now!");
+    }
+
+    private static Data getHoje() {
+        System.out.print("Bom dia,\nQue dia é hoje?");
+        Scanner sc = new Scanner(System.in);
+        String in = sc.nextLine();
+        Data data;
+        while (!(data = Ficheiro.getDateFromString(in)).isDateValid()) {
+            System.out.print("A data que inseriu não é válida.\nIntroduza uma data válida.");
+        }
+        return data;
     }
 
     private static Cliente LoginRegister(ArrayList<Cliente> clientes) {
@@ -286,6 +307,4 @@ public class GestSupermercado implements Serializable {
         }
         return null;
     }
-
-
 }

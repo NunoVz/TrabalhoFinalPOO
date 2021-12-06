@@ -55,19 +55,14 @@ public class Ficheiro {
 
                 while ((linha = br.readLine()) != null) {
                     if (linha.length() != 0) {
-
                         if (linha.contains("*NOME*"))
                             modoEscrita = 0;
-
                         else if (linha.contains("*PRODUTOS*"))
                             modoEscrita = 1;
-
                         else if (linha.contains("*PROMOCAO*"))
                             modoEscrita = 2;
-
                         else if (linha.contains("*PUSH*")) {
                             GestSupermercado.supermercados.add(new Supermercado(nome, produtos, promocoes));
-
                             produtos = new ArrayList<>();
                             promocoes = new ArrayList<>();
                         } else {
@@ -83,7 +78,6 @@ public class Ficheiro {
                                         produtos.add(new ProdutoLimpeza(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
                                     if (array[0].equals("PDMOB"))
                                         produtos.add(new ProdutorMobilado(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), array[7]));
-
                                 }
                                 case 2 -> {
                                     String[] array = linha.split(" ");
@@ -91,15 +85,22 @@ public class Ficheiro {
                                         String produto = array[1];
                                         for (Produto b : produtos) {
                                             if (b.getNome().equals(produto)) {
-                                                promocoes.add(new PromocaoPagueMenos(b, array[0]));
+                                                Data inicio = getDateFromString(array[2]);
+                                                Data fim = getDateFromString(array[3]);
+                                                if (inicio.isDateValid() && fim.isDateValid() && inicio.isBigger(fim, inicio))
+                                                    promocoes.add(new PromocaoPagueMenos(b, array[0], getDateFromString(array[2]), getDateFromString(array[3])));
+                                                else System.out.println("Data inválida, a promoçao nao foi adicionada");
                                             }
                                         }
-
                                     } else if (array[0].equals("TQ")) {
                                         String Produto = array[1];
                                         for (Produto b : produtos) {
                                             if (b.getNome().equals(Produto)) {
-                                                promocoes.add(new PromocaoTresQuatro(b, array[0]));
+                                                Data inicio = getDateFromString(array[2]);
+                                                Data fim = getDateFromString(array[3]);
+                                                if (inicio.isDateValid() && fim.isDateValid() && inicio.isBigger(fim, inicio))
+                                                    promocoes.add(new PromocaoTresQuatro(b, array[0], getDateFromString(array[2]), getDateFromString(array[3])));
+                                                else System.out.println("Data inválida, a promoçao nao foi adicionada");
                                             }
                                         }
                                     }
@@ -114,11 +115,7 @@ public class Ficheiro {
             } catch (IOException ex) {
                 System.out.println("Erro a ler ficheiro de texto");
             }
-
-
-        } else {
-            System.out.println("Ficheiro não existe");
-        }
+        } else System.out.println("Ficheiro não existe");
     }
 
     public ArrayList<Supermercado> lerObjetoSupermercado() {

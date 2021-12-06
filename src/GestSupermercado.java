@@ -210,8 +210,12 @@ public class GestSupermercado implements Serializable {
                             while (quantidade <= 0) {
                                 System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar:");
                                 quantidade = sc.nextInt();
-                                if (p.getStock() >= quantidade)
-                                    venda.add_produto(p, quantidade);
+                                if (p.getStock() >= quantidade) {
+                                    if (venda.add_produto(p, quantidade))
+                                        System.out.println("Produto adicionado com sucesso!");
+                                    else System.out.println("Erro ao adicionar o produto.");
+
+                                }
                                 else
                                     System.out.println("Não existe stock suficiente!");
                             }
@@ -219,14 +223,14 @@ public class GestSupermercado implements Serializable {
                         }
                         //Listar promocoes
                         case 1 -> {
-                            if (sup.getprom(sup.getPromocoes(), "TQ") != null) {
+                            if (sup.getPromocao(sup.getPromocoes(), "TQ") != null) {
                                 System.out.println("Produtos com a promoção leve 4 pague 3:");
-                                for (Promocao b : sup.getprom(sup.getPromocoes(), "TQ"))
+                                for (Promocao b : sup.getPromocao(sup.getPromocoes(), "TQ"))
                                     System.out.println(b.getProduto().getNome());
                             }
-                            if (sup.getprom(sup.getPromocoes(), "PM") != null) {
+                            if (sup.getPromocao(sup.getPromocoes(), "PM") != null) {
                                 System.out.println("Produtos com a promoção pague menos:");
-                                for (Promocao b : sup.getprom(sup.getPromocoes(), "PM"))
+                                for (Promocao b : sup.getPromocao(sup.getPromocoes(), "PM"))
                                     System.out.println(b.getProduto().getNome());
                             }
                             menuProdutos(venda);
@@ -234,7 +238,7 @@ public class GestSupermercado implements Serializable {
                         //Listar produtos
                         case 0 -> {
                             for (Produto b : sup.getProdutos())
-                                System.out.println(b.getIdentificador() + "-" + b.getNome() + " Stock: " + b.getStock());
+                                System.out.println("ID: " + b.getIdentificador() + " - " + b.getNome() + " - Preco: " + b.getPrecoUnitario() + " - Stock: " + b.getStock());
                             menuProdutos(venda);
                         }
                     }

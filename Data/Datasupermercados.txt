@@ -2,11 +2,10 @@
 Supermercado do Norte
 
 *PRODUTOS*
-PD 123 Arroz 1.22 8 23
-PD 321 Alho 4.22 86 2312
-PD 222 Cebola 4.22 84 2312
+PD 123 Arroz 1.22 8 5
+PD 321 Alho 4.22 86 5
+PD 222 Cebola 4.22 84 5
 *PROMOCAO*
-PM Arroz
 TQ Cebola
 *PUSH*
 

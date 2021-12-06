@@ -33,15 +33,6 @@ public class Venda implements Serializable {
         this.preco_transporte = preco_transporte;
     }
 
-    private int getProdutoIndex(Produto produto) {
-        int index = -1;
-        for (int i = 0; i < carrinhoDeCompras.size(); i++) {
-            if (produto.getIdentificador() == carrinhoDeCompras.get(i).getIdentificador())
-                index = i;
-        }
-        return index;
-    }
-
     public float getTotal() {
         return (preco_prod + preco_transporte);
     }
@@ -52,10 +43,12 @@ public class Venda implements Serializable {
         if (index != -1) {
             p.setQuantidade_carrinho(p.getQuantidade_carrinho() + quantidade);
             p.setStock(p.getStock() - quantidade);
+            added = true;
         } else {
             p.setQuantidade_carrinho(quantidade);
             p.setStock(p.getStock() - quantidade);
             carrinhoDeCompras.add(p);
+            added = true;
         }
 
         preco_prod += (p.precoUnitario) * quantidade;
@@ -76,34 +69,40 @@ public class Venda implements Serializable {
     }
 
     public float getPreco_Prod(Supermercado sup) {
-        ArrayList<Promocao> PM = sup.getprom(sup.getPromocoes(), "PM");
-        ArrayList<Promocao> TQ = sup.getprom(sup.getPromocoes(), "TQ");
-        for (Promocao b : PM) {
-            if (carrinhoDeCompras.contains(b.getProduto())) {
-                int quantidade = b.getProduto().getQuantidade_carrinho();
-                float MaxDesc;
-                for (Produto x : carrinhoDeCompras) {
-                    if (x == b.getProduto())
-                        quantidade += 1;
-                }
-                MaxDesc = quantidade;
-                preco_prod -= quantidade * b.getProduto().precoUnitario;
-                if (quantidade > 10)
-                    MaxDesc = 10;
-                MaxDesc = (100 - (5 * MaxDesc)) / 100;
-                preco_prod += (quantidade * b.getProduto().precoUnitario) * MaxDesc;
-            }
-        }
-        for (Promocao b : TQ) {
+        ArrayList<Promocao> PM = sup.getPromocao(sup.getPromocoes(), "PM");
+        ArrayList<Promocao> TQ = sup.getPromocao(sup.getPromocoes(), "TQ");
+        System.out.println(preco_prod);
 
-            if (getCarrinhoDeCompras().contains(b.getProduto())) {
-                int quantidade = b.getProduto().getQuantidade_carrinho();
-                while (quantidade > 3) {
-                    preco_prod -= b.getProduto().precoUnitario;
-                    quantidade -= 4;
+        if (PM != null) {
+            for (Promocao b : PM) {
+                if (carrinhoDeCompras.contains(b.getProduto())) {
+                    int quantidade = b.getProduto().getQuantidade_carrinho();
+                    float MaxDesc;
+                    for (Produto x : carrinhoDeCompras) {
+                        if (x == b.getProduto())
+                            quantidade += 1;
+                    }
+                    MaxDesc = quantidade;
+                    preco_prod -= quantidade * b.getProduto().precoUnitario;
+                    if (quantidade > 10)
+                        MaxDesc = 10;
+                    MaxDesc = (100 - (5 * MaxDesc)) / 100;
+                    preco_prod += (quantidade * b.getProduto().precoUnitario) * MaxDesc;
                 }
             }
         }
+        if (TQ != null) {
+            for (Promocao b : TQ) {
+                if (getCarrinhoDeCompras().contains(b.getProduto())) {
+                    int quantidade = b.getProduto().getQuantidade_carrinho();
+                    while (quantidade > 3) {
+                        preco_prod -= b.getProduto().precoUnitario;
+                        quantidade -= 4;
+                    }
+                }
+            }
+        }
+
         preco_prod = (float) (Math.round(preco_prod * 100.0) / 100.0);
         return preco_prod;
     }
@@ -119,7 +118,7 @@ public class Venda implements Serializable {
         for (Produto b : carrinhoDeCompras) {
             if (b.getType().equals("PDMOB")) {
                 if (((ProdutorMobilado) b).getPeso() > 15)
-                    preco_transporte = preco_transporte + 15;
+                    preco_transporte += 15;
             }
         }
         return preco_transporte;

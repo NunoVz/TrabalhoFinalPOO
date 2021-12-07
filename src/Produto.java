@@ -20,7 +20,6 @@ public class Produto implements Serializable {
         this.custoTransporte = custoTransporte;
     }
 
-
     public int getCustoTransporte() {
         return custoTransporte;
     }

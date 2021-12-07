@@ -4,6 +4,8 @@ import java.util.ArrayList;
 public class Ficheiro {
     private String nome;
 
+    public Ficheiro(){}
+
     public Ficheiro(String nome) {
         this.nome = nome;
     }
@@ -40,7 +42,7 @@ public class Ficheiro {
         return clientes;
     }
 
-    public void lerDados() {
+    public void lerDados(GestSupermercado g) {
         File f = new File("Data\\Datasupermercados.txt");
         if (f.exists() && f.isFile()) {
             try {
@@ -62,7 +64,7 @@ public class Ficheiro {
                         else if (linha.contains("*PROMOCAO*"))
                             modoEscrita = 2;
                         else if (linha.contains("*PUSH*")) {
-                            GestSupermercado.supermercados.add(new Supermercado(nome, produtos, promocoes));
+                            g.getSupermercados().add(new Supermercado(nome, produtos, promocoes));
                             produtos = new ArrayList<>();
                             promocoes = new ArrayList<>();
                         } else {
@@ -154,7 +156,7 @@ public class Ficheiro {
         return clientes;
     }
 
-    public static void guardarDadosObj(ArrayList<Cliente> clientes, ArrayList<Supermercado> supermercados) {
+    public void guardarDadosObj(ArrayList<Cliente> clientes, ArrayList<Supermercado> supermercados) {
         File f = new File("Data\\Datasupermercados.ser");
         try {
             FileOutputStream fos = new FileOutputStream(f);
@@ -183,7 +185,7 @@ public class Ficheiro {
         }
     }
 
-    public static Data getDateFromString(String date) {
+    public Data getDateFromString(String date) {
         //splits it by '/'
         String[] d = date.split("/");
 

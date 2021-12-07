@@ -17,6 +17,22 @@ public class Promocao implements Serializable {
         this.dataFim = dataFim;
     }
 
+    public Data getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(Data dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public Data getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(Data dataFim) {
+        this.dataFim = dataFim;
+    }
+
     public void setProduto(Produto produto) {
         this.produto = produto;
     }

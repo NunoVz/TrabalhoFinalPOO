@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Venda implements Serializable {
     private ArrayList<Produto> carrinhoDeCompras = new ArrayList<>();
-    float preco_prod;
-    float preco_transporte;
+    public float preco_prod;
+    public float preco_transporte;
 
     public Venda() {
     }

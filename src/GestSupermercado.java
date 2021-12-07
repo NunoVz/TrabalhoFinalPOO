@@ -9,13 +9,37 @@ import java.util.Scanner;
 */
 
 public class GestSupermercado implements Serializable {
-    public static ArrayList<Supermercado> supermercados;
-    public static ArrayList<Cliente> clientes;
-    public static Data hoje;
+    public ArrayList<Supermercado> supermercados;
+    public ArrayList<Cliente> clientes;
+    public Data hoje;
 
-    public static void main(String[] args) {
+    public GestSupermercado() {
         supermercados = new ArrayList<>();
         clientes = new ArrayList<>();
+    }
+
+    public ArrayList<Supermercado> getSupermercados() {
+        return supermercados;
+    }
+
+    public void setSupermercados(ArrayList<Supermercado> supermercados) {
+        this.supermercados = supermercados;
+    }
+
+    public ArrayList<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(ArrayList<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public void setHoje(Data hoje) {
+        this.hoje = hoje;
+    }
+
+    public static void main(String[] args) {
+        GestSupermercado g = new GestSupermercado();
 
         //Ficheiros
         Ficheiro clientesTexto = new Ficheiro("Clientes.txt");
@@ -25,9 +49,9 @@ public class GestSupermercado implements Serializable {
 
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
 
-        clientes = clientesTexto.lerClientes();
+        g.clientes = clientesTexto.lerClientes();
 
-        dataSupermercadosTexto.lerDados();
+        dataSupermercadosTexto.lerDados(g);
 
         /*
         Ler objetos
@@ -37,9 +61,9 @@ public class GestSupermercado implements Serializable {
 
         System.out.println("Software up to date");
 
-        hoje = getHoje();
-        Cliente cliente = clientes.get(0);
-        Supermercado sup = supermercados.get(0);
+        g.hoje = g.getHoje();
+        Cliente cliente = g.clientes.get(0);
+        Supermercado sup = g.supermercados.get(0);
 
         /*Cliente cliente = null;
         while (cliente == null) {
@@ -50,25 +74,26 @@ public class GestSupermercado implements Serializable {
             sup = escolherSupermercado();
         }*/
 
-        escolherProdutos(sup, cliente);
+        g.escolherProdutos(g, sup, cliente);
 
         System.out.println("Software storing new data");
-        Ficheiro.guardarDadosObj(clientes, supermercados);
+        clientesTexto.guardarDadosObj(g.clientes, g.supermercados);
         System.out.println("Success\nProgram will be closing now!");
     }
 
-    private static Data getHoje() {
+    private Data getHoje() {
+        Ficheiro f = new Ficheiro();
         System.out.print("Bom dia,\nQue dia é hoje?");
         Scanner sc = new Scanner(System.in);
         String in = sc.nextLine();
         Data data;
-        while (!(data = Ficheiro.getDateFromString(in)).isDateValid()) {
+        while (!(data = f.getDateFromString(in)).isDateValid()) {
             System.out.print("A data que inseriu não é válida.\nIntroduza uma data válida.");
         }
         return data;
     }
 
-    private static Cliente LoginRegister(ArrayList<Cliente> clientes) {
+    private Cliente LoginRegister(ArrayList<Cliente> clientes) {
         Scanner sc = new Scanner(System.in);
         int option;
 
@@ -109,7 +134,7 @@ public class GestSupermercado implements Serializable {
         return null;
     }
 
-    private static Supermercado escolherSupermercado() {
+    private Supermercado escolherSupermercado() {
         Scanner sc = new Scanner(System.in);
         int option;
 
@@ -134,7 +159,7 @@ public class GestSupermercado implements Serializable {
 
     }
 
-    private static void menuProdutos(Venda venda) {
+    private void menuProdutos(Venda venda) {
         System.out.println("---------------------------");
         System.out.println("|       **Produtos**      |");
         System.out.println("0- Listar os produtos");
@@ -161,12 +186,12 @@ public class GestSupermercado implements Serializable {
 
     }
 
-    private static void escolherProdutos(Supermercado sup, Cliente cliente) {
+    private void escolherProdutos(GestSupermercado g, Supermercado sup, Cliente cliente) {
         Scanner sc = new Scanner(System.in);
         Venda venda = new Venda();
         int option = -1;
 
-        menuProdutos(venda);
+        g.menuProdutos(venda);
 
         //Checks for valid input
         if (sc.hasNextInt()) {
@@ -175,7 +200,7 @@ public class GestSupermercado implements Serializable {
 
                 if (option > 5 || option < 0) {
                     System.out.println("Please only input a valid number");
-                    menuProdutos(venda);
+                    g.menuProdutos(venda);
 
                 } else {
                     switch (option) {
@@ -189,7 +214,7 @@ public class GestSupermercado implements Serializable {
                             System.out.println("Total: " + venda.getTotal());
                             cliente.add_venda(venda);
                             venda = new Venda();
-                            menuProdutos(venda);
+                            g.menuProdutos(venda);
                         }
                         //3- Remover elemento do carrinho
                         case 3 -> {
@@ -210,7 +235,7 @@ public class GestSupermercado implements Serializable {
                                 System.out.println(produto.getNome() + " removido com sucesso!");
                             } else System.out.println("Erro ao remover produto");
 
-                            menuProdutos(venda);
+                            g.menuProdutos(venda);
                         }
                         // 2-Adicionar produto
                         case 2 -> {
@@ -240,7 +265,7 @@ public class GestSupermercado implements Serializable {
                                 else
                                     System.out.println("Não existe stock suficiente!");
                             }
-                            menuProdutos(venda);
+                            g.menuProdutos(venda);
                         }
                         //Listar promocoes
                         case 1 -> {
@@ -254,13 +279,13 @@ public class GestSupermercado implements Serializable {
                                 for (Promocao b : sup.getPromocao(sup.getPromocoes(), "PM"))
                                     System.out.println(b.getProduto().getNome());
                             }
-                            menuProdutos(venda);
+                            g.menuProdutos(venda);
                         }
                         //Listar produtos
                         case 0 -> {
                             for (Produto b : sup.getProdutos())
                                 System.out.println("ID: " + b.getIdentificador() + " - " + b.getNome() + " - Preco: " + b.getPrecoUnitario() + " - Stock: " + b.getStock());
-                            menuProdutos(venda);
+                            g.menuProdutos(venda);
                         }
                     }
                 }
@@ -268,8 +293,9 @@ public class GestSupermercado implements Serializable {
         } else System.out.println("Please type a valid option");
     }
 
-    private static void register(ArrayList<Cliente> clientes) {
+    private void register(ArrayList<Cliente> clientes) {
         Scanner sc = new Scanner(System.in);
+        Ficheiro f = new Ficheiro();
 
         System.out.print("Introduza o seu Nome:");
         String nome = sc.nextLine();
@@ -280,7 +306,7 @@ public class GestSupermercado implements Serializable {
         System.out.println("Introduza a data de nascimento:");
         String nascimento = sc.nextLine();
         Data dtNascimento;
-        while (!(dtNascimento = Ficheiro.getDateFromString(nascimento)).isDateValid()) {
+        while (!(dtNascimento = f.getDateFromString(nascimento)).isDateValid()) {
             System.out.println("Data de nascimento inválida.");
             System.out.println("Introduza a data de nascimento:");
             nascimento = sc.nextLine();
@@ -296,7 +322,7 @@ public class GestSupermercado implements Serializable {
         clientes.add(new Cliente(nome, morada, email, telefone, dtNascimento, frequente));
     }
 
-    private static Cliente login(ArrayList<Cliente> clientes) {
+    private Cliente login(ArrayList<Cliente> clientes) {
         Scanner sc = new Scanner(System.in);
 
         System.out.print("Introduza o seu email:");

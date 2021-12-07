@@ -256,14 +256,17 @@ public class GestSupermercado implements Serializable {
                             while (quantidade <= 0) {
                                 System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar:");
                                 quantidade = sc.nextInt();
-                                if (p.getStock() >= quantidade) {
-                                    if (venda.add_produto(p, quantidade))
-                                        System.out.println("Produto adicionado com sucesso!");
-                                    else System.out.println("Erro ao adicionar o produto.");
+                                if (quantidade > 0) {
+                                    if (p.getStock() >= quantidade) {
+                                        if (venda.add_produto(p, quantidade))
+                                            System.out.println("Produto adicionado com sucesso!");
+                                        else System.out.println("Erro ao adicionar o produto.");
 
-                                }
-                                else
-                                    System.out.println("Não existe stock suficiente!");
+                                    }
+                                    else
+                                        System.out.println("Não existe stock suficiente!");
+                                } else System.out.println("Indique uma quantidade válida!");
+
                             }
                             g.menuProdutos(venda);
                         }

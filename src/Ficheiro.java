@@ -1,15 +1,34 @@
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * O tipo Ficheiro.
+ */
 public class Ficheiro {
+    /**
+     * O Nome.
+     */
     public String nome;
 
+    /**
+     * Cria um novo Ficheiro.
+     */
     public Ficheiro(){}
 
+    /**
+     * Cria um novo Ficheiro.
+     *
+     * @param nome o nome
+     */
     public Ficheiro(String nome) {
         this.nome = nome;
     }
 
+    /**
+     * Ler clientes array list.
+     *
+     * @return o array list
+     */
     public ArrayList<Cliente> lerClientes() {
         ArrayList<Cliente> clientes = new ArrayList<>();
         File f = new File("Data\\Clientes.txt");
@@ -34,6 +53,11 @@ public class Ficheiro {
         return clientes;
     }
 
+    /**
+     * Ler dados.
+     *
+     * @param g o gestor
+     */
     public void lerDados(GestSupermercado g) {
         File f = new File("Data\\Datasupermercados.txt");
         if (f.exists() && f.isFile()) {
@@ -71,7 +95,7 @@ public class Ficheiro {
                                     if (array[0].equals("PDLIMP"))
                                         produtos.add(new ProdutoLimpeza(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
                                     if (array[0].equals("PDMOB"))
-                                        produtos.add(new ProdutorMobilado(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), array[7]));
+                                        produtos.add(new ProdutoMobilado(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), array[7]));
                                 }
                                 case 2 -> {
                                     String[] array = linha.split(" ");
@@ -112,6 +136,11 @@ public class Ficheiro {
         } else System.out.println("Ficheiro não existe");
     }
 
+    /**
+     * Ler objeto supermercado array list.
+     *
+     * @return a array list
+     */
     public ArrayList<Supermercado> lerObjetoSupermercado() {
         ArrayList<Supermercado> supermercados = null;
         File dataSupermercadosObj = new File("Data\\Datasupermercados.ser");
@@ -130,6 +159,11 @@ public class Ficheiro {
         return supermercados;
     }
 
+    /**
+     * Ler objeto cliente array list.
+     *
+     * @return a array list
+     */
     public ArrayList<Cliente> lerObjetoCliente() {
         ArrayList<Cliente> clientes = null;
         File clientesObj = new File("Data\\Clientes.ser");
@@ -148,6 +182,12 @@ public class Ficheiro {
         return clientes;
     }
 
+    /**
+     * Guardar dados obj.
+     *
+     * @param clientes      os clientes
+     * @param supermercados os supermercados
+     */
     public void guardarDadosObj(ArrayList<Cliente> clientes, ArrayList<Supermercado> supermercados) {
         File f = new File("Data\\Datasupermercados.obj");
         try {
@@ -177,6 +217,12 @@ public class Ficheiro {
         }
     }
 
+    /**
+     * Gets date from string.
+     *
+     * @param date the date
+     * @return the date from string
+     */
     public Data getDateFromString(String date) {
         //splits it by '/'
         String[] d = date.split("/");

@@ -3,36 +3,90 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * O tipo Gest supermercado.
+ */
 public class GestSupermercado implements Serializable {
+    /**
+     * Os Supermercados.
+     */
     public ArrayList<Supermercado> supermercados;
+    /**
+     * Os Clientes.
+     */
     public ArrayList<Cliente> clientes;
+    /**
+     * Data de Hoje.
+     */
     public Data hoje;
 
+    /**
+     * Cria um Gest supermercado.
+     */
     public GestSupermercado() {
         supermercados = new ArrayList<>();
         clientes = new ArrayList<>();
     }
 
+    /**
+     * Gets hoje.
+     *
+     * @return hoje
+     */
+    public Data getHoje() {
+        return hoje;
+    }
+
+    /**
+     * Gets supermercados.
+     *
+     * @return os supermercados
+     */
     public ArrayList<Supermercado> getSupermercados() {
         return supermercados;
     }
 
+    /**
+     * Sets supermercados.
+     *
+     * @param supermercados os supermercados
+     */
     public void setSupermercados(ArrayList<Supermercado> supermercados) {
         this.supermercados = supermercados;
     }
 
+    /**
+     * Gets clientes.
+     *
+     * @return os clientes
+     */
     public ArrayList<Cliente> getClientes() {
         return clientes;
     }
 
+    /**
+     * Sets clientes.
+     *
+     * @param clientes os clientes
+     */
     public void setClientes(ArrayList<Cliente> clientes) {
         this.clientes = clientes;
     }
 
+    /**
+     * Sets hoje.
+     *
+     * @param hoje hoje
+     */
     public void setHoje(Data hoje) {
         this.hoje = hoje;
     }
 
+    /**
+     * O inicio do programa
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         GestSupermercado g = new GestSupermercado();
         boolean exit=false;
@@ -59,7 +113,7 @@ public class GestSupermercado implements Serializable {
 
         System.out.println("Software up to date");
 
-        g.hoje = g.getHoje();
+        g.hoje = g.hoje();
         Cliente cliente = g.clientes.get(0);
         Supermercado sup = g.supermercados.get(0);
 
@@ -82,7 +136,7 @@ public class GestSupermercado implements Serializable {
         }
     }
 
-    private Data getHoje() {
+    private Data hoje() {
         Ficheiro f = new Ficheiro();
         System.out.print("Bom dia,\nQue dia é hoje?(dd/mm/aaaa): ");
         Scanner sc = new Scanner(System.in);
@@ -90,11 +144,12 @@ public class GestSupermercado implements Serializable {
         Data data;
         while (!(data = f.getDateFromString(in)).isDateValid()) {
             System.out.print("A data que inseriu não é válida.\nIntroduza uma data válida.");
+            hoje();
         }
         return data;
     }
 
-    private Cliente LoginRegister(ArrayList<Cliente> clientes) {
+    private Cliente loginRegister(ArrayList<Cliente> clientes) {
         Scanner sc = new Scanner(System.in);
         int option;
 
@@ -112,7 +167,7 @@ public class GestSupermercado implements Serializable {
             option = Integer.parseInt(sc.nextLine());
             if (option > 2) {
                 System.out.println("Please only input a valid number");
-                LoginRegister(clientes);
+                loginRegister(clientes);
             }
             //Switch Case for the menu
             switch (option) {
@@ -277,15 +332,24 @@ public class GestSupermercado implements Serializable {
                         }
                         //Listar promocoes
                         case 1 -> {
-                            if (sup.getPromocao(sup.getPromocoes(), "TQ") != null) {
-                                System.out.println("Produtos com a promoção leve 4 pague 3:");
-                                for (Promocao b : sup.getPromocao(sup.getPromocoes(), "TQ"))
-                                    System.out.println(b.getProduto().getNome());
+                            ArrayList<Promocao> promosTQ = sup.getPromocao(sup.getPromocoes(), "TQ");
+                            if (promosTQ != null) {
+                                System.out.println("\nProdutos com a promoção leve 4 pague 3:");
+                                for (Promocao b : promosTQ) {
+                                    int index = promosTQ.indexOf(b);
+                                    if (getHoje().isBigger(getHoje(), promosTQ.get(index).getDataInicio()) && getHoje().isBigger(promosTQ.get(index).getDataFim(), getHoje()))
+                                        System.out.println(b.getProduto().getNome() + ", Válido de " + promosTQ.get(index).getDataInicio() + " a " + promosTQ.get(index).getDataFim());
+                                }
                             }
-                            if (sup.getPromocao(sup.getPromocoes(), "PM") != null) {
-                                System.out.println("Produtos com a promoção pague menos:");
-                                for (Promocao b : sup.getPromocao(sup.getPromocoes(), "PM"))
-                                    System.out.println(b.getProduto().getNome());
+
+                            ArrayList<Promocao> promosPM = sup.getPromocao(sup.getPromocoes(), "PM");
+                            if (promosPM != null) {
+                                System.out.println("\nProdutos com a promoção pague menos:");
+                                for (Promocao b : promosPM) {
+                                    int index = promosPM.indexOf(b);
+                                    if (getHoje().isBigger(getHoje(), promosPM.get(index).getDataInicio()) && getHoje().isBigger(promosPM.get(index).getDataFim(), getHoje()))
+                                        System.out.println(b.getProduto().getNome() + ", Válido de " + promosPM.get(index).getDataInicio() + " a " + promosPM.get(index).getDataFim());
+                                }
                             }
                             g.menuProdutos(venda);
                         }

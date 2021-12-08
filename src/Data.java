@@ -1,5 +1,8 @@
 import java.io.Serializable;
 
+/**
+ * O tipo Data.
+ */
 public class Data implements Serializable {
     private int dia, mes, ano;
 
@@ -16,14 +19,29 @@ public class Data implements Serializable {
         this.ano = ano;
     }
 
+    /**
+     * Gets dia.
+     *
+     * @return o dia
+     */
     public int getDia() {
         return dia;
     }
 
+    /**
+     * Gets mes.
+     *
+     * @return o mes
+     */
     public int getMes() {
         return mes;
     }
 
+    /**
+     * Gets ano.
+     *
+     * @return o ano
+     */
     public int getAno() {
         return ano;
     }
@@ -53,9 +71,9 @@ public class Data implements Serializable {
     /**
      * Checks if d1 is after d2
      *
-     * @param d1 the date1
-     * @param d2 the date2
-     * @return the boolean
+     * @param d1 o date1
+     * @param d2 o date2
+     * @return um boolean
      */
     public boolean isBigger(Data d1, Data d2) {
         boolean val = false;
@@ -75,6 +93,6 @@ public class Data implements Serializable {
 
     @Override
     public String toString() {
-        return dia + " " + mes + " " + ano;
+        return dia + "/" + mes + "/" + ano;
     }
 }

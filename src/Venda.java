@@ -37,22 +37,19 @@ public class Venda implements Serializable {
         return (preco_prod + preco_transporte);
     }
 
-    public boolean add_produto(Produto p, int quantidade) {
-        boolean added = false;
+    public float add_produto(Produto p, int quantidade, float preco) {
         int index = carrinhoDeCompras.indexOf(p);
         if (index != -1) {
             p.setQuantidade_carrinho(p.getQuantidade_carrinho() + quantidade);
             p.setStock(p.getStock() - quantidade);
-            added = true;
         } else {
             p.setQuantidade_carrinho(quantidade);
             p.setStock(p.getStock() - quantidade);
             carrinhoDeCompras.add(p);
-            added = true;
         }
 
-        preco_prod += (p.precoUnitario) * quantidade;
-        return added;
+        preco += (p.precoUnitario) * quantidade;
+        return preco;
     }
 
     public boolean removerProduto(Produto p) {
@@ -68,10 +65,9 @@ public class Venda implements Serializable {
         return removed;
     }
 
-    public float getPreco_Prod(Supermercado sup) {
+    public float getPreco_Prod(Supermercado sup,float preco) {
         ArrayList<Promocao> PM = sup.getPromocao(sup.getPromocoes(), "PM");
         ArrayList<Promocao> TQ = sup.getPromocao(sup.getPromocoes(), "TQ");
-        System.out.println(preco_prod);
 
         if (PM != null) {
             for (Promocao b : PM) {
@@ -83,11 +79,11 @@ public class Venda implements Serializable {
                             quantidade += 1;
                     }
                     MaxDesc = quantidade;
-                    preco_prod -= quantidade * b.getProduto().precoUnitario;
+                    preco -= quantidade * b.getProduto().precoUnitario;
                     if (quantidade > 10)
                         MaxDesc = 10;
                     MaxDesc = (100 - (5 * MaxDesc)) / 100;
-                    preco_prod += (quantidade * b.getProduto().precoUnitario) * MaxDesc;
+                    preco += (quantidade * b.getProduto().precoUnitario) * MaxDesc;
                 }
             }
         }
@@ -96,32 +92,32 @@ public class Venda implements Serializable {
                 if (getCarrinhoDeCompras().contains(b.getProduto())) {
                     int quantidade = b.getProduto().getQuantidade_carrinho();
                     while (quantidade > 3) {
-                        preco_prod -= b.getProduto().precoUnitario;
+                        preco -= b.getProduto().precoUnitario;
                         quantidade -= 4;
                     }
                 }
             }
         }
 
-        preco_prod = (float) (Math.round(preco_prod * 100.0) / 100.0);
-        return preco_prod;
+        preco = (float) (Math.round(preco * 100.0) / 100.0);
+        return preco;
     }
 
     public float getPreco_transporte(Cliente c) {
-        preco_transporte = 20;
+        float preco = 20;
         if (c.isFrequente()) {
             if (preco_prod < 40)
-                preco_transporte = 15;
+                preco = 15;
             else
-                preco_transporte = 0;
+                preco = 0;
         }
         for (Produto b : carrinhoDeCompras) {
             if (b.getType().equals("PDMOB")) {
                 if (((ProdutorMobilado) b).getPeso() > 15)
-                    preco_transporte += 15;
+                    preco += 15;
             }
         }
-        return preco_transporte;
+        return preco;
     }
 
     @Override

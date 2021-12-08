@@ -40,7 +40,7 @@ public class GestSupermercado implements Serializable {
 
     public static void main(String[] args) {
         GestSupermercado g = new GestSupermercado();
-
+        boolean exit=false;
         //Ficheiros
         Ficheiro clientesTexto = new Ficheiro("Clientes.txt");
         Ficheiro dataSupermercadosTexto = new Ficheiro("Datasupermercados.txt");
@@ -48,6 +48,7 @@ public class GestSupermercado implements Serializable {
         System.out.println("Software Boot");
 
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
+
 
         g.clientes = clientesTexto.lerClientes();
 
@@ -68,22 +69,25 @@ public class GestSupermercado implements Serializable {
         /*Cliente cliente = null;
         while (cliente == null) {
             cliente = LoginRegister(clientes);
-        }
-        Supermercado sup = null;
+        }*/
+        while(!exit){
+        /*Supermercado sup = null;
         while (sup == null) {
             sup = escolherSupermercado();
         }*/
 
         g.escolherProdutos(g, sup, cliente);
+        exit=g.exit(cliente);
 
         System.out.println("Software storing new data");
         clientesTexto.guardarDadosObj(g.clientes, g.supermercados);
         System.out.println("Success\nProgram will be closing now!");
+        }
     }
 
     private Data getHoje() {
         Ficheiro f = new Ficheiro();
-        System.out.print("Bom dia,\nQue dia é hoje?");
+        System.out.print("Bom dia,\nQue dia é hoje?(dd/mm/aaaa): ");
         Scanner sc = new Scanner(System.in);
         String in = sc.nextLine();
         Data data;
@@ -190,6 +194,8 @@ public class GestSupermercado implements Serializable {
         Scanner sc = new Scanner(System.in);
         Venda venda = new Venda();
         int option = -1;
+        float preco_prod=0;
+        float preco_trans;
 
         g.menuProdutos(venda);
 
@@ -209,12 +215,17 @@ public class GestSupermercado implements Serializable {
                         // 4-Pagar
                         case 4 -> {
                             System.out.println("Prosseguindo para o pagamento");
-                            System.out.println("Valor a pagar pelos produtos: " + venda.getPreco_Prod(sup));
-                            System.out.println("Valor a pagar pelo Transporte: " + venda.getPreco_transporte(cliente));
+                            preco_prod=venda.getPreco_Prod(sup,preco_prod);
+                            System.out.println("Valor a pagar pelos produtos: " + preco_prod);
+                            preco_trans=venda.getPreco_transporte(cliente);
+                            venda.setPreco_prod(preco_prod);
+                            System.out.println("Valor a pagar pelo Transporte: " + preco_trans);
+                            venda.setPreco_transporte(preco_trans);
                             System.out.println("Total: " + venda.getTotal());
                             cliente.add_venda(venda);
                             venda = new Venda();
-                            g.menuProdutos(venda);
+                            option=5;
+
                         }
                         //3- Remover elemento do carrinho
                         case 3 -> {
@@ -258,10 +269,7 @@ public class GestSupermercado implements Serializable {
                                 quantidade = sc.nextInt();
                                 if (quantidade > 0) {
                                     if (p.getStock() >= quantidade) {
-                                        if (venda.add_produto(p, quantidade))
-                                            System.out.println("Produto adicionado com sucesso!");
-                                        else System.out.println("Erro ao adicionar o produto.");
-
+                                        preco_prod+=venda.add_produto(p, quantidade,preco_prod);
                                     }
                                     else
                                         System.out.println("Não existe stock suficiente!");
@@ -336,4 +344,35 @@ public class GestSupermercado implements Serializable {
         }
         return null;
     }
+
+    private boolean exit(Cliente x) {
+        Scanner sc = new Scanner(System.in);
+        int option;
+        boolean exit=false;
+
+        System.out.println("---------------------------");
+        System.out.println(" Obrigado pela sua compra |");
+        System.out.println("|1-Fazer uma nova compra  |");
+        System.out.println("|2-Historico de compras   |");
+        System.out.println("|3-Exit                   |");
+        System.out.println("---------------------------");
+        System.out.print("Introduza um numero:");
+
+        if (sc.hasNextInt()) {
+            option = Integer.parseInt(sc.nextLine());
+            if (option > 3) {
+                System.out.println("Please only input a valid number");
+                exit(x);
+            }
+            if(option==2)
+                for(Venda b:x.getHistoricoVendas()){
+                    System.out.println(b);}
+            else if(option==3){
+                exit=true;
+            }
+
+        } else System.out.println("Please type a valid option");
+        return exit;
+    }
+
 }

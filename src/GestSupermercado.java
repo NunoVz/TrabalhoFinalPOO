@@ -1,12 +1,7 @@
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-/*
- TODO: 06/12/2021
-    tirar o calculo de atributos da classe, da classe venda (preco_prod)
-    cena de abertura de ficheiros obj apenas se existirem
-*/
 
 public class GestSupermercado implements Serializable {
     public ArrayList<Supermercado> supermercados;
@@ -41,24 +36,26 @@ public class GestSupermercado implements Serializable {
     public static void main(String[] args) {
         GestSupermercado g = new GestSupermercado();
         boolean exit=false;
+        String[] ficheiros = {"Data\\Clientes.txt", "Data\\Datasupermercados.txt", "Data\\Clientes.obj", "Data\\Datasupermercados.obj"};
+
         //Ficheiros
-        Ficheiro clientesTexto = new Ficheiro("Clientes.txt");
-        Ficheiro dataSupermercadosTexto = new Ficheiro("Datasupermercados.txt");
+        Ficheiro clientesTexto = new Ficheiro(ficheiros[0]);
+        Ficheiro dataSupermercadosTexto = new Ficheiro(ficheiros[1]);
 
         System.out.println("Software Boot");
 
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
 
-
-        g.clientes = clientesTexto.lerClientes();
-
-        dataSupermercadosTexto.lerDados(g);
-
-        /*
-        Ler objetos
-        clientes = clientesTexto.lerObjetoCliente();
-        supermercados = dataSupermercadosTexto.lerObjetoSupermercado();
-        */
+        if (!(new File(ficheiros[2])).exists()) {
+            System.out.println("Ficheiros objetos nao existem\nA ler texto");
+            g.clientes = clientesTexto.lerClientes();
+            dataSupermercadosTexto.lerDados(g);
+        } else {
+            //Ler objetos
+            System.out.println("Ficheiros objetos existem\nA ler objetos");
+            g.clientes = clientesTexto.lerObjetoCliente();
+            g.supermercados = dataSupermercadosTexto.lerObjetoSupermercado();
+        }
 
         System.out.println("Software up to date");
 
@@ -351,7 +348,7 @@ public class GestSupermercado implements Serializable {
         boolean exit=false;
 
         System.out.println("---------------------------");
-        System.out.println(" Obrigado pela sua compra |");
+        System.out.println("|Obrigado pela sua compra |");
         System.out.println("|1-Fazer uma nova compra  |");
         System.out.println("|2-Historico de compras   |");
         System.out.println("|3-Exit                   |");

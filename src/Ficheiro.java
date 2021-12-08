@@ -2,19 +2,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Ficheiro {
-    private String nome;
+    public String nome;
 
     public Ficheiro(){}
 
     public Ficheiro(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -157,20 +149,20 @@ public class Ficheiro {
     }
 
     public void guardarDadosObj(ArrayList<Cliente> clientes, ArrayList<Supermercado> supermercados) {
-        File f = new File("Data\\Datasupermercados.ser");
+        File f = new File("Data\\Datasupermercados.obj");
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(supermercados);
 
             oos.close();
-        } catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException e) {
             System.out.println("Erro a criar ficheiro");
-        } catch (IOException ex) {
+        } catch (IOException e) {
             System.out.println("Erro a escrever para o ficheiro");
         }
 
-        f = new File("Data\\Clientes.ser");
+        f = new File("Data\\Clientes.obj");
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);

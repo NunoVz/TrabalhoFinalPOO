@@ -2,22 +2,36 @@
 Supermercado do Norte
 
 *PRODUTOS*
+
 Tipo ID Nome Preço Stock Transporte Calorias(/100g) Gordura(%)
 PDALI 892365 Arroz 1 80 5 140 3
 PDALI 927492 Alho 4 86 5 120 4
-PDALI 756284 Cebola 2 84 5 100 2
+PDALI 756284 Cebola 2 83 5 50 2
+PDALI 312324 Pepino 2 82 5 20 2
+PDALI 532312 Cenoura 2 92 5 100 2
 
 Tipo ID Nome Preço Stock Transporte Peso Dimensao(AlturaxLarguraxProfundidade)
-PDMOB 826492 Mob 50 10 19 100 20x10x5
+PDMOB 826492 Movel 50 10 19 400 20x10x5
+PDMOB 321231 Sofa 50 10 19 200 20x10x5
+PDMOB 341232 Cadeira 50 10 19 10 2x2x5
+PDMOB 563368 Porta 50 10 19 50 10x10x2
+PDMOB 088239 Mesa 50 10 19 50 10x10x5
 
 Tipo ID Nome Preço Stock Transporte GrauToxicidade
-PDLIMP 472748 Limpeza 20 80 19 2
+PDLIMP 472748 Fairy 20 80 19 2
+PDLIMP 321423 Lixivia 20 80 19 2
+PDLIMP 732621 Detergente 20 80 19 2
+PDLIMP 098732 Papel_Higienico 20 80 19 0
+PDLIMP 712313 Sacos_Do_Lixo 20 80 19 0
 
 *PROMOCAO*
+
 Tipo Nome DataInicio DataFim
 TQ Cebola 4/12/2021 31/12/2021
 PM Arroz 2/12/2021 31/12/2021
+PM Pepino 2/12/2021 31/12/2021
 TQ Alho 1/12/2021 31/12/2021
+TQ Cenoura 1/12/2021 31/12/2021
 *PUSH*
 
 
@@ -25,9 +39,32 @@ TQ Alho 1/12/2021 31/12/2021
 Supermercado do Sul
 
 *PRODUTOS*
-PD 512 Batata 1.22 10 23
-PD 321 Milho 6.22 32 213
-PD 421 Azeite 5.322 41 6423
+
+Tipo ID Nome Preço Stock Transporte Calorias(/100g) Gordura(%)
+PDALI 892365 Massa 1 80 5 140 3
+PDALI 927492 Maça 4 86 5 120 4
+PDALI 756284 Pão 2 83 5 50 2
+PDALI 312324 Ketchup 2 82 5 20 2
+PDALI 532312 Mostarda 2 92 5 100 2
+
+Tipo ID Nome Preço Stock Transporte Peso Dimensao(AlturaxLarguraxProfundidade)
+PDMOB 826492 Movel 50 10 19 400 20x10x5
+PDMOB 321231 Sofa 50 10 19 200 20x10x5
+PDMOB 341232 Janela 50 10 19 10 2x2x5
+PDMOB 563368 Quadro 50 10 19 50 10x10x2
+PDMOB 088239 Cortina 50 10 19 50 10x10x5
+
+Tipo ID Nome Preço Stock Transporte GrauToxicidade
+PDLIMP 472748 Fairy 20 80 19 2
+PDLIMP 321423 Lixivia 20 80 19 2
+PDLIMP 732621 Detergente 20 80 19 2
+PDLIMP 098732 Papel_Higienico 20 80 19 0
+PDLIMP 712313 Sacos_Do_Lixo 20 80 19 0
+
 *PROMOCAO*
-PM Milho 1/12/2021 31/12/2021
+PM Cortina 1/12/2021 31/12/2021
+PM Ketchup 1/12/2021 31/12/2021
+PM Pão 2/12/2021 31/12/2021
+TQ Janela 1/12/2021 31/12/2021
+TQ Detergente 1/12/2021 31/12/2021
 *PUSH*

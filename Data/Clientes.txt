@@ -1,4 +1,5 @@
-Lionel|Morada|antones@com|915252113|13/11/2010|true
-Limpao|SemAbrigo|marionata@com|912234122|12/12/2001|false
-juao|Rua|w|915222113|13/11/2010|true
-Limpao|SemAbrigo|p|912342122|12/12/2001|false
+Leonel|Vila_Real|antones@com|915252113|23/10/2010|true
+Jose|Coimbra|marionata@com|935553959|29/11/2001|false
+Miguel|Santarém|miguel@gmail.com|965556722|1/12/2010|true
+Filipe|Porto|filipe2001@gmail.com|929055580|3/12/2001|false
+João|Porto|joao@hotmail.com|935558961|4/10/2001|false

@@ -31,6 +31,7 @@ public class Ficheiro {
      * @return o array list
      */
     public ArrayList<Cliente> lerClientes() {
+        //Le os dados relativos aos clientes
         ArrayList<Cliente> clientes = new ArrayList<>();
         File f = new File("Data\\Clientes.txt");
         try {
@@ -41,6 +42,7 @@ public class Ficheiro {
                 if (line.length() != 0) {
                     String[] array = line.split("\\|");
                     //new Cliente(nome, morada, email, telefone, Data nascimento, bool frequente)
+                    //Criação do cliente e respetica adição com os dados apresentados no ficheiro de texto
                     clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]), getDateFromString(array[4]), Boolean.parseBoolean(array[5])));
                 }
             }
@@ -59,6 +61,7 @@ public class Ficheiro {
      * @param g o gestor
      */
     public void lerDadosTexto(GestSupermercado g) {
+        //Le os dados relativos ao Supermercado
         File f = new File("Data\\Datasupermercados.txt");
         if (f.exists() && f.isFile()) {
             try {
@@ -73,6 +76,12 @@ public class Ficheiro {
 
                 while ((linha = br.readLine()) != null) {
                     if (linha.length() != 0) {
+                     /*Verifica o modo de escrita:
+                             1-Nome
+                             2-Produtos
+                             3-Promoções
+                             4-Guardar Classe no array
+                             */
                         if (linha.contains("*NOME*"))
                             modoEscrita = 0;
                         else if (linha.contains("*PRODUTOS*"))
@@ -85,7 +94,9 @@ public class Ficheiro {
                             promocoes = new ArrayList<>();
                         } else {
                             switch (modoEscrita) {
+                                //Atribui o nome do supermercado
                                 case 0 -> nome = linha;
+                                //Adciona produtos ao supermercado
                                 case 1 -> {
                                     String[] array = linha.split(" ");
                                     if (array[0].equals("PD"))
@@ -97,8 +108,10 @@ public class Ficheiro {
                                     if (array[0].equals("PDMOB"))
                                         produtos.add(new ProdutoMobilado(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), array[7]));
                                 }
+                                //Adciona as promoções
                                 case 2 -> {
                                     String[] array = linha.split(" ");
+                                    //Se for Pague menos executa este bloco de codigo e verifica se as datas estao corretas
                                     if (array[0].equals("PM")) {
                                         String produto = array[1];
                                         for (Produto b : produtos) {
@@ -110,6 +123,7 @@ public class Ficheiro {
                                                 else System.out.println("Data inválida, a promoçao nao foi adicionada");
                                             }
                                         }
+                                    //Se for pague 3 leve quatro executa este bloco de codigo e verifica se as datas estao corretas
                                     } else if (array[0].equals("TQ")) {
                                         String Produto = array[1];
                                         for (Produto b : produtos) {
@@ -147,6 +161,7 @@ public class Ficheiro {
         try {
             FileInputStream fis = new FileInputStream(dataSupermercadosObj);
             ObjectInputStream ois = new ObjectInputStream(fis);
+            //Obtenção da arraylist que contem os supermercados
             supermercados = (ArrayList<Supermercado>) ois.readObject();
             ois.close();
         } catch (FileNotFoundException e) {
@@ -170,6 +185,7 @@ public class Ficheiro {
         try {
             FileInputStream fis = new FileInputStream(clientesObj);
             ObjectInputStream ois = new ObjectInputStream(fis);
+            //Obtenção da arraylist que contem os clientes
             clientes = (ArrayList<Cliente>) ois.readObject();
             ois.close();
         } catch (FileNotFoundException e) {
@@ -193,6 +209,7 @@ public class Ficheiro {
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+            //Guarda o array dos supermercados
             oos.writeObject(supermercados);
 
             oos.close();
@@ -206,6 +223,7 @@ public class Ficheiro {
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
+            //Guarda o array dos clientes
             oos.writeObject(clientes);
 
             oos.close();

@@ -93,6 +93,7 @@ public class Supermercado implements Serializable {
      * @param custoTransporte o custo de transporte
      */
     public void add_produto(int identificador, String nome, float precoUnitario, int stock, int custoTransporte) {
+        //Adcionar um produto ao supermercado
         produtos.add(new Produto(identificador, nome, precoUnitario, stock, custoTransporte));
     }
 
@@ -104,6 +105,7 @@ public class Supermercado implements Serializable {
      * @return a array list
      */
     public ArrayList<Promocao> getPromocao(ArrayList<Promocao> promos, String tipo){
+        //Função para retornar as promoções conforme o tipo requesitado
         ArrayList<Promocao> promoTipo=new ArrayList<>();
         for(Promocao b:promos){
             if (b.getTipo().equals(tipo)){
@@ -114,6 +116,7 @@ public class Supermercado implements Serializable {
             return promoTipo;
 
         }
+        //Se retornar null significa que não existe promoções
         return null;
     }
 

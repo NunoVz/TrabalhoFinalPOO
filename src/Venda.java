@@ -92,17 +92,23 @@ public class Venda implements Serializable {
      * @param preco      o preco
      * @return um float
      */
-    public float add_produto(Produto p, int quantidade, float preco) {
+    public float addProduto(Produto p, int quantidade, float preco) {
+        //Adciona o produto ao carrinho
+        //Verifica se o produto ja existe no carrinho de compras
         int index = carrinhoDeCompras.indexOf(p);
         if (index != -1) {
+            //Se não existir
+            //Adciona o produto e indica a quantidade existente
             p.setQuantidade_carrinho(p.getQuantidade_carrinho() + quantidade);
             p.setStock(p.getStock() - quantidade);
         } else {
+            //Se existir apenas aumenta a quantidade existente
             p.setQuantidade_carrinho(quantidade);
             p.setStock(p.getStock() - quantidade);
             carrinhoDeCompras.add(p);
         }
 
+        //Adciona o preço sem desconto
         preco += (p.precoUnitario) * quantidade;
         return preco;
     }
@@ -117,10 +123,14 @@ public class Venda implements Serializable {
         boolean removed = false;
         int stock = p.getStock();
         int index = carrinhoDeCompras.indexOf(p);
+        //Se esse produto existir
         if (index != -1) {
+            //Repoem os produtos no stock
             stock += carrinhoDeCompras.get(index).getQuantidade_carrinho();
             p.setStock(stock);
+            //Remove o produto do carrinho
             carrinhoDeCompras.remove(p);
+            //Produto removido com sucesso
             removed = true;
         }
         return removed;
@@ -133,42 +143,47 @@ public class Venda implements Serializable {
      * @param preco o preco
      * @return o preco produto
      */
-    public float getPreco_Prod(Supermercado sup,float preco) {
+    public float getPrecoProd(Supermercado sup, float preco) {
         ArrayList<Promocao> PM = sup.getPromocao(sup.getPromocoes(), "PM");
         ArrayList<Promocao> TQ = sup.getPromocao(sup.getPromocoes(), "TQ");
-
+        //Se existir promoção Pague Menos
         if (PM != null) {
             for (Promocao b : PM) {
+                //Se o carrinho de compras conter um produto com desconto aplicavel
                 if (carrinhoDeCompras.contains(b.getProduto())) {
-                    if (b.getProduto().getQuantidade_carrinho() != 1) {
-                        int quantidade = b.getProduto().getQuantidade_carrinho();
-                        int MaxDesc= quantidade;
-                        preco-=b.getProduto().getPrecoUnitario()*quantidade;
-                        float prom= (float) 1.05;
-                        if(MaxDesc>10){
-                            MaxDesc=11;
-                        }
-                        int x=quantidade-MaxDesc;
-                        if(x>0){
-                            preco+=b.getProduto().getPrecoUnitario()*0.5*x;
-                        }
+                    int quantidade = b.getProduto().getQuantidade_carrinho();
+                    int MaxDesc = quantidade;
+                    preco -= b.getProduto().getPrecoUnitario() * quantidade;
+                    //Desconto minimo
+                    float prom = (float) 1.05;
+                    //Maximo que a promoção pode descer é até 50% ou seja 10 produtos
+                    if (MaxDesc > 10) {
+                        MaxDesc = 11;
+                    }
+                    //Se a quantidade for maior de 10 os restantes produtos tem uma promoção de 50% automaticamente
+                    int x = quantidade - MaxDesc;
+                    if (x > 0) {
+                        preco += b.getProduto().getPrecoUnitario() * 0.5 * x;
+                    }
 
-                        //1.95
-                        while(MaxDesc>0){
-                            prom-=0.05;
-                            preco+=b.getProduto().getPrecoUnitario()*prom;
-                            MaxDesc-=1;
-                        }
+                    //Função que vai aumentando a promoção e aplicando aos produtos até este não existir
+                    while (MaxDesc > 0) {
+                        prom -= 0.05;
+                        preco += b.getProduto().getPrecoUnitario() * prom;
+                        MaxDesc -= 1;
+                    }
 
-                    } else preco = b.getProduto().precoUnitario;
 
                 }
             }
         }
+        //Se existir promoção leve tres pague quatro
         if (TQ != null) {
             for (Promocao b : TQ) {
+                //E se conter o produto no carrinho de compras
                 if (getCarrinhoDeCompras().contains(b.getProduto())) {
                     int quantidade = b.getProduto().getQuantidade_carrinho();
+                    //Enquanto a quantidade for maior que 3 é removido o valor de um produto em 4
                     while (quantidade > 3) {
                         preco -= b.getProduto().precoUnitario;
                         quantidade -= 4;
@@ -176,7 +191,7 @@ public class Venda implements Serializable {
                 }
             }
         }
-
+        //Arredontamentos de forma ao preço possuir duas casas decimais
         preco = (float) (Math.round(preco * 100.0) / 100.0);
         return preco;
     }
@@ -189,12 +204,14 @@ public class Venda implements Serializable {
      */
     public float getPreco_transporte(Cliente c) {
         float preco = 20;
+        //Verifica se o cliente é frequente e aplica o respetico preço, se não for o preço base é 20
         if (c.isFrequente()) {
             if (preco_prod < 40)
                 preco = 15;
             else
                 preco = 0;
         }
+        //Se existir um produto de mobilia o preco tem um custo acrescido de 15 euros se exceder o limite de 15Kg
         for (Produto b : carrinhoDeCompras) {
             if (b.getType().equals("PDMOB")) {
                 if (((ProdutoMobilado) b).getPeso() > 15)
@@ -205,6 +222,7 @@ public class Venda implements Serializable {
     }
 
     private String getNomes() {
+        //Listar produtos no historico de vendas do cliente
         String nomes = "";
         for (Produto p : carrinhoDeCompras) {
             nomes += "[" + p.getNome() + " * " + p.getQuantidade_carrinho() + "] ";

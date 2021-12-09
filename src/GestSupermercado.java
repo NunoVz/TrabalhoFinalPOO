@@ -388,7 +388,7 @@ public class GestSupermercado {
                         case 0 -> {
                             //Percorre os produtos do supermercado e lista
                             for (Produto b : sup.getProdutos())
-                                System.out.println("ID: " + b.getIdentificador() + " - " + b.getNome() + " - Preco: " + b.getPrecoUnitario() + "€ - Stock: " + b.getStock() + " unidades" + b.toString());
+                                System.out.println("ID: " + b.getIdentificador() + " - " + b.getNome() + " - Preco: " + b.getPrecoUnitario() + "€ - Stock: " + b.getStock() + " unidades" + b);
                             //Apresenta o menu ao user outra vez
                             g.menuProdutos(venda);
                         }

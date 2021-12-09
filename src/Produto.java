@@ -175,10 +175,7 @@ public class Produto implements Serializable {
      *
      * @return an string
      */
-    public String guardarData() {
-        return getType() + " " + identificador
-                + " " + nome + " " + precoUnitario + " " + stock + " " + custoTransporte;
-    }
+
 
     @Override
     public String toString() {

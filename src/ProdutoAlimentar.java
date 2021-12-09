@@ -73,6 +73,6 @@ public class ProdutoAlimentar extends Produto implements Serializable {
 
     @Override
     public String toString() {
-        return " - nº Calorias/100g: " + nCalorias100g + " - Percentagem de Gordura: " + percentagemGordura + "%";
+        return " - Custo de transporte: " + custoTransporte + "€ - nº Calorias/100g: " + nCalorias100g + " - Percentagem de Gordura: " + percentagemGordura + "%";
     }
 }

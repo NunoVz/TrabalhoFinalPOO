@@ -72,12 +72,8 @@ public class ProdutoMobilado extends Produto implements Serializable {
         return "PDMOB";
     }
 
-    /* * @param custoTransporte o custo de transporte
-     * @param peso            o peso
-     * @param dimensao        a dimensao*/
-
     @Override
     public String toString() {
-        return " - Custo de transporte: " + custoTransporte + " - Peso: " + peso + "Dimensao: " + dimensao;
+        return " - Custo de transporte: " + custoTransporte + "€ - Peso: " + peso + "kg - Dimensao: " + dimensao;
     }
 }

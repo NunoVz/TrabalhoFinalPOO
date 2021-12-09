@@ -2,14 +2,21 @@
 Supermercado do Norte
 
 *PRODUTOS*
-PDALI 123 Arroz 1 8 5 140 3
-PDALI 321 Alho 4 86 5 120 4
-PDALI 222 Cebola 4 84 5 100 2
-PDMOB 111 Mob 50 10 19 100 20x10x5
-PDLIMP 121 Limpeza 20 80 19 2
+Tipo ID Nome Preço Stock Transporte Calorias(/100g) Gordura(%)
+PDALI 892365 Arroz 1 80 5 140 3
+PDALI 927492 Alho 4 86 5 120 4
+PDALI 756284 Cebola 2 84 5 100 2
+
+Tipo ID Nome Preço Stock Transporte Peso Dimensao(AlturaxLarguraxProfundidade)
+PDMOB 826492 Mob 50 10 19 100 20x10x5
+
+Tipo ID Nome Preço Stock Transporte GrauToxicidade
+PDLIMP 472748 Limpeza 20 80 19 2
+
 *PROMOCAO*
-TQ Cebola 1/12/2021 31/12/2021
-PM Arroz 1/12/2021 31/12/2021
+Tipo Nome DataInicio DataFim
+TQ Cebola 4/12/2021 31/12/2021
+PM Arroz 2/12/2021 31/12/2021
 TQ Alho 1/12/2021 31/12/2021
 *PUSH*
 

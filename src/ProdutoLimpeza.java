@@ -43,4 +43,9 @@ public class ProdutoLimpeza extends Produto implements Serializable {
     public String getType() {
         return "PDLIMP";
     }
+
+    @Override
+    public String toString() {
+        return " - Custo de transporte: " + custoTransporte + "€ - Grau Toxicidade: " + grauToxicidade;
+    }
 }

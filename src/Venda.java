@@ -140,18 +140,28 @@ public class Venda implements Serializable {
         if (PM != null) {
             for (Promocao b : PM) {
                 if (carrinhoDeCompras.contains(b.getProduto())) {
-                    int quantidade = b.getProduto().getQuantidade_carrinho();
-                    float MaxDesc;
-                    for (Produto x : carrinhoDeCompras) {
-                        if (x == b.getProduto())
-                            quantidade += 1;
-                    }
-                    MaxDesc = quantidade;
-                    preco -= quantidade * b.getProduto().precoUnitario;
-                    if (quantidade > 10)
-                        MaxDesc = 10;
-                    MaxDesc = (100 - (5 * MaxDesc)) / 100;
-                    preco += (quantidade * b.getProduto().precoUnitario) * MaxDesc;
+                    if (b.getProduto().getQuantidade_carrinho() != 1) {
+                        int quantidade = b.getProduto().getQuantidade_carrinho();
+                        int MaxDesc= quantidade;
+                        preco-=b.getProduto().getPrecoUnitario()*quantidade;
+                        float prom= (float) 1.05;
+                        if(MaxDesc>10){
+                            MaxDesc=11;
+                        }
+                        int x=quantidade-MaxDesc;
+                        if(x>0){
+                            preco+=b.getProduto().getPrecoUnitario()*0.5*x;
+                        }
+
+                        //1.95
+                        while(MaxDesc>0){
+                            prom-=0.05;
+                            preco+=b.getProduto().getPrecoUnitario()*prom;
+                            MaxDesc-=1;
+                        }
+
+                    } else preco = b.getProduto().precoUnitario;
+
                 }
             }
         }
@@ -194,9 +204,17 @@ public class Venda implements Serializable {
         return preco;
     }
 
+    private String getNomes() {
+        String nomes = "";
+        for (Produto p : carrinhoDeCompras) {
+            nomes += "[" + p.getNome() + " * " + p.getQuantidade_carrinho() + "] ";
+        }
+        return nomes;
+    }
+
     @Override
     public String toString() {
-        return "Comprou: " + carrinhoDeCompras + "\nPreço prod = " + preco_prod
+        return "Comprou: " + getNomes() + "\nPreço prod = " + preco_prod
                 + "\nPreço do Transporte = " + preco_transporte + "\nTotal = " + getTotal() + "\n";
     }
 }

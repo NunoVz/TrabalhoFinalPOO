@@ -442,37 +442,43 @@ public class GestSupermercado {
         return null;
     }
 
-    private boolean exit(Cliente x) {
-        Scanner sc = new Scanner(System.in);
-        int option;
-        boolean exit = false;
-
+    private void  escolherExit(){
         System.out.println("---------------------------");
-        System.out.println("|Obrigado pela sua compra |");
+        System.out.println("|        Menu Final       |");
         System.out.println("|1-Fazer uma nova compra  |");
         System.out.println("|2-Historico de compras   |");
         System.out.println("|3-Exit                   |");
         System.out.println("---------------------------");
         System.out.print("Introduza um numero:");
+    }
+    private boolean exit(Cliente x) {
+        Scanner sc = new Scanner(System.in);
+        int option;
+        boolean exit = false;
+
+        escolherExit();
 
         if (sc.hasNextInt()) {
-            option = Integer.parseInt(sc.nextLine());
-            if (option > 3) {
-                System.out.println("Please only input a valid number");
-                exit(x);
-            }
-            //Se o user quiser fazer uma nova compra basta deixar a variavel exit como foi declarada
-
-            //Se o user quiser listar as compras efetuadas
-            if (option == 2)
-                for (Venda b : x.getHistoricoVendas()) {
-                    System.out.println(b);
+            do {
+                option = Integer.parseInt(sc.nextLine());
+                if (option > 3) {
+                    System.out.println("Please only input a valid number");
+                    exit(x);
                 }
+                //Se o user quiser fazer uma nova compra basta deixar a variavel exit como foi declarada
 
-            //Exit da aplicação
-            else if (option == 3) {
-                exit = true;
-            }
+                //Se o user quiser listar as compras efetuadas
+                if (option == 2)
+                    for (Venda b : x.getHistoricoVendas()) {
+                        System.out.println(b);
+                        escolherExit();
+                    }
+
+                    //Exit da aplicação
+                else if (option == 3) {
+                    exit = true;
+                }
+            }while(option==2);
 
         } else System.out.println("Please type a valid option");
         return exit;

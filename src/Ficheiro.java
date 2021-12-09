@@ -99,14 +99,12 @@ public class Ficheiro {
                                 //Adciona produtos ao supermercado
                                 case 1 -> {
                                     String[] array = linha.split(" ");
-                                    if (array[0].equals("PD"))
-                                        produtos.add(new Produto(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5])));
-                                    if (array[0].equals("PDALI"))
-                                        produtos.add(new ProdutoAlimentar(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), Integer.parseInt(array[7])));
-                                    if (array[0].equals("PDLIMP"))
-                                        produtos.add(new ProdutoLimpeza(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
-                                    if (array[0].equals("PDMOB"))
-                                        produtos.add(new ProdutoMobilado(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), array[7]));
+                                    switch (array[0]) {
+                                        case "PD" -> produtos.add(new Produto(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5])));
+                                        case "PDALI" -> produtos.add(new ProdutoAlimentar(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), Integer.parseInt(array[7])));
+                                        case "PDLIMP" -> produtos.add(new ProdutoLimpeza(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6])));
+                                        case "PDMOB" -> produtos.add(new ProdutoMobilado(Integer.parseInt(array[1]), array[2], Float.parseFloat(array[3]), Integer.parseInt(array[4]), Integer.parseInt(array[5]), Integer.parseInt(array[6]), array[7]));
+                                    }
                                 }
                                 //Adciona as promoções
                                 case 2 -> {

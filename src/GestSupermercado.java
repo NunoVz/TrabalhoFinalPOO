@@ -89,7 +89,7 @@ public class GestSupermercado {
      */
     public static void main(String[] args) {
         GestSupermercado g = new GestSupermercado();
-        boolean exit=false;
+        boolean exit = false;
         String[] ficheiros = {"Data\\Clientes.txt", "Data\\Datasupermercados.txt", "Data\\Clientes.obj", "Data\\Datasupermercados.obj"};
 
         //Ficheiros
@@ -101,38 +101,38 @@ public class GestSupermercado {
         //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
 
         if (!(new File(ficheiros[2])).exists()) {
-            System.out.println("Ficheiros objetos nao existem\nA ler texto");
+            //Ler Texto
             g.clientes = clientesTexto.lerClientes();
             dataSupermercadosTexto.lerDadosTexto(g);
         } else {
             //Ler objetos
-            System.out.println("Ficheiros objetos existem\nA ler objetos");
             g.clientes = clientesTexto.lerObjetoCliente();
             g.supermercados = dataSupermercadosTexto.lerObjetoSupermercado();
         }
 
         System.out.println("Software up to date");
 
-        g.hoje = g.hoje();
+        //g.hoje = g.hoje();                                    *****************************************************
+        g.hoje = new Data(12,12,2021);
         Cliente cliente = g.clientes.get(0);
         Supermercado sup = g.supermercados.get(0);
 
-        /*Cliente cliente = null;
+        /*Cliente cliente = null;                                       **********************************************
         while (cliente == null) {
             cliente = LoginRegister(clientes);
         }*/
-        while(!exit){
-        /*Supermercado sup = null;
+        while (!exit) {
+        /*Supermercado sup = null;                                          **********************************************
         while (sup == null) {
             sup = escolherSupermercado();
         }*/
 
-        g.escolherProdutos(g, sup, cliente);
-        exit=g.exit(cliente);
+            g.escolherProdutos(g, sup, cliente);
+            exit = g.exit(cliente);
 
-        System.out.println("Software storing new data");
-        clientesTexto.guardarDadosObj(g.clientes, g.supermercados);
-        System.out.println("Success\nProgram will be closing now!");
+            System.out.println("Software storing new data");
+            clientesTexto.guardarDadosObj(g.clientes, g.supermercados);
+            System.out.println("Success\nProgram will be closing now!");
         }
     }
 
@@ -216,14 +216,14 @@ public class GestSupermercado {
     }
 
     private void menuProdutos(Venda venda) {
-        System.out.println("---------------------------");
-        System.out.println("|       **Produtos**      |");
-        System.out.println("0- Listar os produtos");
-        System.out.println("1- Listar as promoções");
-        System.out.println("2- Adicionar um produto");
-        System.out.println("3- Remover elemento do carrinho");
-        System.out.println("4- Pagar");
-        System.out.println("5- Exit");
+        System.out.println("------------------------------------");
+        System.out.println("|           **Produtos**           |");
+        System.out.println("| 0- Listar os produtos            |");
+        System.out.println("| 1- Listar as promoções           |");
+        System.out.println("| 2- Adicionar um produto          |");
+        System.out.println("| 3- Remover elemento do carrinho  |");
+        System.out.println("| 4- Pagar                         |");
+        System.out.println("| 5- Exit                          |");
         if (venda.getCarrinhoDeCompras().size() != 0) {
             System.out.print("Carrinho de compras=[");
             int i = 0;
@@ -236,7 +236,7 @@ public class GestSupermercado {
                     System.out.print("]\n");
             }
         }
-        System.out.println("---------------------------");
+        System.out.println("------------------------------------");
         System.out.print("Introduza um numero:");
 
 
@@ -246,7 +246,7 @@ public class GestSupermercado {
         Scanner sc = new Scanner(System.in);
         Venda venda = new Venda();
         int option = -1;
-        float preco_prod=0;
+        float preco_prod = 0;
         float preco_trans;
 
         g.menuProdutos(venda);
@@ -257,7 +257,7 @@ public class GestSupermercado {
                 option = sc.nextInt();
 
                 if (option > 5 || option < 0) {
-                    System.out.println("Please only input a valid number");
+                    System.out.println("Introduza um número válido!");
                     g.menuProdutos(venda);
 
                 } else {
@@ -267,37 +267,40 @@ public class GestSupermercado {
                         // 4-Pagar
                         case 4 -> {
                             System.out.println("Prosseguindo para o pagamento");
-                            preco_prod=venda.getPreco_Prod(sup,preco_prod);
+                            preco_prod = venda.getPreco_Prod(sup, preco_prod);
                             System.out.println("Valor a pagar pelos produtos: " + preco_prod);
-                            preco_trans=venda.getPreco_transporte(cliente);
+                            preco_trans = venda.getPreco_transporte(cliente);
                             venda.setPreco_prod(preco_prod);
                             System.out.println("Valor a pagar pelo Transporte: " + preco_trans);
                             venda.setPreco_transporte(preco_trans);
                             System.out.println("Total: " + venda.getTotal());
                             cliente.add_venda(venda);
                             venda = new Venda();
-                            option=5;
+                            option = 5;
 
                         }
                         //3- Remover elemento do carrinho
                         case 3 -> {
-                            Produto produto = null;
-                            while (produto == null) {
-                                System.out.print("Indique o ID do produto que deseja eliminar: ");
-                                int ID = sc.nextInt();
-                                for (Produto p : sup.getProdutos()) {
-                                    if (p.getIdentificador() == ID) {
-                                        produto = p;
+                            if (venda.getCarrinhoDeCompras().size() != 0) {
+                                Produto produto = null;
+                                while (produto == null) {
+                                    System.out.print("Indique o ID do produto que deseja eliminar: ");
+                                    int ID = sc.nextInt();
+                                    for (Produto p : sup.getProdutos()) {
+                                        if (p.getIdentificador() == ID) {
+                                            produto = p;
+                                        }
+                                    }
+                                    if (produto == null) {
+                                        System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
                                     }
                                 }
-                                if (produto == null) {
-                                    System.out.println("O ID que inseriu não corresponde a nenhum produto\nTente outra vez!");
-                                }
+                                if (venda.removerProduto(produto)) {
+                                    System.out.println(produto.getNome() + " removido com sucesso!");
+                                } else System.out.println("Erro ao remover produto");
+                            } else {
+                                System.out.println("O carrinho encontra-se vazio");
                             }
-                            if (venda.removerProduto(produto)) {
-                                System.out.println(produto.getNome() + " removido com sucesso!");
-                            } else System.out.println("Erro ao remover produto");
-
                             g.menuProdutos(venda);
                         }
                         // 2-Adicionar produto
@@ -317,13 +320,12 @@ public class GestSupermercado {
 
                             int quantidade = 0;
                             while (quantidade <= 0) {
-                                System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar:");
+                                System.out.print("Escolha a quantidade de " + p.getNome() + " que deseja adicionar: ");
                                 quantidade = sc.nextInt();
                                 if (quantidade > 0) {
                                     if (p.getStock() >= quantidade) {
-                                        preco_prod+=venda.add_produto(p, quantidade,preco_prod);
-                                    }
-                                    else
+                                        preco_prod += venda.add_produto(p, quantidade, preco_prod);
+                                    } else
                                         System.out.println("Não existe stock suficiente!");
                                 } else System.out.println("Indique uma quantidade válida!");
 
@@ -356,7 +358,7 @@ public class GestSupermercado {
                         //Listar produtos
                         case 0 -> {
                             for (Produto b : sup.getProdutos())
-                                System.out.println("ID: " + b.getIdentificador() + " - " + b.getNome() + " - Preco: " + b.getPrecoUnitario() + " - Stock: " + b.getStock());
+                                System.out.println("ID: " + b.getIdentificador() + " - " + b.getNome() + " - Preco: " + b.getPrecoUnitario() + "€ - Stock: " + b.getStock() + " unidades" + b.toString());
                             g.menuProdutos(venda);
                         }
                     }
@@ -409,7 +411,7 @@ public class GestSupermercado {
     private boolean exit(Cliente x) {
         Scanner sc = new Scanner(System.in);
         int option;
-        boolean exit=false;
+        boolean exit = false;
 
         System.out.println("---------------------------");
         System.out.println("|Obrigado pela sua compra |");
@@ -425,11 +427,12 @@ public class GestSupermercado {
                 System.out.println("Please only input a valid number");
                 exit(x);
             }
-            if(option==2)
-                for(Venda b:x.getHistoricoVendas()){
-                    System.out.println(b);}
-            else if(option==3){
-                exit=true;
+            if (option == 2)
+                for (Venda b : x.getHistoricoVendas()) {
+                    System.out.println(b);
+                }
+            else if (option == 3) {
+                exit = true;
             }
 
         } else System.out.println("Please type a valid option");

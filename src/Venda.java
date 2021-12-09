@@ -1,5 +1,6 @@
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * O tipo Venda.
@@ -223,11 +224,14 @@ public class Venda implements Serializable {
 
     private String getNomes() {
         //Listar produtos no historico de vendas do cliente
-        String nomes = "";
+        int n = carrinhoDeCompras.size();
+        String[] arr = new String[n];
+        int i=0;
         for (Produto p : carrinhoDeCompras) {
-            nomes += "[" + p.getNome() + " * " + p.getQuantidade_carrinho() + "] ";
+            arr[i]=p.getNome() + " * " + p.getQuantidade_carrinho();
+            i++;
         }
-        return nomes;
+        return Arrays.toString(arr);
     }
 
     @Override

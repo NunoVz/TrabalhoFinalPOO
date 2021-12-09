@@ -98,8 +98,7 @@ public class GestSupermercado {
 
         System.out.println("Software Boot");
 
-        //Função para a primeira inicialização do programa nunca correr em simultaneo com a função lerobjeto
-
+        //Condicao que garante que na primeira incicalizacao(quando nao existem ficheiros objetos)
         if (!(new File(ficheiros[2])).exists()) {
             //Ler Texto
             g.clientes = clientesTexto.lerClientes();
@@ -112,21 +111,18 @@ public class GestSupermercado {
 
         System.out.println("Software up to date");
 
-        //g.hoje = g.hoje();                                    *****************************************************
-        g.hoje = new Data(12,12,2021);
-        Cliente cliente = g.clientes.get(0);
-        Supermercado sup = g.supermercados.get(0);
+        g.hoje = g.hoje();
 
-        /*Cliente cliente = null;                                       **********************************************
+        Cliente cliente = null;
         while (cliente == null) {
-            cliente = LoginRegister(clientes);
-        }*/
-        while (!exit) {
-        /*Supermercado sup = null;                                          **********************************************
-        while (sup == null) {
-            sup = escolherSupermercado();
-        }*/
+            cliente = g.loginRegister(g.clientes);
+        }
 
+        while (!exit) {
+        Supermercado sup = null;
+        while (sup == null) {
+            sup = g.escolherSupermercado();
+        }
             g.escolherProdutos(g, sup, cliente);
             exit = g.exit(cliente);
 

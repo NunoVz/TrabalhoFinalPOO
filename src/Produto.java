@@ -173,7 +173,7 @@ public class Produto implements Serializable {
     /**
      * Guardar data string.
      *
-     * @return a string
+     * @return an string
      */
     public String guardarData() {
         return getType() + " " + identificador

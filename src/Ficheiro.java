@@ -13,7 +13,8 @@ public class Ficheiro {
     /**
      * Cria um novo Ficheiro.
      */
-    public Ficheiro(){}
+    public Ficheiro() {
+    }
 
     /**
      * Cria um novo Ficheiro.
@@ -35,16 +36,15 @@ public class Ficheiro {
         try {
             FileReader fileReader = new FileReader(f);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
-
             String line;
             while ((line = bufferedReader.readLine()) != null) {
                 if (line.length() != 0) {
                     String[] array = line.split("\\|");
+                    //new Cliente(nome, morada, email, telefone, Data nascimento, bool frequente)
                     clientes.add(new Cliente(array[0], array[1], array[2], Integer.parseInt(array[3]), getDateFromString(array[4]), Boolean.parseBoolean(array[5])));
                 }
             }
             bufferedReader.close();
-
         } catch (FileNotFoundException e) {
             System.out.println("O ficheiro nao existe.");
         } catch (IOException e) {
@@ -58,7 +58,7 @@ public class Ficheiro {
      *
      * @param g o gestor
      */
-    public void lerDados(GestSupermercado g) {
+    public void lerDadosTexto(GestSupermercado g) {
         File f = new File("Data\\Datasupermercados.txt");
         if (f.exists() && f.isFile()) {
             try {
@@ -143,7 +143,7 @@ public class Ficheiro {
      */
     public ArrayList<Supermercado> lerObjetoSupermercado() {
         ArrayList<Supermercado> supermercados = null;
-        File dataSupermercadosObj = new File("Data\\Datasupermercados.ser");
+        File dataSupermercadosObj = new File("Data\\Datasupermercados.obj");
         try {
             FileInputStream fis = new FileInputStream(dataSupermercadosObj);
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -166,7 +166,7 @@ public class Ficheiro {
      */
     public ArrayList<Cliente> lerObjetoCliente() {
         ArrayList<Cliente> clientes = null;
-        File clientesObj = new File("Data\\Clientes.ser");
+        File clientesObj = new File("Data\\Clientes.obj");
         try {
             FileInputStream fis = new FileInputStream(clientesObj);
             ObjectInputStream ois = new ObjectInputStream(fis);
@@ -206,7 +206,6 @@ public class Ficheiro {
         try {
             FileOutputStream fos = new FileOutputStream(f);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
-
             oos.writeObject(clientes);
 
             oos.close();

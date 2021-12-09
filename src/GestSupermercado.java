@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * O tipo Gest supermercado.
+ * Classe do tipo Gest supermercado.
  */
-public class GestSupermercado implements Serializable {
+public class GestSupermercado {
     /**
      * Os Supermercados.
      */
@@ -21,7 +21,7 @@ public class GestSupermercado implements Serializable {
     public Data hoje;
 
     /**
-     * Cria um Gest supermercado.
+     * Cria um Gestor de supermercados.
      */
     public GestSupermercado() {
         supermercados = new ArrayList<>();
@@ -85,7 +85,7 @@ public class GestSupermercado implements Serializable {
     /**
      * O inicio do programa
      *
-     * @param args the input arguments
+     * @param args os argumentos de entrada
      */
     public static void main(String[] args) {
         GestSupermercado g = new GestSupermercado();
@@ -103,7 +103,7 @@ public class GestSupermercado implements Serializable {
         if (!(new File(ficheiros[2])).exists()) {
             System.out.println("Ficheiros objetos nao existem\nA ler texto");
             g.clientes = clientesTexto.lerClientes();
-            dataSupermercadosTexto.lerDados(g);
+            dataSupermercadosTexto.lerDadosTexto(g);
         } else {
             //Ler objetos
             System.out.println("Ficheiros objetos existem\nA ler objetos");

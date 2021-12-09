@@ -174,15 +174,6 @@ public class Cliente implements Serializable {
         historicoVendas.add(venda);
     }
 
-    /**
-     * Guardar data.
-     *
-     * @return uma string
-     */
-    public String guardarData() {
-        return nome + " " + morada + " " + email + " " + telefone + " " + nascimento + " " + isFrequente();
-    }
-
     @Override
     public String toString() {
         return "Cliente{" +
